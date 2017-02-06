@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import Root from './Root.jsx';
 
-import configureStore from './Store';
+import configureStore from './config/store';
 import loadInitialState from './loadInitialState';
 
 import createDevToolsWindow from './createDevToolsWindow';
