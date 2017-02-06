@@ -7,7 +7,7 @@ import Root from './Root.jsx';
 import configureStore from './config/store';
 import loadInitialState from './loadInitialState';
 
-import createDevToolsWindow from './createDevToolsWindow';
+import {createDevToolsWindow} from './config/devtools';
 
 const initialState = loadInitialState();
 
