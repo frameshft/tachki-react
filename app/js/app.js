@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 
-import Root from './Root.jsx';
+import Root from './router/Root';
 
 import configureStore from './config/store';
 import loadInitialState from './loadInitialState';

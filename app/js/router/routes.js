@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import Application from './components/Application.jsx';
-import Companies from './components/companies/Index.jsx';
+import Application from '../components/Application.jsx';
+import Companies from '../components/companies/Index.jsx';
 
 export default (store) => {
     return (
