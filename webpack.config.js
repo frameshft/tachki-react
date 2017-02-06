@@ -2,8 +2,6 @@ const path = require('path');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
-console.log(path.resolve(__dirname, "dist-build"));
-
 module.exports = {
   devtool: 'inline-source-map',
   context: path.resolve(__dirname, 'app'),
