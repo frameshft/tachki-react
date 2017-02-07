@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {Map, List} from 'immutable';
 import * as ClientInfoOperations from '../actions/companies';
 
 const initialState = Map({
@@ -25,7 +25,7 @@ export default function companiesReducer (companies, action) {
                 companies = companies.update('status', () => action.data.Error);
             } else {
                 companies = companies.update('status', () => 1);
-                companies = companies.update('list', () => Map(action.data));
+                companies = companies.update('list', () => List(action.data.results));
             }
             break;
     }

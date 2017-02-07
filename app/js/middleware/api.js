@@ -25,15 +25,11 @@ function callApi(endpoint, method, data, passCredentials) {
         'Content-Type': 'application/json'
     };
 
-    if (token) {
-        headers.authorization = `Bearer ${token}`;
-    }
-    
     return fetch(antiCacheEndpoint, {
         method,
         headers,
-        credentials: 'include',
-        body: method === 'get' ? undefined : JSON.stringify(data)
+        // credentials: 'include',
+        body: method === 'get' ? JSON.stringify(data) : undefined
     }).then(checkStatus).then(response => {
         if (!response.ok) {
             return Promise.reject(response);

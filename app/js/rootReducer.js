@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
-import {routerStateReducer} from 'redux-router';
+import {routerReducer} from 'react-router-redux';
 
 import companiesReducer from './reducers/companiesReducer';
 
 export default combineReducers({
-    router: routerStateReducer,
+    routing: routerReducer,
     companies: companiesReducer
 });

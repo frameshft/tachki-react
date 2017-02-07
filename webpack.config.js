@@ -6,6 +6,12 @@ module.exports = {
   devtool: 'inline-source-map',
   context: path.resolve(__dirname, 'app'),
 
+  devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+
   entry: {
     javascript: './js/app.js',
     html: "./index.html",

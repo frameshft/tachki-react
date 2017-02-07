@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 
-import Root from './router/Root';
-
 import configureStore from './config/store';
 import loadInitialState from './loadInitialState';
 
@@ -13,9 +11,11 @@ const initialState = loadInitialState();
 
 const store = configureStore(initialState);
 
+import routes from './router/routes';
+
 ReactDOM.render(
     <Provider store={store}>
-        <Root store={store}/>
+        {routes(store)}
     </Provider>, document.getElementById('app')
 );
 

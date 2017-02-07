@@ -2,6 +2,11 @@ import {Map} from 'immutable';
 
 export default function () {
     return {
-        router: undefined
+        routing: undefined,
+        companies: new Map({
+            fetching: false,
+            status: 0,
+            list: Map()
+        })
     };
 }

@@ -5,7 +5,8 @@ import {fetchCompanies as fetchCompaniesAction} from '../../actions/creators/com
 
 class Index extends React.Component {
     static propTypes = {
-        fetchCompaniesAction: React.PropTypes.func
+        fetchCompaniesAction: React.PropTypes.func,
+        companies: React.PropTypes.object
     };
 
     componentWillMount() {
@@ -13,17 +14,36 @@ class Index extends React.Component {
     }
 
     render() {
+        const {companies} = this.props;
+        const fetching = companies.get('fetching');
+        const status = companies.get('status');
+
+        const companyItem = [];
+
+        if (!fetching && status === 1) {
+            const list = companies.get('list');
+
+            list.map(function(item) {
+                companyItem.push(<li key={item.id}><img src={item.image} />{item.name}</li>);
+            })
+        }
+
+
         return (
-            <div>Fuck</div>
+            <div>
+                <ul>
+                    {companyItem}
+                </ul>
+            </div>
         )
     }
 }
 
 function mapToProps(state) {
-    const companiesList = state.companies.get('list');
+    const companies = state.companies;
 
     return {
-        companiesList
+        companies
     };
 }
 
