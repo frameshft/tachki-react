@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback --progress --watch-poll -d --client-log-level=info"
+    "dev": "node ./node_modules/eslint/bin/eslint.js webpack.config.js app/js/** && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback --progress --watch-poll -d --client-log-level=info"
   },
   "author": "",
   "license": "ISC",

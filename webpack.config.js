@@ -1,6 +1,6 @@
 const path = require('path');
-const precss = require('precss');
-const autoprefixer = require('autoprefixer');
+// const precss = require('precss');
+// const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -10,11 +10,11 @@ module.exports = {
 
   devServer: {
     headers: {
-      "Access-Control-Allow-Origin": "*"
-    }
+      'Access-Control-Allow-Origin': '*',
+    },
   },
 
-  entry: path.join(__dirname, 'app/js/app.js'),
+  entry: path.join(__dirname, 'app/js/app.jsx'),
 
   output: {
     filename: 'bundle.js',
@@ -23,7 +23,7 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({template: 'index.html'}),
+    new HtmlWebpackPlugin({ template: 'index.html' }),
     new webpack.NamedModulesPlugin(),
   ],
 
@@ -31,23 +31,23 @@ module.exports = {
     extensions: ['.js', '.jsx', '.json'],
     modules: [
       // path.resolve(__dirname, 'app/js'),
-      path.resolve(__dirname, 'node_modules')
-    ]
+      path.resolve(__dirname, 'node_modules'),
+    ],
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ["react-hot-loader", "babel-loader"]
+        loaders: ['react-hot-loader', 'babel-loader'],
       },
 
       {
         test: /\.scss$/,
-        loader: 'style!css?sourceMap!postcss!sass?sourceMap'
-      }
-    ]
-  }
+        loader: 'style!css?sourceMap!postcss!sass?sourceMap',
+      },
+    ],
+  },
   // postcss() {
   //   return [autoprefixer, precss];
   // }

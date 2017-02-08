@@ -1,12 +1,11 @@
-import React from 'react';
 import { createStore, combineReducers, compose } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import reducers from './reducers';
 
-let enhancers = [];
+const enhancers = [];
 
 if (process.env.NODE_ENV !== 'production') {
-  const DevTools = require('./devtools').DevTools;
+  const DevTools = require('./devtools').DevTools; // eslint-disable-line global-require
   enhancers.push(DevTools.instrument());
 }
 
@@ -15,5 +14,5 @@ export default createStore(
     routing: routerReducer,
     ...reducers,
   }),
-  compose(...enhancers)
+  compose(...enhancers),
 );

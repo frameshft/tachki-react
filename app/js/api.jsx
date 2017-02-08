@@ -12,26 +12,25 @@ const apiRequest = axios.create({
 });
 
 export default {
-  fetch: function (endpoint, params={}) {
-    return apiRequest.get(endpoint, params=params)
+  fetch: function fetch(endpoint, params = {}) {
+    return apiRequest.get(endpoint, params)
       .then(res => res.data)
-    ;
+      ;
   },
 
-  create: function (endpoint, data={}) {
-    return apiRequest.post(endpoint, data=data)
+  create: function create(endpoint, data = {}) {
+    return apiRequest.post(endpoint, data)
       .then(res => res.data)
-    ;
+      ;
   },
 
-  update: function (endpoint, data={}, partial=false) {
-    const req = partial ? apiRequest.patch(endpoint, data=data) : apiRequest.put(endpoint, data=data);
+  update: function update(endpoint, data = {}, partial = false) {
+    const req = partial ? apiRequest.patch(endpoint, data) : apiRequest.put(endpoint, data);
     return req.then(res => res.data);
   },
 
-  remove: function (endpoint, partial=false) {
+  remove: function remove(endpoint, partial = false) {
     const req = partial ? apiRequest.post(endpoint) : apiRequest.put(endpoint);
     return req.then(res => res.data);
   },
-}
-
+};
