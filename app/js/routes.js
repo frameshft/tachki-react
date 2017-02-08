@@ -2,8 +2,8 @@ import React from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
 
-import Application from '../components/Application.jsx';
-import Companies from '../components/companies/Index.jsx';
+import Application from './components/application';
+import {CompanyList} from './components/companies';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -11,9 +11,9 @@ export default (store) => {
   return (
     <Router history={history}>
       <Route path="/" component={ Application }>
-        <IndexRoute components={{main: Companies}}/>
+        <IndexRoute component={ CompanyList }/>
+        <Route path="companies" component={ CompanyList }/>
       </Route>
-      <Route path="companies" component={ Companies }/>
     </Router>
   );
 };

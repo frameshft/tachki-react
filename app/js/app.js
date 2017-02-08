@@ -1,17 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-
-import configureStore from './config/store';
-import loadInitialState from './loadInitialState';
-
-import {createDevToolsWindow} from './config/devtools';
-
-const initialState = loadInitialState();
-
-const store = configureStore(initialState);
-
-import routes from './router/routes';
+import {createDevToolsWindow} from './devtools';
+import store from './store';
+import routes from './routes';
 
 ReactDOM.render(
     <Provider store={store}>
