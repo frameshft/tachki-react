@@ -34,8 +34,7 @@ export default {
     return req.then(res => res.data);
   },
 
-  remove: function remove(endpoint, partial = false) {
-    const req = partial ? apiRequest.post(endpoint) : apiRequest.put(endpoint);
-    return req.then(res => res.data);
+  remove: function remove(endpoint) {
+    return apiRequest.delete(endpoint);
   },
 };
