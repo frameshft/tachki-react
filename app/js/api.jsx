@@ -12,8 +12,13 @@ const apiRequest = axios.create({
 });
 
 export default {
-  fetch: function fetch(endpoint, params = {}) {
-    return apiRequest.get(endpoint, params)
+  fetch: function fetch(endpoint, params = null) {
+    const opts = {};
+    if (params !== null) {
+      opts.params = params;
+    }
+
+    return apiRequest.get(endpoint, opts)
       .then(res => res.data)
       ;
   },
