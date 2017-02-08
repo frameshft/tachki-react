@@ -25,7 +25,7 @@ export default {
   },
 
   update: function (endpoint, data={}, partial=false) {
-    const req = partial ? apiRequest.post(endpoint, data=data) : apiRequest.put(endpoint, data=data);
+    const req = partial ? apiRequest.patch(endpoint, data=data) : apiRequest.put(endpoint, data=data);
     return req.then(res => res.data);
   },
 
