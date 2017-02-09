@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  react:
+    build: .
+    restart: always
+    command: npm run dev
+    volumes:
+          - ./app:/usr/src/tachki/app
+    ports:
+      - "8080:8080"
