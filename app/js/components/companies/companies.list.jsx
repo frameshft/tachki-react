@@ -7,7 +7,7 @@ import API from '../../api';
 class CompanyList extends React.Component {
 
   fetchCompanies() {
-    API.fetch('companies/')
+    API.fetch('/companies/')
       .then(res => {
         store.dispatch({
           type: FETCH_COMPANIES_LIST,
