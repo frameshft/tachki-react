@@ -1,0 +1,173 @@
+@import "variables";
+
+$header-padding-top: 8.335%;
+
+.header {
+  background: $red-primary;
+  max-height: 70px;
+  padding: 23px $header-padding-top;
+  position: relative;
+
+  &__location {
+    display: inline-block;
+    font-size: 24px;
+    color: #fff;
+    text-transform: capitalize;
+  }
+
+  &__tools {
+    float: right;
+
+    &__btn {
+      display: inline-block;
+      &--map {
+        background: url('../img/icon-marker.png') no-repeat 0 0;
+        width: 18px;
+        height: 26px;
+        background-size: 100%;
+        margin-right: 20px;
+      }
+
+      &--view {
+        width: 22px;
+        height: 17px;
+        position: relative;
+        top: -5px;
+        border: 1px solid blue;
+        &--big {
+          background: url('../img/icon-view-big.png') no-repeat 0 0;
+          background-size: 22px 17px;
+        }
+
+        &--small {
+          background: url('../img/icon-view-small.png') no-repeat 0 0;
+          background-size: 100%;
+        }
+      }
+    }
+  }
+}
+
+.sandwich {
+  &__toggle {
+    border: 1px solid #fff;
+    display: inline-block;
+    cursor: pointer;
+    background: url('../img/icon-sandwich.svg') no-repeat 0 0;
+    width: 24px;
+    height: 17px;
+    background-size: 100%;
+    margin-right: $header-padding-top;
+  }
+}
+
+.sidebar {
+  z-index: 1050;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  background: #fff;
+  max-width: 335px;
+  width: 81%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  left: 0;
+
+  &__profile {
+    background-color: #d32323;
+    padding: 22px 15px 14px;
+    color:  #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 18px;
+
+    &__media {
+      margin-bottom: 15px;
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    &__title {
+      margin-bottom: 18px;
+    }
+  }
+
+  &__navigation {
+    padding: 20px 10px;
+
+    &__item {
+      list-style: none;
+      margin-bottom: 35px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:before {
+        content: '';
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background: url('../img/sidebar-user-icons.png') no-repeat;
+      }
+
+      &--my {
+        &:before {
+          background-position: 0 -65px;
+        }
+      }
+
+      &--messages {
+        &:before {
+          background-position: 0 -128px;
+        }
+      }
+
+      &--saved {
+        &:before {
+          background-position: 0 -191px;
+        }
+      }
+
+      &--viewed {
+        &:before {
+          background-position: 0 -256px;
+        }
+      }
+
+      &--settings {
+        &:before {
+          background-position: 0 -319px;
+        }
+      }
+
+      &--recommend {
+        &:before {
+          background-position: 0 -385px;
+        }
+      }
+
+      &--signout {
+        &:before {
+          background-position: 0 -448px;
+        }
+      }
+
+    }
+
+    &__link {
+      vertical-align: top;
+      position: relative;
+      top: 7px;
+      color:  #000;
+      text-decoration: none;
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      display: inline-block;
+    }
+  }
+}
+

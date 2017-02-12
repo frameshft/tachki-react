@@ -41,10 +41,13 @@ module.exports = {
         exclude: /node_modules/,
         loaders: ['react-hot-loader', 'babel-loader'],
       },
-
       {
         test: /\.scss$/,
-        loader: 'style!css?sourceMap!postcss!sass?sourceMap',
+        loader: 'style-loader!css-loader?sourceMap&!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
+      },
+      {
+        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png$/,
+        loader: 'file-loader',
       },
     ],
   },
