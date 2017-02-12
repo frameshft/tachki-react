@@ -9,11 +9,11 @@ const initialCompaniesState = Map({
   list: undefined
 });
 
-function listCompanies(state, data) {
+function storeCompanies(state, data) {
   state = state.update('status', () => 1);
   state = state.update('next', () => data.next);
   state = state.update('previous', () => data.previous);
-  state = state.update('list', () => List(data.results));
+  state = state.update('list', () => Map(data.results));
   return state
 }
 
@@ -25,7 +25,7 @@ export default function companiesReducer(state, action) {
 
   switch (action.type) {
     case ClientInfoOperations.FETCH_COMPANIES_LIST:
-      return listCompanies(state, action.data);
+      return storeCompanies(state, action.data);
     default:
       return state;
   }

@@ -22,12 +22,17 @@ class CompanyList extends React.Component {
 
   render() {
     const companies = this.props.companies.toJS();
-    let companyList;
+    let companyList = [];
     if (companies.status === 1) {
-      companyList = companies.list.map(item => <li key={item.id}><img src={item.image}/>{item.name}</li>);
-    } else {
-      companyList = []
+
+      for (let x in companies.list) {
+        if (companies.list.hasOwnProperty(x)) {
+          let company = companies.list[x]
+          companyList.push(<li key={x}><img src={company.image}/>{company.name}</li>)
+        }
+      }
     }
+    companyList.sort((a, b) => b.key- a.key);
 
     return (
       <div>
