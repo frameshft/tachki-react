@@ -13,8 +13,18 @@ function storeCompanies(state, data) {
   state = state.update('status', () => 1);
   state = state.update('next', () => data.next);
   state = state.update('previous', () => data.previous);
-  state = state.update('list', () => Map(data.results));
-  return state
+
+  let _list = {};
+  for (let l of data.results) {
+    _list = {
+      ..._list,
+      [l.id]: l
+    }
+  }
+
+  state = state.update('list', () => Map(_list));
+
+  return state;
 }
 
 export default function companiesReducer(state, action) {
