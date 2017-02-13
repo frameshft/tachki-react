@@ -46,10 +46,10 @@ class Header extends React.Component {
     }
 
     render() {
-        const {showSidebar, listType} = this.state;
-
+      const {showSidebar, listType} = this.state;
       const listViewIconCls = (listType === listViewType.LIST_VIEW_NORMAL)
         ? " header__tools__btn--view--big" : " header__tools__btn--view--small";
+
         return (
             <div className="header">
                 <div className="sandwich__toggle" onClick={this.toggleSidebar}/>
