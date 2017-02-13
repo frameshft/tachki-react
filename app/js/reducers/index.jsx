@@ -1,5 +1,7 @@
-import companiesReducer from './companies'
+import companiesReducer from './companies';
+import listViewReducer from './listView';
 
 export default {
-  companies: companiesReducer
+  companies: companiesReducer,
+  listView: listViewReducer
 }

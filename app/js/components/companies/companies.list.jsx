@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import store from  '../../store';
 import {FETCH_COMPANIES_LIST} from "../../actions/companies";
 import API from '../../api';
+import * as listViewType from '../../constants/listView';
 
 import Company from './company';
 import Pagination from './pagination';
@@ -63,7 +64,9 @@ class CompanyList extends React.Component {
 
   render() {
     const {showAlert, currentPage} = this.state;
-    const {companies} = this.props;
+    const {companies, listView} = this.props;
+
+    const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? "" : " list--small";
 
     const companiesList = companies.toJS();
     let companyList = [];
@@ -90,7 +93,7 @@ class CompanyList extends React.Component {
           Хотите стать компанией?
           <i className="fa fa-times alert__close" onClick={this.alertClose}/>
         </div>}
-        <div className="list list--small">
+        <div className={"list" + listsCls}>
           { companyList}
         </div>
         <Pagination {...paginationProps} />
@@ -100,8 +103,10 @@ class CompanyList extends React.Component {
 }
 
 function mapToProps(state) {
+  const listView = state.listView.get('listView');
   return {
-    companies: state.companies
+    companies: state.companies,
+    listView,
   };
 }
 
