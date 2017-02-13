@@ -1,47 +1,56 @@
 const path = require('path');
-const precss = require('precss');
-const autoprefixer = require('autoprefixer');
-
-console.log(path.resolve(__dirname, "dist-build"));
+// const precss = require('precss');
+// const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
   context: path.resolve(__dirname, 'app'),
 
-  entry: {
-    javascript: './js/app.js',
-    html: "./index.html",
+  devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
 
+  entry: path.join(__dirname, 'app/js/app.jsx'),
+
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, "dist"),
-      publicPath: '/'
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
   },
+
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new HtmlWebpackPlugin({ template: 'index.html' }),
+    new webpack.NamedModulesPlugin(),
+  ],
+
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [
-        // path.resolve(__dirname, 'app/js'),
-        path.resolve(__dirname, 'node_modules')
-    ]
+      // path.resolve(__dirname, 'app/js'),
+      path.resolve(__dirname, 'node_modules'),
+    ],
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ["react-hot-loader", "babel-loader"]
-      },
-      {
-        test: /\.html$/,
-        loader: "file-loader?name=[name].[ext]",
+        loaders: ['react-hot-loader', 'babel-loader'],
       },
       {
         test: /\.scss$/,
-        loader: 'style!css?sourceMap!postcss!sass?sourceMap'
-      }
-    ]
-  }
+        loader: 'style-loader!css-loader?sourceMap&!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
+      },
+      {
+        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png$/,
+        loader: 'file-loader',
+      },
+    ],
+  },
   // postcss() {
   //   return [autoprefixer, precss];
   // }

@@ -1,0 +1,31 @@
+.alert {
+  border-radius: 8px;
+  min-height: 34px;
+  line-height: 32px;
+  color:  #de2b00;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  padding: 0 15px;
+  position: relative;
+
+  &--red {
+    border: 2px solid #d93c3c;
+  }
+
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}
+
+.companies {
+  padding-bottom: 40px;
+  .list {
+    margin-top: 22px;
+  }
+}
