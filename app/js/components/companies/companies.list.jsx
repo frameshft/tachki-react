@@ -5,6 +5,9 @@ import {FETCH_COMPANIES_LIST} from "../../actions/companies";
 import API from '../../api';
 
 import Company from './company';
+import Pagination from './pagination';
+
+const TOTAL_PAGES = 3;
 
 class CompanyList extends React.Component {
 
@@ -18,18 +21,38 @@ class CompanyList extends React.Component {
       });
   }
 
+    fetchPage(page) {
+        API.fetch(`/companies/?page=${page}`)
+            .then(res => {
+                store.dispatch({
+                    type: FETCH_COMPANIES_LIST,
+                    data: res,
+                });
+            });
+    }
+
   constructor(props) {
     super(props);
 
     this.alertClose = this.alertClose.bind(this);
+    this.onPageClick = this.onPageClick.bind(this);
 
     this.state = {
-      showAlert: true
+      showAlert: true,
+      currentPage: 1
     };
   }
 
   componentDidMount() {
     this.fetchCompanies();
+  }
+
+  onPageClick(page) {
+    this.fetchPage(page);
+
+    this.setState({
+      currentPage: page
+    });
   }
 
   alertClose() {
@@ -39,20 +62,27 @@ class CompanyList extends React.Component {
   }
 
   render() {
-    const {showAlert} = this.state;
+    const {showAlert, currentPage} = this.state;
+    const {companies} = this.props;
 
-    const companies = this.props.companies.toJS();
+    const companiesList = companies.toJS();
     let companyList = [];
-    if (companies.status === 1) {
+    if (companiesList.status === 1) {
 
-      for (let x in companies.list) {
-        if (companies.list.hasOwnProperty(x)) {
-          let company = companies.list[x]
+      for (let x in companiesList.list) {
+        if (companiesList.list.hasOwnProperty(x)) {
+          let company = companiesList.list[x];
           companyList.push(<Company key={x} company={company}/>)
         }
       }
     }
     companyList.sort((a, b) => b.key- a.key);
+
+    const paginationProps = {
+        totalPages: TOTAL_PAGES,
+        selectPage: this.onPageClick,
+        currentPage
+    };
 
     return (
       <div className="body companies">
@@ -63,6 +93,7 @@ class CompanyList extends React.Component {
         <div className="list list--small">
           { companyList}
         </div>
+        <Pagination {...paginationProps} />
       </div>
     )
   }
