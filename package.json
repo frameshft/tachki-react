@@ -11,7 +11,7 @@
   },
   "author": "",
   "precommit": {
-    "run": "npm run eslint"
+    "run": "eslint"
   },
   "license": "ISC",
   "devDependencies": {
