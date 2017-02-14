@@ -4,15 +4,15 @@ import * as ClientInfoOperations from '../actions/companies';
 const initialCompaniesState = Map({
   fetching: false,
   status: 0,
-  next: null,
-  previous: null,
+  itemsPerPage: null,
+  totalPages: null,
   list: undefined
 });
 
 function storeCompanies(state, data) {
   state = state.update('status', () => 1);
-  state = state.update('next', () => data.next);
-  state = state.update('previous', () => data.previous);
+  state = state.update('itemsPerPage', () => data['per_page']);
+  state = state.update('totalPages', () => data['total_pages']);
 
   let _list = {};
   for (let l of data.results) {

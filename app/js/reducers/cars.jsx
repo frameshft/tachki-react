@@ -4,11 +4,15 @@ import * as ClientInfoOperations from '../actions/cars';
 const initialCompaniesState = Map({
   fetching: false,
   status: 0,
+  itemsPerPage: null,
+  totalPages: null,
   list: undefined
 });
 
 function storeCars(state, data) {
   state = state.update('status', () => 1);
+  state = state.update('itemsPerPage', () => data['per_page']);
+  state = state.update('totalPages', () => data['total_pages']);
 
   let _list = {};
   for (let l of data.results) {

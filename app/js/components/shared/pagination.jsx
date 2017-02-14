@@ -38,35 +38,43 @@ export default class Pagination extends React.Component {
     render() {
         const {totalPages, currentPage} = this.props;
         let prevPageClick, nextPageClick = undefined;
+        let startIndex = 1;
         let showTotalPages = totalPages;
 
         const pageLinks = [];
 
-        const paginationDirections = totalPages > TOTAL_PAGES;
+        const prevLink = currentPage != 1;
+        const nextLink = currentPage != totalPages;
 
-        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-            pageLinks.push(this.renderPageLink(pageNum, currentPage === pageNum));
-        }
-
-        if (showTotalPages > TOTAL_PAGES) {
+        if (totalPages > TOTAL_PAGES) {
+            showTotalPages = TOTAL_PAGES;
             if (currentPage !== 0) {
                 prevPageClick = this.paginationNavClick.bind(this, currentPage - 1);
             }
 
-            if (currentPage !== totalPages - 1) {
+            if (currentPage !== totalPages) {
                 nextPageClick = this.paginationNavClick.bind(this, currentPage + 1);
             }
+
+            if (showTotalPages < currentPage) {
+                startIndex = currentPage - showTotalPages + 1;
+                showTotalPages += startIndex - 1;
+            }
+        }
+
+        for (let pageNum = startIndex; pageNum <= showTotalPages; pageNum++) {
+            pageLinks.push(this.renderPageLink(pageNum, currentPage === pageNum));
         }
 
         return (
             <ul className="pagination">
-                {paginationDirections && <li className="pagination__item">
+                {prevLink && <li className="pagination__item">
                     <a href="#" className="pagination__link" onClick={prevPageClick}>
                         Пред.
                     </a>
                 </li>}
                 {pageLinks}
-                {paginationDirections && <li className="pagination__item" onClick={nextPageClick}>
+                {nextLink && <li className="pagination__item" onClick={nextPageClick}>
                     <a href="#" className="pagination__link">
                         следующая
                     </a>

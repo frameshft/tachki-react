@@ -8,7 +8,6 @@ export default class extends React.Component {
     render() {
         const {company} = this.props;
         const types = company.types;
-        const last = types.length;
 
         return (
             <div className="list__item">

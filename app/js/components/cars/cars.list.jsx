@@ -1,5 +1,4 @@
 import React from 'react';
-import { Map } from 'immutable';
 import {connect} from 'react-redux';
 import store from  '../../store';
 import API from '../../api';
@@ -7,6 +6,7 @@ import { FETCH_CARS_LIST } from "../../actions/cars";
 
 import * as listViewType from '../../constants/listView';
 import Car from './car';
+import Pagination from '../shared/pagination';
 
 class CarList extends React.Component {
 
@@ -20,11 +20,40 @@ class CarList extends React.Component {
       });
   }
 
+  fetchPage(page) {
+    API.fetch(`/automobiles/?page=${page}`)
+      .then(res => {
+        store.dispatch({
+          type: FETCH_CARS_LIST,
+          data: res,
+        });
+      });
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.onPageClick = this.onPageClick.bind(this);
+
+    this.state = {
+      currentPage: 1
+    };
+  }
+
   componentDidMount() {
     this.fetchAuto();
   }
 
+  onPageClick(page) {
+    this.fetchPage(page);
+
+    this.setState({
+      currentPage: page
+    });
+  }
+
   render() {
+    const {currentPage} = this.state;
     const {listView, cars} = this.props;
 
     const carsList = cars.get('list');
@@ -39,11 +68,18 @@ class CarList extends React.Component {
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? "" : " list--small";
 
+    const paginationProps = {
+      totalPages: cars.get('totalPages'),
+      selectPage: this.onPageClick,
+      currentPage
+    };
+
     return (
       <div className="body companies">
         <div className={"list" + listsCls}>
           {carsRender}
         </div>
+        <Pagination {...paginationProps} />
       </div>
     )
   }

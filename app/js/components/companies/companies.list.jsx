@@ -6,9 +6,7 @@ import API from '../../api';
 import * as listViewType from '../../constants/listView';
 
 import Company from './company';
-import Pagination from './pagination';
-
-const TOTAL_PAGES = 3;
+import Pagination from '../shared/pagination';
 
 class CompanyList extends React.Component {
 
@@ -68,21 +66,17 @@ class CompanyList extends React.Component {
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? "" : " list--small";
 
-    const companiesList = companies.toJS();
-    let companyList = [];
-    if (companiesList.status === 1) {
+    const companiesList = companies.get('list');
+    const companiesRender = [];
 
-      for (let x in companiesList.list) {
-        if (companiesList.list.hasOwnProperty(x)) {
-          let company = companiesList.list[x];
-          companyList.push(<Company key={x} company={company}/>)
-        }
-      }
+    if (companies.get('status') === 1) {
+      companiesList.map(function (item) {
+        companiesRender.push(<Company key={item.id} company={item}/>)
+      });
     }
-    companyList.sort((a, b) => b.key- a.key);
 
     const paginationProps = {
-        totalPages: TOTAL_PAGES,
+        totalPages: companies.get('totalPages'),
         selectPage: this.onPageClick,
         currentPage
     };
@@ -94,7 +88,7 @@ class CompanyList extends React.Component {
           <i className="fa fa-times alert__close" onClick={this.alertClose}/>
         </div>}
         <div className={"list" + listsCls}>
-          { companyList}
+          { companiesRender }
         </div>
         <Pagination {...paginationProps} />
       </div>
