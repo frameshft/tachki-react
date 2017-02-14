@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import store from  '../../store';
 import Sidebar from './sidebar.jsx';
-import {LIST_VIEW_TYPE} from "../../actions/listView";
+import { LIST_VIEW_TYPE } from "../../actions/listView";
 import * as listViewType from '../../constants/listView';
 
 import '../../../style/_header.scss';
@@ -46,10 +46,10 @@ class Header extends React.Component {
     }
 
     render() {
-        const {showSidebar, listType} = this.state;
-
+      const {showSidebar, listType} = this.state;
       const listViewIconCls = (listType === listViewType.LIST_VIEW_NORMAL)
         ? " header__tools__btn--view--big" : " header__tools__btn--view--small";
+
         return (
             <div className="header">
                 <div className="sandwich__toggle" onClick={this.toggleSidebar}/>
