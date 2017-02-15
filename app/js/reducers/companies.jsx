@@ -1,34 +1,38 @@
-import {Map, List} from 'immutable';
+// import { Map } from 'immutable';
 import * as ClientInfoOperations from '../actions/companies';
 
-const initialCompaniesState = Map({
+const initialCompaniesState = {
   fetching: false,
   status: 0,
   itemsPerPage: null,
   totalPages: null,
-  list: undefined
-});
+  list: undefined,
+  ordering: [],
+};
 
 function storeCompanies(state, data) {
-  state = state.update('status', () => 1);
-  state = state.update('itemsPerPage', () => data['per_page']);
-  state = state.update('totalPages', () => data['total_pages']);
+  let list = {};
+  const ordering = [];
+  data.results.forEach((item) => {
+    list = {
+      ...state.list,
+      ...list,
+      [item.id]: item,
+    };
+    ordering.push(item.id);
+  });
 
-  let _list = {};
-  for (let l of data.results) {
-    _list = {
-      ..._list,
-      [l.id]: l
-    }
-  }
-
-  state = state.update('list', () => Map(_list));
-
-  return state;
+  return {
+    ...state,
+    status: 1,
+    itemsPerPage: data.per_page,
+    totalPages: data.total_pages,
+    list,
+    ordering,
+  };
 }
 
 export default function companiesReducer(state, action) {
-
   if (state === undefined) {
     return initialCompaniesState;
   }

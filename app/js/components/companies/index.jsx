@@ -1,3 +1,3 @@
 import CompanyList from './companies.list';
 
-export {CompanyList}
+export default { CompanyList };

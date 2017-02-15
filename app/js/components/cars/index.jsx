@@ -1,3 +1,3 @@
 import CarList from './cars.list';
 
-export { CarList }
+export default { CarList };

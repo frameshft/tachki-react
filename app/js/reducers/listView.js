@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import LIST_VIEW_TYPE from '../actions/listView';
+import { LIST_VIEW_TYPE } from '../actions/listView';
 import * as listViewType from '../constants/listView';
 
 const initialState = Map({

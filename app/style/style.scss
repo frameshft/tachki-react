@@ -6,3 +6,20 @@
 @import "companies";
 @import "list";
 @import "footer";
+
+.button__transparent {
+  border: none;
+  background: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.button__noaction {
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}

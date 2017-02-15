@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import store from  '../../store';
-import {FETCH_COMPANIES_LIST} from "../../actions/companies";
+import { connect } from 'react-redux';
+import store from '../../store';
+import { FETCH_COMPANIES_LIST } from '../../actions/companies';
 import API from '../../api';
 import * as listViewType from '../../constants/listView';
 
@@ -10,25 +10,15 @@ import Pagination from '../shared/pagination';
 
 class CompanyList extends React.Component {
 
-  fetchCompanies() {
-    API.fetch('/companies/')
-      .then(res => {
+  static fetchCompanies(page = 1) {
+    API.fetch(`/companies/?page=${page}`)
+      .then((res) => {
         store.dispatch({
           type: FETCH_COMPANIES_LIST,
           data: res,
         });
       });
   }
-
-    fetchPage(page) {
-        API.fetch(`/companies/?page=${page}`)
-            .then(res => {
-                store.dispatch({
-                    type: FETCH_COMPANIES_LIST,
-                    data: res,
-                });
-            });
-    }
 
   constructor(props) {
     super(props);
@@ -38,63 +28,69 @@ class CompanyList extends React.Component {
 
     this.state = {
       showAlert: true,
-      currentPage: 1
+      currentPage: 1,
     };
   }
 
   componentDidMount() {
-    this.fetchCompanies();
+    CompanyList.fetchCompanies();
   }
 
   onPageClick(page) {
-    this.fetchPage(page);
+    CompanyList.fetchCompanies(page);
 
     this.setState({
-      currentPage: page
+      currentPage: page,
     });
   }
 
   alertClose() {
     this.setState({
-      showAlert: false
-    })
+      showAlert: false,
+    });
   }
 
   render() {
-    const {showAlert, currentPage} = this.state;
-    const {companies, listView} = this.props;
+    const { showAlert, currentPage } = this.state;
+    const { companies, listView } = this.props;
 
-    const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? "" : " list--small";
-
-    const companiesList = companies.get('list');
+    const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const companiesRender = [];
 
-    if (companies.get('status') === 1) {
-      companiesList.map(function (item) {
-        companiesRender.push(<Company key={item.id} company={item}/>)
+    if (companies.status === 1) {
+      companies.ordering.forEach((i) => {
+        const item = companies.list[i];
+        companiesRender.push(<Company key={ item.id } company={ item } />);
       });
     }
 
     const paginationProps = {
-        totalPages: companies.get('totalPages'),
-        selectPage: this.onPageClick,
-        currentPage
+      totalPages: companies.totalPages,
+      selectPage: this.onPageClick,
+      currentPage,
     };
 
     return (
-      <div className="body companies">
-        {showAlert && <div className="alert alert--red">
+      <div className='body companies'>
+        {showAlert && <div className='alert alert--red'>
           Хотите стать компанией?
-          <i className="fa fa-times alert__close" onClick={this.alertClose}/>
+          <button className='alert__close button__transparent' onClick={ this.alertClose }>
+            <i className='fa fa-times' />
+          </button>
         </div>}
-        <div className={"list" + listsCls}>
+        <div className={ `list${listsCls}` }>
           { companiesRender }
         </div>
-        <Pagination {...paginationProps} />
+        <Pagination { ...paginationProps } />
       </div>
-    )
+    );
   }
 }
+
+CompanyList.propTypes = {
+  listView: React.PropTypes.number.isRequired,
+  companies: React.PropTypes.object.isRequired,
+};
 
 function mapToProps(state) {
   const listView = state.listView.get('listView');

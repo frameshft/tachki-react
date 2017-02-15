@@ -2,84 +2,94 @@ import React from 'react';
 
 const TOTAL_PAGES = 3;
 
-export default class Pagination extends React.Component {
-    renderPageLink(pageNum, isCurrent) {
-        const boundClick = this.onPageClick.bind(this, pageNum);
+class Pagination extends React.Component {
+  constructor(props) {
+    super(props);
 
-        const liClass = 'pagination__link' + (isCurrent ? ' pagination__link--active' : '');
+    this.onPageClick = this.onPageClick.bind(this);
+    this.onNextClick = this.onNextClick.bind(this);
+    this.onPrevClick = this.onPrevClick.bind(this);
+  }
 
-        return  (<li className="pagination__item" key={pageNum}>
-            <a href="#" className={liClass} onClick={boundClick}>{pageNum}</a>
-        </li>);
+  onPageClick(page, e) {
+    e.preventDefault();
+    this.goToPage(page);
+  }
+
+  onNextClick(e) {
+    e.preventDefault();
+    this.goToPage(this.props.currentPage + 1);
+  }
+
+  onPrevClick(e) {
+    e.preventDefault();
+    this.goToPage(this.props.currentPage - 1);
+  }
+
+  goToPage(page) {
+    if (page >= 1 && page <= this.props.totalPages) {
+      this.props.selectPage(page);
+      this.setState({
+        currentPage: page,
+      });
+    }
+  }
+
+
+  renderPageLink(pageNum, isCurrent) {
+    const boundClick = this.onPageClick.bind(this, pageNum);
+    const isActiveLinkClass = isCurrent ? ' pagination__link--active' : '';
+    const liClass = `pagination__link${isActiveLinkClass}`;
+
+    return (<li className='pagination__item' key={ pageNum }>
+      <button className={ liClass } onClick={ boundClick }>{ pageNum }</button>
+    </li>);
+  }
+
+  render() {
+    const { totalPages, currentPage } = this.props;
+    let startIndex = 1;
+    let showTotalPages = totalPages;
+
+    const pageLinks = [];
+
+    const prevLink = currentPage !== 1;
+    const nextLink = currentPage !== totalPages;
+
+    if (totalPages > TOTAL_PAGES) {
+      showTotalPages = TOTAL_PAGES;
+
+      if (showTotalPages < currentPage) {
+        startIndex = currentPage - (showTotalPages + 1);
+        showTotalPages += (startIndex - 1);
+      }
     }
 
-    constructor() {
-        super();
-
-        this.onPageClick = this.onPageClick.bind(this);
-        this.paginationNavClick = this.paginationNavClick.bind(this);
+    for (let pageNum = startIndex; pageNum <= showTotalPages; pageNum += 1) {
+      pageLinks.push(this.renderPageLink(pageNum, currentPage === pageNum));
     }
 
-    onPageClick(page, e) {
-        e.preventDefault();
-        this.props.selectPage(page);
-    }
-
-    paginationNavClick(page, e) {
-        e.preventDefault();
-
-        this.props.selectPage(page);
-
-        this.setState({
-            currentPage: page
-        });
-    }
-
-    render() {
-        const {totalPages, currentPage} = this.props;
-        let prevPageClick, nextPageClick = undefined;
-        let startIndex = 1;
-        let showTotalPages = totalPages;
-
-        const pageLinks = [];
-
-        const prevLink = currentPage != 1;
-        const nextLink = currentPage != totalPages;
-
-        if (totalPages > TOTAL_PAGES) {
-            showTotalPages = TOTAL_PAGES;
-            if (currentPage !== 0) {
-                prevPageClick = this.paginationNavClick.bind(this, currentPage - 1);
-            }
-
-            if (currentPage !== totalPages) {
-                nextPageClick = this.paginationNavClick.bind(this, currentPage + 1);
-            }
-
-            if (showTotalPages < currentPage) {
-                startIndex = currentPage - showTotalPages + 1;
-                showTotalPages += startIndex - 1;
-            }
-        }
-
-        for (let pageNum = startIndex; pageNum <= showTotalPages; pageNum++) {
-            pageLinks.push(this.renderPageLink(pageNum, currentPage === pageNum));
-        }
-
-        return (
-            <ul className="pagination">
-                {prevLink && <li className="pagination__item">
-                    <a href="#" className="pagination__link" onClick={prevPageClick}>
-                        Пред.
-                    </a>
-                </li>}
-                {pageLinks}
-                {nextLink && <li className="pagination__item" onClick={nextPageClick}>
-                    <a href="#" className="pagination__link">
-                        следующая
-                    </a>
-                </li>}
-            </ul>
-        )
-    }
+    return (
+      <ul className='pagination'>
+        {prevLink && <li className='pagination__item'>
+          <button className='pagination__link' onClick={ this.onPrevClick }>
+            Пред.
+          </button>
+        </li>}
+        { pageLinks }
+        {nextLink && <li className='pagination__item'>
+          <button className='pagination__link' onClick={ this.onNextClick }>
+            следующая
+          </button>
+        </li>}
+      </ul>
+    );
+  }
 }
+Pagination.PropTypes = {
+  selectPage: React.PropTypes.number.isRequired,
+  totalPage: React.PropTypes.number.isRequired,
+  currentPage: React.PropTypes.number.isRequired,
+};
+
+export default Pagination;

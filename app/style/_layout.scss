@@ -55,10 +55,16 @@ body {
     padding: 0 5px;
     color:  #4e4e4e;
     font-size: 20px;
+    cursor: pointer;
 
     &--active {
       background: #bababa;
       color: #fff;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
     }
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import store from  '../../store';
+import { connect } from 'react-redux';
+import store from '../../store';
 import API from '../../api';
-import { FETCH_CARS_LIST } from "../../actions/cars";
+import { FETCH_CARS_LIST } from '../../actions/cars';
 
 import * as listViewType from '../../constants/listView';
 import Car from './car';
@@ -10,19 +10,9 @@ import Pagination from '../shared/pagination';
 
 class CarList extends React.Component {
 
-  fetchAuto() {
-    API.fetch('/automobiles/')
-      .then(res => {
-        store.dispatch({
-          type: FETCH_CARS_LIST,
-          data: res,
-        });
-      });
-  }
-
-  fetchPage(page) {
+  static fetchAuto(page = 1) {
     API.fetch(`/automobiles/?page=${page}`)
-      .then(res => {
+      .then((res) => {
         store.dispatch({
           type: FETCH_CARS_LIST,
           data: res,
@@ -36,54 +26,59 @@ class CarList extends React.Component {
     this.onPageClick = this.onPageClick.bind(this);
 
     this.state = {
-      currentPage: 1
+      currentPage: 1,
     };
   }
 
   componentDidMount() {
-    this.fetchAuto();
+    CarList.fetchAuto();
   }
 
   onPageClick(page) {
-    this.fetchPage(page);
+    CarList.fetchAuto(page);
 
     this.setState({
-      currentPage: page
+      currentPage: page,
     });
   }
 
   render() {
-    const {currentPage} = this.state;
-    const {listView, cars} = this.props;
-
-    const carsList = cars.get('list');
+    const { currentPage } = this.state;
+    const { listView, cars } = this.props;
 
     const carsRender = [];
 
-    if (cars.get('status') === 1) {
-      carsList.map(function (item) {
-        carsRender.push(<Car key={item.id} car={item}/>)
+    if (cars.status === 1) {
+      cars.ordering.forEach((i) => {
+        const item = cars.list[i];
+        carsRender.push(<Car key={ item.id } car={ item } />);
       });
     }
 
-    const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? "" : " list--small";
+    const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
 
     const paginationProps = {
-      totalPages: cars.get('totalPages'),
+      totalPages: cars.totalPages,
       selectPage: this.onPageClick,
-      currentPage
+      currentPage,
     };
 
     return (
-      <div className="body companies">
-        <div className={"list" + listsCls}>
-          {carsRender}
+      <div className='body companies'>
+        <div className={ `list${listsCls}` }>
+          { carsRender }
         </div>
-        <Pagination {...paginationProps} />
+        <Pagination { ...paginationProps } />
       </div>
-    )
+    );
   }
 }
+
+CarList.PropTypes = {
+  listView: React.PropTypes.number.isRequired,
+  cars: React.PropTypes.object.isRequired,
+};
+
 
 function mapToProps(state) {
   const listView = state.listView.get('listView');

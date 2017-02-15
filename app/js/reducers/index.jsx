@@ -5,5 +5,5 @@ import listViewReducer from './listView';
 export default {
   companies: companiesReducer,
   cars: carsReducer,
-  listView: listViewReducer
-}
+  listView: listViewReducer,
+};
