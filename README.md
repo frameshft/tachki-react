@@ -41,6 +41,42 @@ Sign up, sign in, recover password actions
     **Content:** `{ error : "Account has been suspended. Please reach out system administrator." }`
 
 
+**User Registration**
+
+* **URL**
+
+  /sign-in/
+
+* **Method:**
+
+  `POST`
+
+* **Data Params**
+
+  `phone=[integer]` <br />
+  `password=[string]` *min_length=6*
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ token : "abracadabra", name : "Vasya", image: "http://server.com/user.image.jpg", balance: 12345 }`
+ 
+* **Error Response:**
+
+  * **Code:** 400 NOT FOUND <br />
+    **Content:** `{ error : "User with the phone number "1234567890" alraedy exists." }`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "Incorrect authentication credentials." }`
+
+  OR
+
+  * **Code:** 403 FORBIDDEN <br />
+    **Content:** `{ error : "Account has been suspended. Please reach out system administrator." }`
+
+
 **User logout**
 
 * **URL**
