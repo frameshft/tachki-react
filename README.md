@@ -119,3 +119,22 @@ Sign up, sign in, recover password actions
   
     * **Code:** 403 FORBIDDEN <br />
       **Content:** `{ error : "Account has been suspended. Please reach out system administrator." }`
+ 
+
+**Request new activation code**
+
+* **URL**
+
+  /resend-activation-code/
+
+* **Method:**
+
+  `POST`
+
+* **Data Params**
+
+  `phone=[integer]`
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
