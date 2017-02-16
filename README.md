@@ -138,3 +138,64 @@ Sign up, sign in, recover password actions
 * **Success Response:**
 
   * **Code:** 201 <br />
+ 
+
+**Forgot password Step 1** - request activation code to reset pasword
+
+* **URL**
+
+  /forgot-password/
+
+* **Method:**
+
+  `POST`
+
+* **Data Params**
+
+  `phone=[integer]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+ 
+
+**Forgot password Step 2** - set new password and login
+
+* **URL**
+
+  /create-password/
+
+* **Method:**
+
+  `POST`
+
+* **Data Params**
+
+  `phone=[integer]` <br />
+  `code=[integer]` <br />
+  `password=[string]` <br />
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ token : "abracadabra", name : "Vasya", image: "http://server.com/user.image.jpg", balance: 12345 }`
+ 
+* **Error Response:**
+
+    * **Code:** 400 Bad Request <br />
+      **Content:** `{ error : "Activation code is incorrect" }`
+
+    OR
+  
+    * **Code:** 404 NOT FOUND <br />
+      **Content:** `{ error : "User doesn't exist" }`
+
+    OR
+  
+    * **Code:** 401 UNAUTHORIZED <br />
+      **Content:** `{ error : "Incorrect authentication credentials." }`
+  
+    OR
+  
+    * **Code:** 403 FORBIDDEN <br />
+      **Content:** `{ error : "Account has been suspended. Please reach out system administrator." }`
