@@ -2,14 +2,19 @@
   "name": "tachki-react",
   "version": "0.0.0",
   "description": "Tachki react app",
-  "main": "index.js",
+  "repository" : { "type" : "git",
+    "url" : "https://github.com/daniyarchambylov/tachki-react"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint . --ext .jsx --ext .js",
     "dev": "webpack-dev-server --hot --inline --history-api-fallback --progress --watch-poll -d --client-log-level=info --host 0.0.0.0",
     "start": "npm run eslint && npm run dev"
   },
-  "author": "",
+  "authors": [
+    "Daniyar Chambylov <dan.chambylov@gmail.com>",
+    "Azim Shigaibaev <shigaibaev.a@gmail.com>"
+  ],
   "precommit": {
     "run": "eslint",
     "silent": true
