@@ -5,7 +5,7 @@
 ----
 Sign up, sign in, recover password actions
 
-**User signin**
+**User login**
 
 * **URL**
 
@@ -22,7 +22,7 @@ Sign up, sign in, recover password actions
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 201 <br />
     **Content:** `{ token : "abracadabra", name : "Vasya", image: "http://server.com/user.image.jpg", balance: 12345 }`
  
 * **Error Response:**
@@ -35,8 +35,23 @@ Sign up, sign in, recover password actions
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "Incorrect authentication credentials." }`
 
- OR
+  OR
 
   * **Code:** 403 FORBIDDEN <br />
     **Content:** `{ error : "Account has been suspended. Please reach out system administrator." }`
 
+
+**User logout**
+
+* **URL**
+
+  /sign-out/
+
+* **Method:**
+
+  `POST`
+
+* **Success Response:**
+
+  * **Code:** 204 <br />
+ 
