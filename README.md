@@ -22,7 +22,7 @@ Sign up, sign in, recover password actions
 
 * **Success Response:**
 
-  * **Code:** 201 <br />
+  * **Code:** 200 <br />
     **Content:** `{ token : "abracadabra", name : "Vasya", image: "http://server.com/user.image.jpg", balance: 12345 }`
  
 * **Error Response:**
