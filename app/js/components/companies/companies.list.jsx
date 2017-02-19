@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
 import { FETCH_COMPANIES_LIST } from '../../actions/companies';
@@ -25,6 +26,7 @@ class CompanyList extends React.Component {
 
     this.alertClose = this.alertClose.bind(this);
     this.onPageClick = this.onPageClick.bind(this);
+    this.onCompanyClick = this.onCompanyClick.bind(this);
 
     this.state = {
       showAlert: true,
@@ -50,6 +52,10 @@ class CompanyList extends React.Component {
     });
   }
 
+  onCompanyClick(id) {
+    browserHistory.push(`/companies/${id}`);
+  }
+
   render() {
     const { showAlert, currentPage } = this.state;
     const { companies, listView } = this.props;
@@ -60,7 +66,7 @@ class CompanyList extends React.Component {
     if (companies.status === 1) {
       companies.ordering.forEach((i) => {
         const item = companies.list[i];
-        companiesRender.push(<Company key={ item.id } company={ item } />);
+        companiesRender.push(<Company key={ item.id } company={ item } companyClickCallback={ this.onCompanyClick}/>);
       });
     }
 

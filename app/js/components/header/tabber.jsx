@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, IndexLink } from 'react-router';
 
 export default class Tabber extends React.Component {
   render() {
     return (
       <ul className='tab'>
         <li className='tab__item'>
-          <Link to='/companies' className='tab__link' activeClassName='tab__link--active'>
+          <IndexLink to='/companies' className='tab__link' activeClassName='tab__link--active'>
             Компании
-          </Link>
+          </IndexLink>
         </li>
         <li className='tab__item'>
           <Link to='/cars' className='tab__link' activeClassName='tab__link--active'>

@@ -1,12 +1,22 @@
 import React from 'react';
 
 class Company extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    this.props.companyClickCallback(this.props.company.id);
+  }
+
   render() {
     const { company } = this.props;
     const types = company.types;
 
     return (
-      <div className='list__item'>
+      <div className='list__item' onClick={this.onClick}>
         <div className='list__item__left'>
           <div className='list__item__media'>
             <img src={ company.image } className='list__item__media__img' alt={ company.name } />
@@ -30,6 +40,7 @@ class Company extends React.Component {
 
 Company.PropTypes = {
   company: React.PropTypes.object.isRequired,
+  companyClickCallback: React.PropTypes.func
 };
 
 export default Company;
