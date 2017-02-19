@@ -5,6 +5,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import Application from './components/application';
 import CompanyList from './components/companies/companies.list';
 import CarList from './components/cars/cars.list';
+import PartsList from './components/spare-parts/parts.list';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -15,6 +16,7 @@ export default (store) => {
         <IndexRoute component={ CompanyList } />
         <Route path='companies' component={ CompanyList } />
         <Route path='cars' component={ CarList } />
+        <Route path='spare-parts' component={ PartsList } />
       </Route>
     </Router>
   );

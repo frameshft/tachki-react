@@ -6,9 +6,10 @@ const initialState = Map({
   listView: listViewType.LIST_VIEW_NORMAL,
 });
 
-export default function (state = initialState, action) {
+export default function listView (state = initialState, action) {
   switch (action.type) {
     case LIST_VIEW_TYPE:
+      console.log(action.data);
       return state.update('listView', () => action.data);
     default:
       return state;

@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import store from '../../store';
 import Sidebar from './sidebar';
-import LIST_VIEW_TYPE from '../../actions/listView';
+import { LIST_VIEW_TYPE } from '../../actions/listView';
 import * as listViewType from '../../constants/listView';
 
 import '../../../style/_header.scss';
