@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React from 'react';
 
 export default class Sidebar extends React.Component {
@@ -6,7 +7,7 @@ export default class Sidebar extends React.Component {
       <div className='sidebar'>
         <div className='sidebar__profile'>
           <div className='sidebar__profile__media'>
-            <img className='sidebar__profile__media__img' src='img/pic.png' alt='' />
+            <img className='sidebar__profile__media__img' src={ require('../../../img/pic.png') } alt='' />
           </div>
           <div className='sidebar__profile__title'>
             Владимир
