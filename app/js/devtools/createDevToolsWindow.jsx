@@ -9,7 +9,7 @@ import DevTools from './DevTools';
 export default function createDevToolsWindow(store) {
   // Give it a name so it reuses the same window
   const name = 'Redux DevTools';
-  const win = window.open( // eslint-disable-line no-undef
+  const win = window.open(
     null,
     name,
     'menubar=no,location=no,resizable=yes,scrollbars=no,status=no,width=450,height=5000',
@@ -32,6 +32,6 @@ export default function createDevToolsWindow(store) {
   // Wait a little bit for it to reload, then render.
   setTimeout(() => render(
     <DevTools store={ store } />,
-    win.document.body.appendChild(document.createElement('div')), // eslint-disable-line no-undef
+    win.document.body.appendChild(document.createElement('div')),
   ), 10);
 }
