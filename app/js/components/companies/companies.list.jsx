@@ -21,12 +21,15 @@ class CompanyList extends React.Component {
       });
   }
 
+  static onCompanyClick(id) {
+    browserHistory.push(`/companies/${id}`);
+  }
+
   constructor(props) {
     super(props);
 
     this.alertClose = this.alertClose.bind(this);
     this.onPageClick = this.onPageClick.bind(this);
-    this.onCompanyClick = this.onCompanyClick.bind(this);
 
     this.state = {
       showAlert: true,
@@ -52,10 +55,6 @@ class CompanyList extends React.Component {
     });
   }
 
-  onCompanyClick(id) {
-    browserHistory.push(`/companies/${id}`);
-  }
-
   render() {
     const { showAlert, currentPage } = this.state;
     const { companies, listView } = this.props;
@@ -66,7 +65,11 @@ class CompanyList extends React.Component {
     if (companies.status === 1) {
       companies.ordering.forEach((i) => {
         const item = companies.list[i];
-        companiesRender.push(<Company key={ item.id } company={ item } companyClickCallback={ this.onCompanyClick}/>);
+        companiesRender.push(
+          <Company
+            key={ item.id } company={ item }
+          />,
+        );
       });
     }
 
@@ -99,7 +102,7 @@ CompanyList.propTypes = {
 };
 
 function mapToProps(state) {
-  const listView = state.listView.get('listView');
+  const listView = state.listView.listView;
   return {
     companies: state.companies,
     listView,

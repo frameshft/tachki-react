@@ -1,16 +1,17 @@
-import { Map } from 'immutable';
-import { LIST_VIEW_TYPE } from '../actions/listView';
+import LIST_VIEW_TYPE from '../actions/listView';
 import * as listViewType from '../constants/listView';
 
-const initialState = Map({
+const initialState = {
   listView: listViewType.LIST_VIEW_NORMAL,
-});
+};
 
-export default function listView (state = initialState, action) {
+export default function listView(state = initialState, action) {
   switch (action.type) {
     case LIST_VIEW_TYPE:
-      console.log(action.data);
-      return state.update('listView', () => action.data);
+      return {
+        ...state,
+        listView: action.data,
+      };
     default:
       return state;
   }

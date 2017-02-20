@@ -20,7 +20,7 @@ class SparePart extends React.Component {
           {image && <div className='spare-part__media'>
             <img className='list__item__media__img' src={ image } alt={ part.title } />
           </div>}
-          <div className="spare-part__price">
+          <div className='spare-part__price'>
             {part.price}
           </div>
         </div>
@@ -42,7 +42,7 @@ class SparePart extends React.Component {
             { part.category }
           </div>
           <div className='spare-part__bottom'>
-            <div className="spare-part__viewed">
+            <div className='spare-part__viewed'>
               { part.num_views }
             </div>
           </div>

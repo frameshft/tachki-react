@@ -1,8 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import API from '../../api';
 import store from '../../store';
 import { FETCH_COMPANY_INFO } from '../../actions/companyProfile';
-import API from '../../api';
-import { connect } from 'react-redux';
 
 class CompanyProfile extends React.Component {
   static fetchCompanies() {
@@ -16,20 +16,18 @@ class CompanyProfile extends React.Component {
   }
 
   componentDidMount() {
-    CompanyProfile.fetchCompanies();
+    // CompanyProfile.fetchCompanies();
   }
 
   render() {
-    // console.log(this.props.routeParams);
-
     return (
       <div>CompanyProfile</div>
-    )
+    );
   }
 }
 
 CompanyProfile.propTypes = {
-  info: React.PropTypes.object.isRequired
+  info: React.PropTypes.object.isRequired,
 };
 
 function mapToProps(state) {
@@ -39,3 +37,4 @@ function mapToProps(state) {
 }
 
 export default connect(mapToProps)(CompanyProfile);
+

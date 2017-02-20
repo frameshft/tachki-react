@@ -2,7 +2,7 @@
 import * as CompanyProfileOperations from '../actions/companyProfile';
 
 const initialState = {
-  info: undefined
+  info: undefined,
 };
 
 export default function companyProfileReducer(state, action) {
@@ -12,7 +12,10 @@ export default function companyProfileReducer(state, action) {
 
   switch (action.type) {
     case CompanyProfileOperations.FETCH_COMPANY_INFO:
-      state = state.update('info', () => action.data);
+      return {
+        ...state,
+        info: action.data,
+      };
     default:
       return state;
   }

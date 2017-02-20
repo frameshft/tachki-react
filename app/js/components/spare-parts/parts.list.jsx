@@ -55,7 +55,7 @@ PartsList.PropTypes = {
 
 
 function mapToProps(state) {
-  const listView = state.listView.get('listView');
+  const listView = state.listView.listView;
   return {
     parts: state.spareParts,
     listView,
