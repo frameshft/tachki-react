@@ -6,7 +6,7 @@ const initialState = {
   status: 0,
   itemsPerPage: null,
   totalPages: null,
-  list: undefined,
+  list: {},
   ordering: [],
 };
 
@@ -17,7 +17,7 @@ function storeParts(state, data) {
     list = {
       ...state.list,
       ...list,
-      [item.id]: item,
+      [item.id]: Object.assign({}, state.list[item.id], item),
     };
     ordering.push(item.id);
   });
