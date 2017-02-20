@@ -1,5 +1,4 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
 import { FETCH_COMPANIES_LIST } from '../../actions/companies';
@@ -14,39 +13,34 @@ class CompanyList extends React.Component {
   static fetchCompanies(page = 1) {
     API.fetch(`/companies/?page=${page}`)
       .then((res) => {
+        const data = {
+          ...res,
+          currentPage: page,
+        };
         store.dispatch({
           type: FETCH_COMPANIES_LIST,
-          data: res,
+          data,
         });
       });
   }
 
-  static onCompanyClick(id) {
-    browserHistory.push(`/companies/${id}`);
-  }
-
   constructor(props) {
     super(props);
-
     this.alertClose = this.alertClose.bind(this);
-    this.onPageClick = this.onPageClick.bind(this);
 
     this.state = {
       showAlert: true,
-      currentPage: 1,
     };
   }
 
   componentDidMount() {
-    CompanyList.fetchCompanies();
+    CompanyList.fetchCompanies(this.props.currentPage);
   }
 
-  onPageClick(page) {
-    CompanyList.fetchCompanies(page);
-
-    this.setState({
-      currentPage: page,
-    });
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentPage !== this.props.currentPage) {
+      CompanyList.fetchCompanies(this.props.currentPage);
+    }
   }
 
   alertClose() {
@@ -56,26 +50,24 @@ class CompanyList extends React.Component {
   }
 
   render() {
-    const { showAlert, currentPage } = this.state;
-    const { companies, listView } = this.props;
+    const { showAlert } = this.state;
+    const { companies, listView, currentPage } = this.props;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const companiesRender = [];
 
-    if (companies.status === 1) {
-      companies.ordering.forEach((i) => {
+    if (companies.ordering[this.props.currentPage] !== undefined) {
+      companies.ordering[this.props.currentPage].forEach((i) => {
         const item = companies.list[i];
         companiesRender.push(
-          <Company
-            key={ item.id } company={ item }
-          />,
+          <Company key={ item.id } company={ item } />,
         );
       });
     }
 
     const paginationProps = {
       totalPages: companies.totalPages,
-      selectPage: this.onPageClick,
+      view: 'companies',
       currentPage,
     };
 
@@ -99,13 +91,18 @@ class CompanyList extends React.Component {
 CompanyList.propTypes = {
   listView: React.PropTypes.number.isRequired,
   companies: React.PropTypes.object.isRequired,
+  currentPage: React.PropTypes.number.isRequired,
 };
 
 function mapToProps(state) {
   const listView = state.listView.listView;
+  let currentPage = state.routing.locationBeforeTransitions.query.page;
+  currentPage = currentPage !== undefined ? +currentPage : 1;
+
   return {
     companies: state.companies,
     listView,
+    currentPage,
   };
 }
 

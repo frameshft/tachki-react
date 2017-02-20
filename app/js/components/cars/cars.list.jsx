@@ -13,43 +13,34 @@ class CarList extends React.Component {
   static fetchAuto(page = 1) {
     API.fetch(`/automobiles/?page=${page}`)
       .then((res) => {
+        const data = {
+          ...res,
+          currentPage: page,
+        };
         store.dispatch({
           type: FETCH_CARS_LIST,
-          data: res,
+          data,
         });
       });
   }
 
-  constructor(props) {
-    super(props);
-
-    this.onPageClick = this.onPageClick.bind(this);
-
-    this.state = {
-      currentPage: 1,
-    };
-  }
-
   componentDidMount() {
-    CarList.fetchAuto();
+    CarList.fetchAuto(this.props.currentPage);
   }
 
-  onPageClick(page) {
-    CarList.fetchAuto(page);
-
-    this.setState({
-      currentPage: page,
-    });
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentPage !== this.props.currentPage) {
+      CarList.fetchAuto(this.props.currentPage);
+    }
   }
 
   render() {
-    const { currentPage } = this.state;
-    const { listView, cars } = this.props;
+    const { listView, cars, currentPage } = this.props;
 
     const carsRender = [];
 
-    if (cars.status === 1) {
-      cars.ordering.forEach((i) => {
+    if (cars.ordering[this.props.currentPage] !== undefined) {
+      cars.ordering[this.props.currentPage].forEach((i) => {
         const item = cars.list[i];
         carsRender.push(<Car key={ item.id } car={ item } />);
       });
@@ -59,7 +50,7 @@ class CarList extends React.Component {
 
     const paginationProps = {
       totalPages: cars.totalPages,
-      selectPage: this.onPageClick,
+      view: 'cars',
       currentPage,
     };
 
@@ -77,14 +68,19 @@ class CarList extends React.Component {
 CarList.PropTypes = {
   listView: React.PropTypes.number.isRequired,
   cars: React.PropTypes.object.isRequired,
+  currentPage: React.PropTypes.number.isRequired,
 };
 
 
 function mapToProps(state) {
   const listView = state.listView.listView;
+  let currentPage = state.routing.locationBeforeTransitions.query.page;
+  currentPage = currentPage !== undefined ? +currentPage : 1;
+
   return {
     cars: state.cars,
     listView,
+    currentPage,
   };
 }
 

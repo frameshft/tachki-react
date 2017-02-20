@@ -1,4 +1,3 @@
-// import {Map} from 'immutable';
 import * as SparePartsOperations from '../actions/spareParts';
 
 const initialState = {
@@ -7,7 +6,7 @@ const initialState = {
   itemsPerPage: null,
   totalPages: null,
   list: {},
-  ordering: [],
+  ordering: {},
 };
 
 function storeParts(state, data) {
@@ -28,7 +27,10 @@ function storeParts(state, data) {
     itemsPerPage: data.per_page,
     totalPages: data.total_pages,
     list,
-    ordering,
+    ordering: {
+      ...state.ordering,
+      [data.currentPage]: ordering,
+    },
   };
 }
 

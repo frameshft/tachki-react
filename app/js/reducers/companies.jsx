@@ -7,7 +7,7 @@ const initialCompaniesState = {
   itemsPerPage: null,
   totalPages: null,
   list: {},
-  ordering: [],
+  ordering: {},
 };
 
 function storeCompanies(state, data) {
@@ -28,7 +28,10 @@ function storeCompanies(state, data) {
     itemsPerPage: data.per_page,
     totalPages: data.total_pages,
     list,
-    ordering,
+    ordering: {
+      ...state.ordering,
+      [data.currentPage]: ordering,
+    },
   };
 }
 

@@ -6,31 +6,47 @@ import { FETCH_SPARE_PARTS_LIST } from '../../actions/spareParts';
 
 import * as listViewType from '../../constants/listView';
 import SparePart from './sparePart';
-// import Pagination from '../shared/pagination';
+import Pagination from '../shared/pagination';
 
 class PartsList extends React.Component {
 
   static fetchList(page = 1) {
     API.fetch(`/spare-parts/?page=${page}`)
       .then((res) => {
+        const data = {
+          ...res,
+          currentPage: page,
+        };
         store.dispatch({
           type: FETCH_SPARE_PARTS_LIST,
-          data: res,
+          data,
         });
       });
   }
 
   componentDidMount() {
-    PartsList.fetchList();
+    PartsList.fetchList(this.props.currentPage);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentPage !== this.props.currentPage) {
+      PartsList.fetchList(this.props.currentPage);
+    }
   }
 
   render() {
-    const { listView, parts } = this.props;
+    const { listView, parts, currentPage } = this.props;
+
+    const paginationProps = {
+      totalPages: parts.totalPages,
+      view: 'spare-parts',
+      currentPage,
+    };
 
     const render = [];
 
-    if (parts.status === 1) {
-      parts.ordering.forEach((i) => {
+    if (parts.ordering[this.props.currentPage] !== undefined) {
+      parts.ordering[this.props.currentPage].forEach((i) => {
         const item = parts.list[i];
         render.push(<SparePart key={ item.id } part={ item } />);
       });
@@ -43,6 +59,7 @@ class PartsList extends React.Component {
         <div className={ `list${listsCls}` }>
           { render }
         </div>
+        <Pagination { ...paginationProps } />
       </div>
     );
   }
@@ -51,14 +68,19 @@ class PartsList extends React.Component {
 PartsList.PropTypes = {
   listView: React.PropTypes.number.isRequired,
   parts: React.PropTypes.object.isRequired,
+  currentPage: React.PropTypes.number.isRequired,
 };
 
 
 function mapToProps(state) {
   const listView = state.listView.listView;
+  let currentPage = state.routing.locationBeforeTransitions.query.page;
+  currentPage = currentPage !== undefined ? +currentPage : 1;
+
   return {
     parts: state.spareParts,
     listView,
+    currentPage,
   };
 }
 

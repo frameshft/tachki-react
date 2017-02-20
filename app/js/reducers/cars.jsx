@@ -1,4 +1,3 @@
-// import {Map} from 'immutable';
 import * as ClientInfoOperations from '../actions/cars';
 
 const initialCompaniesState = {
@@ -7,7 +6,7 @@ const initialCompaniesState = {
   itemsPerPage: null,
   totalPages: null,
   list: {},
-  ordering: [],
+  ordering: {},
 };
 
 function storeCars(state, data) {
@@ -28,7 +27,10 @@ function storeCars(state, data) {
     itemsPerPage: data.per_page,
     totalPages: data.total_pages,
     list,
-    ordering,
+    ordering: {
+      ...state.ordering,
+      [data.currentPage]: ordering,
+    },
   };
 }
 
