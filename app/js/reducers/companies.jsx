@@ -1,5 +1,6 @@
-import * as ClientInfoOperations from '../actions/companies';
+// import * as ClientInfoOperations from '../actions/companies';
 import * as CompanyProfileOperations from '../actions/companyProfile';
+import { SUCCESS_FETCH_COMPANIES_LIST } from '../actions/list';
 
 const initialCompaniesState = {
   fetching: false,
@@ -57,7 +58,7 @@ export default function companiesReducer(state, action) {
     return initialCompaniesState;
   }
   switch (action.type) {
-    case ClientInfoOperations.FETCH_COMPANIES_LIST:
+    case SUCCESS_FETCH_COMPANIES_LIST:
       return storeCompanies(state, action.data);
     case CompanyProfileOperations.FETCH_COMPANY_INFO:
       return updateCompany(state, action.data);

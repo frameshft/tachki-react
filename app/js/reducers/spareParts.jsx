@@ -1,4 +1,4 @@
-import * as SparePartsOperations from '../actions/spareParts';
+import { SUCCESS_SPARE_PARTS_LIST } from '../actions/list';
 
 const initialState = {
   fetching: false,
@@ -40,7 +40,7 @@ export default function sparePartsReducer(state, action) {
   }
 
   switch (action.type) {
-    case SparePartsOperations.FETCH_SPARE_PARTS_LIST:
+    case SUCCESS_SPARE_PARTS_LIST:
       return storeParts(state, action.data);
     default:
       return state;

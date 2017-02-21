@@ -1,36 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../../store';
-import API from '../../api';
-import { FETCH_SPARE_PARTS_LIST } from '../../actions/spareParts';
 
 import * as listViewType from '../../constants/listView';
 import SparePart from './sparePart';
 import Pagination from '../shared/pagination';
+import { fetchPaginatedResponse, SUCCESS_SPARE_PARTS_LIST } from '../../actions/list';
 
 class PartsList extends React.Component {
-
-  static fetchList(page = 1) {
-    API.fetch(`/spare-parts/?page=${page}`)
-      .then((res) => {
-        const data = {
-          ...res,
-          currentPage: page,
-        };
-        store.dispatch({
-          type: FETCH_SPARE_PARTS_LIST,
-          data,
-        });
-      });
-  }
-
   componentDidMount() {
-    PartsList.fetchList(this.props.currentPage);
+    store.dispatch(fetchPaginatedResponse(SUCCESS_SPARE_PARTS_LIST, '/spare-parts', this.props.currentPage));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      PartsList.fetchList(this.props.currentPage);
+      store.dispatch(fetchPaginatedResponse(SUCCESS_SPARE_PARTS_LIST, '/spare-parts', this.props.currentPage));
     }
   }
 

@@ -1,29 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../../store';
-import { FETCH_COMPANIES_LIST } from '../../actions/companies';
-import API from '../../api';
 import * as listViewType from '../../constants/listView';
+import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../actions/list';
 
 import Company from './company';
 import Pagination from '../shared/pagination';
 
 class CompanyList extends React.Component {
-
-  static fetchCompanies(page = 1) {
-    API.fetch(`/companies/?page=${page}`)
-      .then((res) => {
-        const data = {
-          ...res,
-          currentPage: page,
-        };
-        store.dispatch({
-          type: FETCH_COMPANIES_LIST,
-          data,
-        });
-      });
-  }
-
   constructor(props) {
     super(props);
     this.alertClose = this.alertClose.bind(this);
@@ -34,12 +18,12 @@ class CompanyList extends React.Component {
   }
 
   componentDidMount() {
-    CompanyList.fetchCompanies(this.props.currentPage);
+    store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_COMPANIES_LIST, '/companies', this.props.currentPage));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      CompanyList.fetchCompanies(this.props.currentPage);
+      store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_COMPANIES_LIST, '/companies', this.props.currentPage));
     }
   }
 

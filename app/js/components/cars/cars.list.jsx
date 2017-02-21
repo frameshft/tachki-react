@@ -1,36 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../../store';
-import API from '../../api';
-import { FETCH_CARS_LIST } from '../../actions/cars';
-
 import * as listViewType from '../../constants/listView';
 import Car from './car';
 import Pagination from '../shared/pagination';
+import { fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST } from '../../actions/list';
 
 class CarList extends React.Component {
-
-  static fetchAuto(page = 1) {
-    API.fetch(`/automobiles/?page=${page}`)
-      .then((res) => {
-        const data = {
-          ...res,
-          currentPage: page,
-        };
-        store.dispatch({
-          type: FETCH_CARS_LIST,
-          data,
-        });
-      });
-  }
-
   componentDidMount() {
-    CarList.fetchAuto(this.props.currentPage);
+    store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_CARS_LIST, '/automobiles', this.props.currentPage));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      CarList.fetchAuto(this.props.currentPage);
+      store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_CARS_LIST, '/automobiles', this.props.currentPage));
     }
   }
 

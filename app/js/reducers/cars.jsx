@@ -1,4 +1,4 @@
-import * as ClientInfoOperations from '../actions/cars';
+import { SUCCESS_FETCH_CARS_LIST } from '../actions/list';
 
 const initialCompaniesState = {
   fetching: false,
@@ -40,7 +40,7 @@ export default function carsReducer(state, action) {
   }
 
   switch (action.type) {
-    case ClientInfoOperations.FETCH_CARS_LIST:
+    case SUCCESS_FETCH_CARS_LIST:
       return storeCars(state, action.data);
     default:
       return state;
