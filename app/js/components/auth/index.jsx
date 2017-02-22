@@ -1,3 +1,3 @@
-import Auth from './auth';
+import SignIn from './signin';
 
-export default { Auth };
+export default { SignIn };

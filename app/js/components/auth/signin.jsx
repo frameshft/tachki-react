@@ -5,7 +5,7 @@ import * as AuthActions from '../../actions/auth';
 
 import store from '../../store';
 
-class Auth extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -55,7 +55,7 @@ class Auth extends React.Component {
   }
 }
 
-Auth.propTypes = {
+SignIn.propTypes = {
   auth: React.PropTypes.object.isRequired,
 };
 
@@ -67,4 +67,4 @@ function mapToProps(state) {
   };
 }
 
-export default connect(mapToProps)(Auth);
+export default connect(mapToProps)(SignIn);
