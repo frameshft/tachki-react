@@ -1,14 +1,18 @@
 const axios = require('axios');
 
-const baseUrl = process.env.NODE_ENV === 'production' ? 'http://tachki.kg/react/' : 'http://92.245.109.160:1248/react/';
+const baseUrl = process.env.NODE_ENV === 'production' ? 'http://tachki.kg/' : 'http://92.245.109.160:1248/';
+const baseAPI = 'react';
 const locale = 'ru';
 
+const baseAbsoluteUrl = `${baseUrl}${locale}/${baseAPI}`;
+
 const apiRequest = axios.create({
-  baseURL: baseUrl,
+  baseURL: baseAbsoluteUrl,
   headers: {
     'Accept-Language': locale,
   },
   responseType: 'json',
+  withCredentials: false,
 });
 
 export default {

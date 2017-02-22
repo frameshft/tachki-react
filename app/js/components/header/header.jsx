@@ -63,7 +63,7 @@ class Header extends React.Component {
           <a href='/' className={ `header__tools__btn header__tools__btn--view${listViewIconCls}` } onClick={ this.listViewClick } />
         </div>
 
-        {showSidebar && <Sidebar /> }
+        { showSidebar && <Sidebar toggle={ this.toggleSidebar } /> }
         <div className={ `body-fade fade${(showSidebar ? ' in' : '')}` } onClick={ this.toggleSidebar } />
       </div>
     );
