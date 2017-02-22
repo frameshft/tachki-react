@@ -14,36 +14,48 @@ class Sidebar extends React.Component {
     this.props.toggle();
   }
 
+  renderAnonymous() {
+    return (
+      <div className='sidebar'>
+        <div className='sidebar__profile' />
+        <ul className='sidebar__navigation'>
+          <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
+            <a href='/' className='sidebar__navigation__link'>Просмотренные</a>
+          </li>
+          <li className='sidebar__navigation__item sidebar__navigation__item--settings'>
+            <a href='/' className='sidebar__navigation__link'>Настройки</a>
+          </li>
+          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
+            <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
+          </li>
+          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
+            <Link
+              to='/sign-in'
+              className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
+            >
+              Войти
+            </Link>
+          </li>
+        </ul>
+      </div>
+    );
+  }
 
-  render() {
-    const { auth } = this.props;
-    const user = auth.user;
-    const loggedIn = (user.token !== undefined);
-
-    let username;
-    let balance;
-    let img;
-
-    if (loggedIn) {
-      username = user.name;
-      balance = user.balance;
-      img = user.image;
-    }
-
+  renderAuthorized(user) {
     return (
       <div className='sidebar'>
         <div className='sidebar__profile'>
-          {loggedIn && <div>
-            <div className='sidebar__profile__media'>
-              <img className='sidebar__profile__media__img' src={ img } alt={ username } />
-            </div>
-            <div className='sidebar__profile__title'>
-              {username}
-            </div>
-            <div className='sidebar__profile__balance'>
-              Баланс: {balance}
-            </div>
-          </div>}
+          <div className='sidebar__profile__media'>
+            <img
+              className='sidebar__profile__media__img' src={ user.image } alt={ user.username }
+            />
+          </div>
+          <div className='sidebar__profile__title'>
+            { user.username }
+          </div>
+          <div className='sidebar__profile__balance'>
+            Баланс: { user.balance }
+          </div>
         </div>
         <ul className='sidebar__navigation'>
           <li className='sidebar__navigation__item sidebar__navigation__item--create'>
@@ -67,26 +79,24 @@ class Sidebar extends React.Component {
           <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
           </li>
-          {!loggedIn &&
-          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
-            <Link
-              to='/sign-in' className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
-            >
-              Войти
-            </Link>
-          </li>}
-          {loggedIn &&
-          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
+          <li className='sidebar__navigation__item sidebar__navigation__item--signout'>
+            {/* FIXME: replace logout with btn */}
             <Link
               to='/sign-in'
               className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
             >
               Выйти
             </Link>
-          </li>}
+          </li>
         </ul>
       </div>
     );
+  }
+
+  render() {
+    const { auth } = this.props;
+    const user = auth.user;
+    return (user.token !== undefined) ? this.renderAuthorized(user) : this.renderAnonymous();
   }
 }
 
