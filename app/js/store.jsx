@@ -25,6 +25,6 @@ const store = createStore(
   compose(...enhancers),
 );
 
-persistStore(store);
+persistStore(store, { blacklist: ['routing'] });
 
 export default store;
