@@ -1,22 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import * as AuthActions from '../../actions/auth';
 
 import store from '../../store';
 
-class SignIn extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loginValue: '',
       passwordValue: '',
+      activationCode: '',
     };
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.onActivateClick = this.onActivateClick.bind(this);
     this.loginHandle = this.loginHandle.bind(this);
     this.passwordHandle = this.passwordHandle.bind(this);
+    this.activationCodeHandle = this.activationCodeHandle.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +32,12 @@ class SignIn extends React.Component {
 
   onSubmit() {
     const { loginValue, passwordValue } = this.state;
-    store.dispatch(AuthActions.signin({ phone: loginValue, password: passwordValue }));
+    store.dispatch(AuthActions.registration({ phone: loginValue, password: passwordValue }));
+  }
+
+  onActivateClick() {
+    const { activationCode } = this.state;
+    store.dispatch(AuthActions.activation({ code: activationCode }));
   }
 
   loginHandle(e) {
@@ -44,19 +52,44 @@ class SignIn extends React.Component {
     });
   }
 
-  render() {
+  activationCodeHandle(e) {
+    this.setState({
+      activationCode: e.target.value,
+    });
+  }
+
+  renderRegistration() {
     return (
       <div>
         <input type='text' placeholder='Login' onChange={ this.loginHandle } />
         <input type='password' placeholder='Password' onChange={ this.passwordHandle } />
-        <button onClick={ this.onSubmit }>Login</button>
-        <Link to='/forgot-password'>Forgot Password, motherfucker?</Link>
+        <button onClick={ this.onSubmit }>Registration</button>
+      </div>
+    );
+  }
+
+  renderActivate() {
+    return (
+      <div>
+        <input type='text' onChange={ this.activationCodeHandle } />
+        <button onClick={ this.onActivateClick }>confirm</button>
+      </div>
+    );
+  }
+
+  render() {
+    const { auth } = this.props;
+
+    return (
+      <div>
+        { auth.status !== 201 && this.renderRegistration() }
+        { auth.status === 201 && this.renderActivate() }
       </div>
     );
   }
 }
 
-SignIn.propTypes = {
+Registration.propTypes = {
   auth: React.PropTypes.object.isRequired,
 };
 
@@ -68,4 +101,4 @@ function mapToProps(state) {
   };
 }
 
-export default connect(mapToProps)(SignIn);
+export default connect(mapToProps)(Registration);

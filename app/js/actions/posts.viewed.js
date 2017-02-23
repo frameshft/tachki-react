@@ -1,0 +1,2 @@
+export const ADD_VIEWED_POSTS = 'ADD_VIEWED_POSTS';
+export const CLEAR_VIEWED = 'CLEAR_VIEWED';

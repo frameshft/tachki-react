@@ -45,7 +45,7 @@ Sign up, sign in, recover password actions
 
 * **URL**
 
-  /sign-in/
+  /sign-up/
 
 * **Method:**
 

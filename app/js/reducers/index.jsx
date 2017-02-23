@@ -3,6 +3,7 @@ import companiesReducer from './companies';
 import carsReducer from './cars';
 import sparePartsReducer from './spareParts';
 import listViewReducer from './listView';
+import viewedPostsReducer from './posts.viewed';
 
 export default {
   auth: authReducer,
@@ -10,4 +11,5 @@ export default {
   cars: carsReducer,
   spareParts: sparePartsReducer,
   listView: listViewReducer,
+  viewedPosts: viewedPostsReducer,
 };

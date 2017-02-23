@@ -15,6 +15,10 @@ export const FETCH_SPARE_PARTS_LIST = 'FETCH_SPARE_PARTS_LIST';
 export const SUCCESS_SPARE_PARTS_LIST = 'SUCCESS_SPARE_PARTS_LIST';
 export const FAILURE_SPARE_PARTS_LIST = 'FAILURE_SPARE_PARTS_LIST';
 
+export const FETCH_MY_POSTS_LIST = 'FETCH_MY_POSTS_LIST';
+export const SUCCESS_FETCH_MY_POSTS_LIST = 'SUCCESS_FETCH_MY_POSTS_LIST';
+export const FAILURE_FETCH_MY_POSTS_LIST = 'FAILURE_FETCH_MY_POSTS_LIST';
+
 function requestPaginatedResponse() {
   return {
     type: FETCH_PAGINATED_RESPONSE,
@@ -31,10 +35,10 @@ function receivePaginatedResponse(actionType, data) {
 }
 
 
-export function fetchPaginatedResponse(actionType, endpoint, page = 1) {
+export function fetchPaginatedResponse(actionType, endpoint, page = 1, isAuth = false) {
   return (dispatch) => {
     dispatch(requestPaginatedResponse());
-    return API.fetch(`${endpoint}?page=${page}`)
+    return API.fetch(`${endpoint}/?page=${page}`, isAuth)
       .then((res) => {
         const data = {
           ...res,

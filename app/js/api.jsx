@@ -1,3 +1,5 @@
+import store from './store';
+
 const axios = require('axios');
 
 const baseUrl = process.env.NODE_ENV === 'production' ? 'http://tachki.kg/' : 'http://92.245.109.160:1248/';
@@ -16,10 +18,17 @@ const apiRequest = axios.create({
 });
 
 export default {
-  fetch: function fetch(endpoint, params = null) {
+  fetch: function fetch(endpoint, isAuth = false, params = null) {
     const opts = {};
     if (params !== null) {
       opts.params = params;
+    }
+
+    if (isAuth) {
+      const token = store.getState().auth.user.token;
+      opts.headers = {
+        Authorization: `Token ${token}`,
+      };
     }
 
     return apiRequest.get(endpoint, opts)
@@ -27,10 +36,18 @@ export default {
       ;
   },
 
-  create: function create(endpoint, data = {}) {
-    return apiRequest.post(endpoint, data)
-      .then(res => res.data)
-      ;
+  create: function create(endpoint, data = {}, isAuth = false) {
+    const opts = {};
+
+    if (isAuth) {
+      const token = store.getState().auth.user.token;
+      opts.headers = {
+        Authorization: `Token ${token}`,
+      };
+    }
+
+    return apiRequest.post(endpoint, data, opts)
+      .then(res => res.data);
   },
 
   update: function update(endpoint, data = {}, partial = false) {
