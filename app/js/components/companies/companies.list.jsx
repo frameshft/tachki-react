@@ -6,6 +6,7 @@ import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../acti
 
 import Company from './company';
 import Pagination from '../shared/pagination';
+import { STORE_A_COMPANY } from '../../actions/companies';
 
 class CompanyList extends React.Component {
   constructor(props) {
@@ -18,12 +19,18 @@ class CompanyList extends React.Component {
   }
 
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_COMPANIES_LIST, '/companies', this.props.currentPage));
+    store.dispatch(fetchPaginatedResponse({
+      entities: STORE_A_COMPANY,
+      component: SUCCESS_FETCH_COMPANIES_LIST,
+    }, '/companies', this.props.currentPage));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_COMPANIES_LIST, '/companies', this.props.currentPage));
+      store.dispatch(fetchPaginatedResponse({
+        entities: STORE_A_COMPANY,
+        component: SUCCESS_FETCH_COMPANIES_LIST,
+      }, '/companies', this.props.currentPage));
     }
   }
 
@@ -35,14 +42,14 @@ class CompanyList extends React.Component {
 
   render() {
     const { showAlert } = this.state;
-    const { companies, listView, currentPage } = this.props;
+    const { companies, listView, currentPage, entities } = this.props;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const companiesRender = [];
 
-    if (companies.ordering[this.props.currentPage] !== undefined) {
-      companies.ordering[this.props.currentPage].forEach((i) => {
-        const item = companies.list[i];
+    if (companies.list.length > 0) {
+      companies.list.forEach((i) => {
+        const item = entities[i];
         companiesRender.push(
           <Company key={ item.id } company={ item } />,
         );
@@ -75,17 +82,18 @@ class CompanyList extends React.Component {
 CompanyList.propTypes = {
   listView: React.PropTypes.number.isRequired,
   companies: React.PropTypes.object.isRequired,
+  entities: React.PropTypes.object.isRequired,
   currentPage: React.PropTypes.number.isRequired,
 };
 
 function mapToProps(state) {
-  const listView = state.listView.listView;
   let currentPage = state.routing.locationBeforeTransitions.query.page;
   currentPage = currentPage !== undefined ? +currentPage : 1;
 
   return {
-    companies: state.companies,
-    listView,
+    entities: state.entities.users,
+    companies: state.views.companies,
+    listView: state.views.listView,
     currentPage,
   };
 }

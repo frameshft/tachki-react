@@ -26,26 +26,39 @@ function requestPaginatedResponse() {
   };
 }
 
+function parsePaginatedData(data) {
+  let objects = {};
+  const list = [];
 
-function receivePaginatedResponse(actionType, data) {
+  data.results.forEach((item) => {
+    objects = {
+      ...objects,
+      [item.id]: Object.assign({}, item),
+    };
+    list.push(item.id);
+  });
+
   return {
-    type: actionType,
-    data,
+    objects,
+    results: {
+      list,
+      perPage: data.per_page,
+      totalPages: data.total_pages,
+    },
   };
 }
 
 
-export function fetchPaginatedResponse(actionType, endpoint, page = 1, isAuth = false) {
+export function fetchPaginatedResponse(actions, endpoint, page = 1, isAuth = false) {
   return (dispatch) => {
     dispatch(requestPaginatedResponse());
     return API.fetch(`${endpoint}/?page=${page}`, isAuth)
       .then((res) => {
-        const data = {
-          ...res,
-          currentPage: page,
-        };
-
-        return dispatch(receivePaginatedResponse(actionType, data));
+        const { objects, results } = parsePaginatedData(res);
+        return Promise.all([
+          dispatch({ type: actions.entities, data: objects }),
+          dispatch({ type: actions.component, data: results }),
+        ]);
       });
   };
 }

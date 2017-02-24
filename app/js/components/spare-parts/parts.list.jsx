@@ -6,20 +6,27 @@ import * as listViewType from '../../constants/listView';
 import SparePart from './sparePart';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_SPARE_PARTS_LIST } from '../../actions/list';
+import { STORE_A_POST } from '../../actions/posts';
 
 class PartsList extends React.Component {
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse(SUCCESS_SPARE_PARTS_LIST, '/spare-parts', this.props.currentPage));
+    store.dispatch(fetchPaginatedResponse({
+      entities: STORE_A_POST,
+      component: SUCCESS_SPARE_PARTS_LIST,
+    }, '/spare-parts', this.props.currentPage));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(fetchPaginatedResponse(SUCCESS_SPARE_PARTS_LIST, '/spare-parts', this.props.currentPage));
+      store.dispatch(fetchPaginatedResponse({
+        entities: STORE_A_POST,
+        component: SUCCESS_SPARE_PARTS_LIST,
+      }, '/spare-parts', this.props.currentPage));
     }
   }
 
   render() {
-    const { listView, parts, currentPage } = this.props;
+    const { listView, parts, currentPage, entities } = this.props;
 
     const paginationProps = {
       totalPages: parts.totalPages,
@@ -29,9 +36,9 @@ class PartsList extends React.Component {
 
     const render = [];
 
-    if (parts.ordering[this.props.currentPage] !== undefined) {
-      parts.ordering[this.props.currentPage].forEach((i) => {
-        const item = parts.list[i];
+    if (parts.list.length > 0) {
+      parts.list.forEach((i) => {
+        const item = entities[i];
         render.push(<SparePart key={ item.id } part={ item } />);
       });
     }
@@ -57,13 +64,13 @@ PartsList.PropTypes = {
 
 
 function mapToProps(state) {
-  const listView = state.listView.listView;
   let currentPage = state.routing.locationBeforeTransitions.query.page;
   currentPage = currentPage !== undefined ? +currentPage : 1;
 
   return {
-    parts: state.spareParts,
-    listView,
+    entities: state.entities.posts,
+    parts: state.views.spareParts,
+    listView: state.views.listView,
     currentPage,
   };
 }

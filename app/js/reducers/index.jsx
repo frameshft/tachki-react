@@ -1,15 +1,11 @@
 import authReducer from './auth';
-import companiesReducer from './companies';
-import carsReducer from './cars';
-import sparePartsReducer from './spareParts';
-import listViewReducer from './listView';
-import viewedPostsReducer from './posts.viewed';
+// import viewedPostsReducer from './posts.viewed';
+import entities from './entities';
+import views from './views';
 
 export default {
   auth: authReducer,
-  companies: companiesReducer,
-  cars: carsReducer,
-  spareParts: sparePartsReducer,
-  listView: listViewReducer,
-  viewedPosts: viewedPostsReducer,
+  // viewedPosts: viewedPostsReducer,
+  entities,
+  views,
 };

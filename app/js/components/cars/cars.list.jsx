@@ -5,26 +5,32 @@ import * as listViewType from '../../constants/listView';
 import Car from './car';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST } from '../../actions/list';
+import { STORE_A_POST } from '../../actions/posts';
 
 class CarList extends React.Component {
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_CARS_LIST, '/automobiles', this.props.currentPage));
+    store.dispatch(fetchPaginatedResponse({
+      entities: STORE_A_POST,
+      component: SUCCESS_FETCH_CARS_LIST,
+    }, '/automobiles', this.props.currentPage));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_CARS_LIST, '/automobiles', this.props.currentPage));
+      store.dispatch(fetchPaginatedResponse({
+        entities: STORE_A_POST,
+        component: SUCCESS_FETCH_CARS_LIST,
+      }, '/automobiles', this.props.currentPage));
     }
   }
 
   render() {
-    const { listView, cars, currentPage } = this.props;
-
+    const { listView, cars, currentPage, entities } = this.props;
     const carsRender = [];
 
-    if (cars.ordering[this.props.currentPage] !== undefined) {
-      cars.ordering[this.props.currentPage].forEach((i) => {
-        const item = cars.list[i];
+    if (cars.list.length > 0) {
+      cars.list.forEach((i) => {
+        const item = entities[i];
         carsRender.push(<Car key={ item.id } car={ item } />);
       });
     }
@@ -56,13 +62,13 @@ CarList.PropTypes = {
 
 
 function mapToProps(state) {
-  const listView = state.listView.listView;
   let currentPage = state.routing.locationBeforeTransitions.query.page;
   currentPage = currentPage !== undefined ? +currentPage : 1;
 
   return {
-    cars: state.cars,
-    listView,
+    entities: state.entities.posts,
+    cars: state.views.automobiles,
+    listView: state.views.listView,
     currentPage,
   };
 }

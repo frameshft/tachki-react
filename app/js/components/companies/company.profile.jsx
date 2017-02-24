@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import API from '../../api';
 import store from '../../store';
-import { FETCH_COMPANY_INFO } from '../../actions/companyProfile';
 
 import CompanyServices from './company.services';
+import { GET_A_COMPANY } from '../../actions/companies';
 
 class CompanyProfile extends React.Component {
   static fetchCompanies() {
     API.fetch(window.location.pathname)
       .then((res) => {
         store.dispatch({
-          type: FETCH_COMPANY_INFO,
+          type: GET_A_COMPANY,
           data: res,
         });
       });
@@ -68,7 +68,7 @@ CompanyProfile.propTypes = {
 };
 
 function mapToProps(state) {
-  const companies = state.companies.list;
+  const companies = state.entities.users;
 
   return {
     companies,
