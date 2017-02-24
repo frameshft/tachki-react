@@ -20,7 +20,7 @@ export default (store) => {
         <Route path='registration' component={ AuthComponents.Registration } />
         <Route path='forgot-password' component={ AuthComponents.ForgotPassword } />
         <Route path='companies' component={ CompanyList } />
-        <Route path='companies/:companyId' components={ CompanyProfile } />
+        <Route path='companies/:id' components={ CompanyProfile } />
         <Route path='cars' component={ CarList } />
         <Route path='spare-parts' component={ PartsList } />
         <Route path='my/posts' component={ AuthComponents.MyPostsList } />
