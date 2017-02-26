@@ -11,7 +11,7 @@ export default class Tabber extends React.Component {
           </IndexLink>
         </li>
         <li className='tab__item'>
-          <Link to='/cars' className='tab__link' activeClassName='tab__link--active'>
+          <Link to='/automobiles' className='tab__link' activeClassName='tab__link--active'>
             Автомобили
           </Link>
         </li>

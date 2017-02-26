@@ -8,6 +8,7 @@ import CompanyList from './components/companies/companies.list';
 import CarList from './components/cars/cars.list';
 import PartsList from './components/spare-parts/parts.list';
 import CompanyProfile from './components/companies/company.profile';
+import CarProfile from './components/cars/car.profile';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -21,7 +22,8 @@ export default (store) => {
         <Route path='forgot-password' component={ AuthComponents.ForgotPassword } />
         <Route path='companies' component={ CompanyList } />
         <Route path='companies/:id' components={ CompanyProfile } />
-        <Route path='cars' component={ CarList } />
+        <Route path='automobiles' component={ CarList } />
+        <Route path='automobiles/:id' components={ CarProfile } />
         <Route path='spare-parts' component={ PartsList } />
         <Route path='my/posts' component={ AuthComponents.MyPostsList } />
       </Route>
