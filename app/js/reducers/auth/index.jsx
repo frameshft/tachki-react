@@ -1,16 +1,9 @@
 import * as SigninOperations from '../../actions/auth';
-import { SUCCESS_FETCH_MY_POSTS_LIST } from '../../actions/list';
-import storePaginatedData from '../helpers/list';
 
 const initialState = {
   fetching: false,
   status: 0,
-  user: {
-    posts: {
-      list: {},
-      ordering: {},
-    },
-  },
+  user: {},
 };
 
 function user(state, data) {
@@ -39,17 +32,6 @@ function forgotPassword(state) {
   };
 }
 
-function storeMyPosts(state, data) {
-  return {
-    ...state,
-    user: {
-      ...state.user,
-      posts: storePaginatedData(state.user.posts, data),
-    },
-  };
-}
-
-
 export default function signinReducer(state, action) {
   if (state === undefined) {
     return initialState;
@@ -63,8 +45,6 @@ export default function signinReducer(state, action) {
       };
     case SigninOperations.SUCCESS_FETCH_SIGNIN:
       return user(state, action.data);
-    case SUCCESS_FETCH_MY_POSTS_LIST:
-      return storeMyPosts(state, action.data);
     case SigninOperations.SUCCESS_FETCH_REGISTRATION:
       return userRegistration(state);
     case SigninOperations.SUCCESS_FETCH_ACTIVATION:

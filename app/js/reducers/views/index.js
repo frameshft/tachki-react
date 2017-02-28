@@ -3,6 +3,7 @@ import companies from './companies';
 import automobiles from './automobiles';
 import listView from './listView';
 import spareParts from './spareparts';
+import myPosts from './myPosts';
 
 
 const combinedReducer = combineReducers({
@@ -10,6 +11,7 @@ const combinedReducer = combineReducers({
   companies,
   listView,
   spareParts,
+  myPosts,
 });
 
 export default function views(state, action) {

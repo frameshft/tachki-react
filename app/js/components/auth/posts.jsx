@@ -1,44 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
-import { fetchPaginatedResponse, SUCCESS_FETCH_MY_POSTS_LIST } from '../../actions/list';
+import { fetchPaginatedResponse, SUCCESS_FETCH_MY_POSTS_LIST, FETCH_MY_POSTS_LIST } from '../../actions/list';
 
 import Car from '../cars/car';
 import SparePart from '../spare-parts/sparePart';
 import Pagination from '../shared/pagination';
+import { STORE_A_POST } from '../../actions/posts';
 
 class MyPostsList extends React.Component {
   static getPostComponent(item) {
     switch (item.post_type) {
       // TODO: add services and cargo
       case 'sparepart':
-        return (<SparePart key={ item.key } car={ item } />);
+        return (<SparePart key={ item.id } car={ item } />);
       default:
-        return (<Car key={ item.key } car={ item } />);
+        return (<Car key={ item.id } car={ item } />);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const l1 = Object.keys(nextProps.user.posts.list).length;
-    const l2 = Object.keys(this.props.user.posts.list).length;
-    if (l1 !== l2 || nextProps.currentPage !== this.props.currentPage
-      || this.props.user.token !== nextProps.user.token) {
-      store.dispatch(fetchPaginatedResponse(SUCCESS_FETCH_MY_POSTS_LIST, '/my/posts', nextProps.currentPage, true));
+    if (nextProps.user.token === undefined) {
+      browserHistory.push('/sign-in');
+    } else if (!nextProps.posts.isFetched || nextProps.currentPage !== this.props.currentPage) {
+      store.dispatch(fetchPaginatedResponse({
+        entities: STORE_A_POST,
+        component: SUCCESS_FETCH_MY_POSTS_LIST,
+        fetching: FETCH_MY_POSTS_LIST,
+      }, '/my/posts', nextProps.currentPage, true));
     }
   }
 
   render() {
-    const { user, listView, currentPage } = this.props;
-
-    const posts = user.posts;
+    const { listView, currentPage, posts, entities } = this.props;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const postsRender = [];
 
-    if (posts.ordering[this.props.currentPage] !== undefined) {
-      posts.ordering[this.props.currentPage].forEach((i) => {
-        const post = MyPostsList.getPostComponent(posts.list[i]);
+    if (posts.list.length > 0) {
+      posts.list.forEach((i) => {
+        const post = MyPostsList.getPostComponent(entities[i]);
         postsRender.push(post);
       });
     }
@@ -62,18 +65,21 @@ class MyPostsList extends React.Component {
 
 MyPostsList.propTypes = {
   listView: React.PropTypes.number.isRequired,
-  user: React.PropTypes.object.isRequired,
+  // user: React.PropTypes.object.isRequired,
+  entities: React.PropTypes.object.isRequired,
+  posts: React.PropTypes.object.isRequired,
   currentPage: React.PropTypes.number.isRequired,
 };
 
 function mapToProps(state) {
-  const listView = state.listView.listView;
   let currentPage = state.routing.locationBeforeTransitions.query.page;
   currentPage = currentPage !== undefined ? +currentPage : 1;
 
   return {
+    entities: state.entities.posts,
+    posts: state.views.myPosts,
     user: state.auth.user,
-    listView,
+    listView: state.views.listView,
     currentPage,
   };
 }

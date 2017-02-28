@@ -52,6 +52,9 @@ function parsePaginatedData(data) {
 export function fetchPaginatedResponse(actions, endpoint, page = 1, isAuth = false) {
   return (dispatch) => {
     dispatch(requestPaginatedResponse());
+    if (actions.fetching !== undefined) {
+      dispatch({ type: actions.fetching });
+    }
     return API.fetch(`${endpoint}/?page=${page}`, isAuth)
       .then((res) => {
         const { objects, results } = parsePaginatedData(res);
