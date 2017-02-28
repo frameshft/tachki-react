@@ -3,58 +3,44 @@ import { connect } from 'react-redux';
 import API from '../../api';
 import store from '../../store';
 
-import { GET_A_CAR } from '../../actions/cars';
+import { STORE_A_POST } from '../../actions/posts';
 
 class CarProfile extends React.Component {
-  static fetchCompanies() {
-    API.fetch(window.location.pathname)
+  static fetchCompanies(id) {
+    API.fetch(`/automobiles/${id}/`)
       .then((res) => {
         store.dispatch({
-          type: GET_A_CAR,
+          type: STORE_A_POST,
           data: res,
         });
       });
   }
 
   componentDidMount() {
-    CarProfile.fetchCompanies();
+    CarProfile.fetchCompanies(this.props.params.id);
   }
 
   render() {
     const { cars } = this.props;
     const car = cars[this.props.params.id];
-    const services = [];
-
-    if (car !== undefined) {
-      const keys = Object.keys(car.services);
-
-      keys.forEach((x, i) => {
-        services.push(
-          <carServices key={ i } name={ x } services={ car.services[x] } />,
-        );
-      });
-    }
 
     return (
       <div>
         {car && <div>
           <div>
-            { car.name }
+            { car.title }
           </div>
           <div>
             <img src={ car.image } alt={ car.name } />
           </div>
           <div>
-            { car.profile_info }
+            { car.description }
           </div>
           <div>
             { car.phone }
           </div>
           <div>
             { car.address }
-          </div>
-          <div>
-            { services }
           </div>
         </div>}
       </div>
@@ -67,7 +53,7 @@ CarProfile.propTypes = {
 };
 
 function mapToProps(state) {
-  const cars = state.entities.users;
+  const cars = state.entities.posts;
 
   return {
     cars,

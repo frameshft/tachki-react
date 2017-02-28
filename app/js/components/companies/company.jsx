@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 
 class Company extends React.Component {
+  static renderTypes(types) {
+    return types !== undefined ? types.map(type => <span key={ type }>{ type }</span>) : [];
+  }
+
   render() {
     const { company } = this.props;
     const types = company.types;
@@ -22,7 +26,7 @@ class Company extends React.Component {
               { company.profile_info }
             </div> }
             <div className='list__item__category'>
-              { types.map(type => <span key={ type }>{ type }</span>) }
+              { Company.renderTypes(types) }
             </div>
           </div>
         </Link>
