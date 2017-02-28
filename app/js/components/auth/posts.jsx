@@ -22,11 +22,13 @@ class MyPostsList extends React.Component {
   }
 
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse({
-      entities: STORE_A_POST,
-      component: SUCCESS_FETCH_MY_POSTS_LIST,
-      fetching: FETCH_MY_POSTS_LIST,
-    }, '/my/posts', this.props.currentPage, true));
+    if (this.props.user.token !== undefined) {
+      store.dispatch(fetchPaginatedResponse({
+        entities: STORE_A_POST,
+        component: SUCCESS_FETCH_MY_POSTS_LIST,
+        fetching: FETCH_MY_POSTS_LIST,
+      }, '/my/posts', this.props.currentPage, true));
+    }
   }
 
   componentWillReceiveProps(nextProps) {

@@ -22,11 +22,13 @@ class FavoritePosts extends React.Component {
   }
 
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse({
-      entities: STORE_A_POST,
-      component: SUCCESS_FETCH_MY_FAVORITE_POSTS,
-      fetching: FETCH_MY_FAVORITE_POSTS,
-    }, '/my/favorites', this.props.currentPage, true));
+    if (this.props.user.token !== undefined) {
+      store.dispatch(fetchPaginatedResponse({
+        entities: STORE_A_POST,
+        component: SUCCESS_FETCH_MY_FAVORITE_POSTS,
+        fetching: FETCH_MY_FAVORITE_POSTS,
+      }, '/my/favorites', this.props.currentPage, true));
+    }
   }
 
   componentWillReceiveProps(nextProps) {
