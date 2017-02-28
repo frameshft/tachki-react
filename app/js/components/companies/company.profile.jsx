@@ -26,7 +26,7 @@ class CompanyProfile extends React.Component {
     const company = companies[this.props.params.id];
     const services = [];
 
-    if (company !== undefined) {
+    if (company !== undefined && company.services !== undefined) {
       const keys = Object.keys(company.services);
 
       keys.forEach((x, i) => {
