@@ -97,7 +97,12 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Сообщения</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--saved'>
-            <a href='/' className='sidebar__navigation__link'>Сохраненные</a>
+            <Link
+              to='/my/favorites'
+              className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
+            >
+              Сохраненные
+            </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
             <a href='/' className='sidebar__navigation__link'>Просмотренные</a>

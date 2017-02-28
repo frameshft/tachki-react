@@ -26,6 +26,7 @@ export default (store) => {
         <Route path='automobiles/:id' components={ CarProfile } />
         <Route path='spare-parts' component={ PartsList } />
         <Route path='my/posts' component={ AuthComponents.MyPostsList } />
+        <Route path='my/favorites' component={ AuthComponents.FavoritePosts } />
       </Route>
     </Router>
   );

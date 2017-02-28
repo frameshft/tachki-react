@@ -4,6 +4,7 @@ import automobiles from './automobiles';
 import listView from './listView';
 import spareParts from './spareparts';
 import myPosts from './myPosts';
+import favorites from './favorites';
 
 
 const combinedReducer = combineReducers({
@@ -12,6 +13,7 @@ const combinedReducer = combineReducers({
   listView,
   spareParts,
   myPosts,
+  favorites,
 });
 
 export default function views(state, action) {
