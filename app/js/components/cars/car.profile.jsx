@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import API from '../../api';
 import store from '../../store';
+import FavoriteToggle from '../shared/favorite.toggle';
 
 import { STORE_A_POST } from '../../actions/posts';
 
@@ -20,12 +21,19 @@ class CarProfile extends React.Component {
     CarProfile.fetchCompanies(this.props.params.id);
   }
 
+  componentWillUpdate(nextProps) {
+    if (nextProps.user.token !== this.props.user.token) {
+      CarProfile.fetchCompanies(this.props.params.id);
+    }
+  }
+
   render() {
-    const { cars } = this.props;
+    const { cars, user } = this.props;
     const car = cars[this.props.params.id];
 
     return (
       <div>
+        { user.token && <FavoriteToggle postId={ car.id } /> }
         {car && <div>
           <div>
             { car.title }
@@ -50,13 +58,16 @@ class CarProfile extends React.Component {
 
 CarProfile.propTypes = {
   cars: React.PropTypes.object.isRequired,
+  user: React.PropTypes.object.isRequired,
 };
 
 function mapToProps(state) {
   const cars = state.entities.posts;
+  const user = state.auth.user;
 
   return {
     cars,
+    user,
   };
 }
 
