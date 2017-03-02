@@ -24,6 +24,8 @@ export const FETCH_SIGNOUT = 'FETCH_SIGNOUT';
 export const SUCESS_FETCH_SIGNOUT = 'SUCESS_FETCH_SIGNOUT';
 export const FAILURE_FETCH_SIGNOUT = 'FAILURE_FETCH_SIGNOUT';
 
+export const UPDATE_USER_BALANCE = 'UPDATE_USER_BALANCE';
+
 function forgotPasswordAction(data) {
   return {
     type: SUCCESS_FETCH_FORGOT_PASSWORD,

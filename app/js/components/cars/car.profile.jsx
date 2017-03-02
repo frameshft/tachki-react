@@ -4,6 +4,7 @@ import API from '../../api';
 import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
 import PromptDelete from '../shared/prompt.delete';
+import VipPost from '../shared/vip.post';
 
 import { STORE_A_POST } from '../../actions/posts';
 
@@ -79,7 +80,9 @@ class CarProfile extends React.Component {
             { car.address }
           </div>
         </div>}
-        { showPrompt && <PromptDelete postId={ car.id } cancel={ this.onCancelClick } /> }
+        { showPrompt && car && car.isMy &&
+        <PromptDelete postId={ car.id } cancel={ this.onCancelClick } /> }
+        { car && car.isMy && !car.is_vip && <VipPost postId={ car.id } /> }
       </div>
     );
   }

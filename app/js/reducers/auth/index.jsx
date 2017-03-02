@@ -55,6 +55,14 @@ export default function signinReducer(state, action) {
       return user(state, action.data);
     case SigninOperations.SUCESS_FETCH_SIGNOUT:
       return initialState;
+    case SigninOperations.UPDATE_USER_BALANCE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          balance: action.data,
+        },
+      };
     default:
       return state;
   }

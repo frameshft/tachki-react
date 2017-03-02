@@ -15,6 +15,23 @@ const apiRequest = axios.create({
   },
   responseType: 'json',
   withCredentials: false,
+  validateStatus: status => status >= 200 && status < 500,
+});
+
+apiRequest.interceptors.response.use((response) => {
+  const data = response.data;
+  if (response.status === 204) {
+    return response;
+  }
+
+  if (response.status >= 400) {
+    return Promise.reject({
+      status: response.status,
+      error: data,
+    });
+  }
+
+  return data;
 });
 
 
@@ -36,25 +53,23 @@ function buildOptions(inputOpts, additionalOpts) {
 export default {
   fetch: function fetch(endpoint, isAuth = false, params = null, opts = {}) {
     const options = buildOptions(opts, params);
-    return apiRequest.get(endpoint, options).then(res => res.data);
+    return apiRequest.get(endpoint, options);
   },
 
   create: function create(endpoint, data = {}, opts = {}) {
     const options = buildOptions(opts);
-    return apiRequest.post(endpoint, data, options).then(res => res.data);
+    return apiRequest.post(endpoint, data, options);
   },
 
   update: function update(endpoint, data = {}, partial = false, opts = {}) {
     const options = buildOptions(opts);
-    const req = partial ?
+    return partial ?
       apiRequest.patch(endpoint, data, options) :
       apiRequest.put(endpoint, data, options);
-
-    return req.then(res => res.data);
   },
 
   remove: function remove(endpoint, opts = {}) {
     const options = buildOptions(opts);
-    return apiRequest.delete(endpoint, options).then(res => res.data);
+    return apiRequest.delete(endpoint, options);
   },
 };

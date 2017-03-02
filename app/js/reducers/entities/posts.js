@@ -1,4 +1,6 @@
-import { GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE, REMOVE_A_POST, UP_A_POST } from '../../actions/posts';
+import { GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE,
+  REMOVE_A_POST, UP_A_POST, MAKE_POST_VIP,
+} from '../../actions/posts';
 
 export default function posts(state = {}, action) {
   let newState;
@@ -40,6 +42,14 @@ export default function posts(state = {}, action) {
         [action.data.id]: {
           ...state[action.data.id],
           uppedTime: action.data.time,
+        },
+      };
+    case MAKE_POST_VIP:
+      return {
+        ...state,
+        [action.data]: {
+          ...state[action.data],
+          is_vip: true,
         },
       };
     default:
