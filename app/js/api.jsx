@@ -1,4 +1,5 @@
 import store from './store';
+import { SUCESS_FETCH_SIGNOUT } from './actions/auth/index';
 
 const axios = require('axios');
 
@@ -23,8 +24,10 @@ apiRequest.interceptors.response.use((response) => {
   if (response.status === 204) {
     return response;
   }
-
-  if (response.status >= 400) {
+  if (response.status === 401) {
+    store.dispatch({ type: SUCESS_FETCH_SIGNOUT });
+    return Promise.reject({ status: 401, error: 'Unauthorized' });
+  } else if (response.status >= 400) {
     return Promise.reject({
       status: response.status,
       error: data,
