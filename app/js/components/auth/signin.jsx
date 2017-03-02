@@ -29,7 +29,9 @@ class SignIn extends React.Component {
 
   onSubmit() {
     const { loginValue, passwordValue } = this.state;
-    store.dispatch(AuthActions.signin({ phone: loginValue, password: passwordValue }));
+    const mask = '996';
+    const login = mask.concat(loginValue);
+    store.dispatch(AuthActions.signin({ phone: login, password: passwordValue }));
   }
 
   loginHandle(e) {
@@ -46,11 +48,36 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div>
-        <input type='text' placeholder='Login' onChange={ this.loginHandle } />
-        <input type='password' placeholder='Password' onChange={ this.passwordHandle } />
-        <button onClick={ this.onSubmit }>Login</button>
-        <Link to='/forgot-password'>Forgot Password, motherfucker?</Link>
+      <div className='auth-form'>
+        <input type='text' style={ { display: 'none' } } />
+        <input type='password' style={ { display: 'none' } } />
+        <div className='auth-form__row auth-form__row--phone'>
+          <input
+            type='text'
+            placeholder='Login'
+            maxLength='9'
+            onChange={ this.loginHandle }
+            className='auth-form__input'
+          />
+        </div>
+        <div className='auth-form__row'>
+          <input
+            type='password'
+            placeholder='Password'
+            onChange={ this.passwordHandle }
+            className='auth-form__input'
+          />
+        </div>
+        <div className='auth-form__row auth-form__row--submit text-center'>
+          <button onClick={ this.onSubmit } className='btn btn--primary'>
+            Login
+          </button>
+        </div>
+        <div className='text-center'>
+          <Link to='/forgot-password' className='auth-form__forgot-password'>
+            Forgot Password?
+          </Link>
+        </div>
       </div>
     );
   }

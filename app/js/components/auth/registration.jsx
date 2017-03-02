@@ -60,19 +60,51 @@ class Registration extends React.Component {
 
   renderRegistration() {
     return (
-      <div>
-        <input type='text' placeholder='Login' onChange={ this.loginHandle } />
-        <input type='password' placeholder='Password' onChange={ this.passwordHandle } />
-        <button onClick={ this.onSubmit }>Registration</button>
+      <div className='auth-form'>
+        <input type='text' style={ { display: 'none' } } />
+        <input type='password' style={ { display: 'none' } } />
+        <div className='auth-form__row auth-form__row--phone'>
+          <input
+            type='text'
+            placeholder='Login'
+            maxLength='9'
+            onChange={ this.loginHandle }
+            className='auth-form__input'
+          />
+        </div>
+        <div className='auth-form__row'>
+          <input
+            type='password'
+            placeholder='Password'
+            onChange={ this.passwordHandle }
+            className='auth-form__input'
+          />
+        </div>
+        <div className='auth-form__row auth-form__row--submit text-center'>
+          <button onClick={ this.onSubmit } className='btn btn--primary'>
+            Registration
+          </button>
+        </div>
       </div>
     );
   }
 
   renderActivate() {
     return (
-      <div>
-        <input type='text' onChange={ this.activationCodeHandle } />
-        <button onClick={ this.onActivateClick }>confirm</button>
+      <div className='auth-form'>
+        <div className='auth-form__row'>
+          <input
+            type='text'
+            placeholder='code'
+            className='auth-form__input'
+            onChange={ this.activationCodeHandle }
+          />
+        </div>
+        <div className='auth-form__row auth-form__row--submit text-center'>
+          <button onClick={ this.onActivateClick } className='btn btn--primary'>
+            Confirm
+          </button>
+        </div>
       </div>
     );
   }

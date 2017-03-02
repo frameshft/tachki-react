@@ -21,7 +21,9 @@ class DeletePost extends React.Component {
 
   render() {
     return (
-      <button onClick={ this.onClick }>Delete post</button>
+      <button onClick={ this.onClick } className={ this.props.btnCls }>
+        Delete post
+      </button>
     );
   }
 }
@@ -29,6 +31,7 @@ class DeletePost extends React.Component {
 DeletePost.PropTypes = {
   postId: React.PropTypes.number.isRequired,
   posts: React.PropTypes.object.isRequired,
+  btnCls: React.PropTypes.text,
 };
 
 function mapToProps(state) {

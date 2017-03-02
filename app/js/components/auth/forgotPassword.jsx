@@ -32,7 +32,10 @@ class ForgotPassword extends React.Component {
   }
 
   onSubmitForgot() {
-    store.dispatch(AuthActions.forgotPassword({ phone: this.state.phone }))
+    const mask = '996';
+    const phone = mask.concat(this.state.phone);
+
+    store.dispatch(AuthActions.forgotPassword({ phone }))
       .then(() => { this.setState({ isChangePassword: true }); });
   }
 
@@ -62,19 +65,48 @@ class ForgotPassword extends React.Component {
 
   renderForgotPassword() {
     return (
-      <div>
-        <input type='number' onChange={ this.onPhoneHandle } />
-        <button onClick={ this.onSubmitForgot }>Send</button>
+      <div className='auth-form'>
+        <div className='auth-form__row auth-form__row--phone'>
+          <input
+            type='number'
+            placeholder='login'
+            className='auth-form__input'
+            onChange={ this.onPhoneHandle }
+          />
+        </div>
+        <div className='auth-form__row auth-form__row--submit text-center'>
+          <button onClick={ this.onSubmitForgot } className='btn btn--primary'>
+            Send
+          </button>
+        </div>
       </div>
     );
   }
 
   renderCreatePassword() {
     return (
-      <div>
-        <input type='text' onChange={ this.onCodeHandle } />
-        <input type='password' onChange={ this.onPasswordHandle } />
-        <button onClick={ this.onSubmitChange }>Change</button>
+      <div className='auth-form'>
+        <div className='auth-form__row'>
+          <input
+            type='text'
+            placeholder='code'
+            className='auth-form__input'
+            onChange={ this.onCodeHandle }
+          />
+        </div>
+        <div className='auth-form__row'>
+          <input
+            type='password'
+            placeholder='password'
+            className='auth-form__input'
+            onChange={ this.onPasswordHandle }
+          />
+        </div>
+        <div className='auth-form__row auth-form__row--submit text-center'>
+          <button onClick={ this.onSubmitChange } className='btn btn--primary'>
+            Change
+          </button>
+        </div>
       </div>
     );
   }
