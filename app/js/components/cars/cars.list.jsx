@@ -31,7 +31,9 @@ class CarList extends React.Component {
     if (cars.list.length > 0) {
       cars.list.forEach((i) => {
         const item = entities[i];
-        carsRender.push(<Car key={ item.id } car={ item } />);
+        if (item !== undefined) {
+          carsRender.push(<Car key={ item.id } car={ item } />);
+        }
       });
     }
 

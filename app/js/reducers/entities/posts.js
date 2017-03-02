@@ -1,6 +1,8 @@
-import { GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE } from '../../actions/posts';
+import { GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE, REMOVE_A_POST } from '../../actions/posts';
 
 export default function posts(state = {}, action) {
+  let newState;
+
   switch (action.type) {
     case STORE_A_POST:
       return {
@@ -28,6 +30,10 @@ export default function posts(state = {}, action) {
           isFavorite: false,
         },
       };
+    case REMOVE_A_POST:
+      newState = { ...state };
+      delete newState[action.data];
+      return newState;
     default:
       return state;
   }

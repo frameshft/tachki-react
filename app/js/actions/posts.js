@@ -20,3 +20,10 @@ export function unMarkPostAsFavorite(postId) {
         dispatch({ type: UNMARK_POST_AS_FAVORITE, data: postId }))
     ;
 }
+
+export function deletePost(postId) {
+  return dispatch =>
+    API.create(`/posts/${postId}/delete/`)
+      .then(() => dispatch({ type: REMOVE_A_POST, data: postId }))
+    ;
+}

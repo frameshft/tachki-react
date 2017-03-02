@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import API from '../../api';
 import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
+import PromptDelete from '../shared/prompt.delete';
 
 import { STORE_A_POST } from '../../actions/posts';
 
@@ -12,9 +13,22 @@ class CarProfile extends React.Component {
       .then((res) => {
         store.dispatch({
           type: STORE_A_POST,
-          data: res,
+          data: {
+            [res.id]: res,
+          },
         });
       });
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+    this.onCancelClick = this.onCancelClick.bind(this);
+
+    this.state = {
+      showPrompt: false,
+    };
   }
 
   componentDidMount() {
@@ -27,13 +41,27 @@ class CarProfile extends React.Component {
     }
   }
 
+  onDeleteClick() {
+    this.setState({
+      showPrompt: true,
+    });
+  }
+
+  onCancelClick() {
+    this.setState({
+      showPrompt: false,
+    });
+  }
+
   render() {
     const { cars, user } = this.props;
+    const { showPrompt } = this.state;
     const car = cars[this.props.params.id];
 
     return (
       <div>
-        { user.token && <FavoriteToggle postId={ car.id } /> }
+        { user.token && car && !car.isMy && <FavoriteToggle postId={ car.id } /> }
+        { car && car.isMy && <button onClick={ this.onDeleteClick }>Delete</button> }
         {car && <div>
           <div>
             { car.title }
@@ -51,6 +79,7 @@ class CarProfile extends React.Component {
             { car.address }
           </div>
         </div>}
+        { showPrompt && <PromptDelete postId={ car.id } cancel={ this.onCancelClick } /> }
       </div>
     );
   }

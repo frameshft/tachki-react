@@ -6,7 +6,7 @@ import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_MY_POSTS_LIST, FETCH_MY_POSTS_LIST } from '../../actions/list';
 
 import Car from '../cars/car';
-import SparePart from '../spare-parts/sparePart';
+// import SparePart from '../spare-parts/sparePart';
 import Pagination from '../shared/pagination';
 import { STORE_A_POST } from '../../actions/posts';
 
@@ -14,10 +14,13 @@ class MyPostsList extends React.Component {
   static getPostComponent(item) {
     switch (item.post_type) {
       // TODO: add services and cargo
-      case 'sparepart':
-        return (<SparePart key={ item.id } car={ item } />);
-      default:
+      case 'spare':
+        // return (<SparePart key={ item.id } part={ item } />);
+        return null;
+      case 'automobile':
         return (<Car key={ item.id } car={ item } />);
+      default:
+        return null;
     }
   }
 
@@ -51,8 +54,12 @@ class MyPostsList extends React.Component {
 
     if (posts.list.length > 0) {
       posts.list.forEach((i) => {
-        const post = MyPostsList.getPostComponent(entities[i]);
-        postsRender.push(post);
+        if (entities[i] !== undefined) {
+          const post = MyPostsList.getPostComponent(entities[i]);
+          if (post !== null) {
+            postsRender.push(post);
+          }
+        }
       });
     }
 
