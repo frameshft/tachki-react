@@ -15,7 +15,7 @@ class FavoritePosts extends React.Component {
     switch (item.post_type) {
       // TODO: add services and cargo
       case 'sparepart':
-        return (<SparePart key={ item.id } car={ item } />);
+        return (<SparePart key={ item.id } part={ item } />);
       default:
         return (<Car key={ item.id } car={ item } />);
     }
@@ -51,8 +51,10 @@ class FavoritePosts extends React.Component {
 
     if (posts.list.length > 0) {
       posts.list.forEach((i) => {
-        const post = FavoritePosts.getPostComponent(entities[i]);
-        postsRender.push(post);
+        if (entities[i] !== undefined) {
+          const post = FavoritePosts.getPostComponent(entities[i]);
+          postsRender.push(post);
+        }
       });
     }
 
