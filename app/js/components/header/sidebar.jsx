@@ -36,7 +36,12 @@ class Sidebar extends React.Component {
         <div className='sidebar__profile' />
         <ul className='sidebar__navigation'>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
-            <a href='/' className='sidebar__navigation__link'>Просмотренные</a>
+            <Link
+              to='/my/history' className='sidebar__navigation__link'
+              onClick={ this.onToggleSidebar }
+            >
+              Просмотренные
+            </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--settings'>
             <a href='/' className='sidebar__navigation__link'>Настройки</a>
@@ -105,7 +110,12 @@ class Sidebar extends React.Component {
             </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
-            <a href='/' className='sidebar__navigation__link'>Просмотренные</a>
+            <Link
+              to='/my/history' className='sidebar__navigation__link'
+              onClick={ this.onToggleSidebar }
+            >
+              Просмотренные
+            </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--settings'>
             <a href='/' className='sidebar__navigation__link'>Настройки</a>

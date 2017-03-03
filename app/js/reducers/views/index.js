@@ -5,6 +5,7 @@ import listView from './listView';
 import spareParts from './spareparts';
 import myPosts from './myPosts';
 import favorites from './favorites';
+import history from './history';
 
 
 const combinedReducer = combineReducers({
@@ -13,6 +14,7 @@ const combinedReducer = combineReducers({
   listView,
   spareParts,
   myPosts,
+  history,
   favorites,
 });
 

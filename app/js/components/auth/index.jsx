@@ -3,6 +3,7 @@ import MyPostsList from './posts';
 import FavoritePosts from './favorites';
 import Registration from './registration';
 import ForgotPassword from './forgotPassword';
+import HistoryPosts from './history';
 
 export default {
   SignIn,
@@ -10,5 +11,6 @@ export default {
   Registration,
   ForgotPassword,
   FavoritePosts,
+  HistoryPosts,
 };
 

@@ -28,6 +28,7 @@ export default (store) => {
         <Route path='spare-parts' component={ PartsList } />
         <Route path='my/posts' component={ AuthComponents.MyPostsList } />
         <Route path='my/favorites' component={ AuthComponents.FavoritePosts } />
+        <Route path='my/history' component={ AuthComponents.HistoryPosts } />
         <Route path='up/:id' component={ UpPost } />
       </Route>
     </Router>
