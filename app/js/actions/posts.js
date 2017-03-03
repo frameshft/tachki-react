@@ -34,9 +34,12 @@ export function deletePost(postId) {
 export function votePostUp(postId) {
   return dispatch =>
     API.create(`/posts/${postId}/up/`)
-      .then(res => dispatch({
-        type: UP_A_POST, data: { id: postId, time: res },
-      }))
+      .then((res) => {
+        dispatch({
+          type: UP_A_POST, data: { id: postId, time: res },
+        });
+        return res;
+      })
     ;
 }
 

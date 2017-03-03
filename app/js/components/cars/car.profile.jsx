@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import API from '../../api';
 import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
-import PromptDelete from '../shared/prompt.delete';
-import VipPost from '../shared/vip.post';
+import VipPost from '../shared/vip.post.btn';
+import Controls from '../shared/controls.post';
 
 import { STORE_A_POST } from '../../actions/posts';
 
@@ -21,17 +21,6 @@ class CarProfile extends React.Component {
       });
   }
 
-  constructor(props) {
-    super(props);
-
-    this.onDeleteClick = this.onDeleteClick.bind(this);
-    this.onCancelClick = this.onCancelClick.bind(this);
-
-    this.state = {
-      showPrompt: false,
-    };
-  }
-
   componentDidMount() {
     CarProfile.fetchCompanies(this.props.params.id);
   }
@@ -42,27 +31,14 @@ class CarProfile extends React.Component {
     }
   }
 
-  onDeleteClick() {
-    this.setState({
-      showPrompt: true,
-    });
-  }
-
-  onCancelClick() {
-    this.setState({
-      showPrompt: false,
-    });
-  }
-
   render() {
     const { cars, user } = this.props;
-    const { showPrompt } = this.state;
     const car = cars[this.props.params.id];
 
     return (
       <div>
         { user.token && car && !car.isMy && <FavoriteToggle postId={ car.id } /> }
-        { car && car.isMy && <button onClick={ this.onDeleteClick }>Delete</button> }
+        { car && car.isMy && <Controls car={ car } /> }
         {car && <div>
           <div>
             { car.title }
@@ -80,8 +56,6 @@ class CarProfile extends React.Component {
             { car.address }
           </div>
         </div>}
-        { showPrompt && car && car.isMy &&
-        <PromptDelete postId={ car.id } cancel={ this.onCancelClick } /> }
         { car && car.isMy && !car.is_vip && <VipPost postId={ car.id } /> }
       </div>
     );

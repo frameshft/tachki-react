@@ -9,6 +9,7 @@ import CarList from './components/cars/cars.list';
 import PartsList from './components/spare-parts/parts.list';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
+import UpPost from './components/shared/up.post';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -27,6 +28,7 @@ export default (store) => {
         <Route path='spare-parts' component={ PartsList } />
         <Route path='my/posts' component={ AuthComponents.MyPostsList } />
         <Route path='my/favorites' component={ AuthComponents.FavoritePosts } />
+        <Route path='up/:id' component={ UpPost } />
       </Route>
     </Router>
   );

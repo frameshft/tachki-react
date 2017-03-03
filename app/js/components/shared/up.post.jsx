@@ -1,36 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { votePostUp } from '../../actions/posts';
-import store from '../../store';
+import BtnUp from './up.post.btn';
+import BtnVip from './vip.post.btn';
 
 class UpPost extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
 
     this.state = {
-      post: this.props.posts[this.props.postId],
+      post: props.posts[this.props.params.id],
     };
   }
 
-  onClick() {
-    store.dispatch(votePostUp(this.state.post.id));
-  }
-
   render() {
+    const { post } = this.state;
+
     return (
-      <button onClick={ this.onClick }>Up</button>
+      <div>
+        <BtnUp post={ post } />
+        <BtnVip post={ post } />
+      </div>
     );
   }
 }
 
-UpPost.PropTypes = {
-  postId: React.PropTypes.number.isRequired,
+UpPost.propTypes = {
   posts: React.PropTypes.object.isRequired,
 };
 
 function mapToProps(state) {
   const posts = state.entities.posts;
+
   return {
     posts,
   };
