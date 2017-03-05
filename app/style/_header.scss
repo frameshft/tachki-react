@@ -17,6 +17,8 @@ $header-padding-top: 8.335%;
 
   &__tools {
     float: right;
+    position: relative;
+    top: -20px;
 
     &__btn {
       display: inline-block;

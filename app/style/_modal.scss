@@ -67,8 +67,25 @@
 
 .modal-dialog {
   position: relative;
-  max-width: 500px;
   margin: 30px auto;
+
+  &--image {
+    width: 80%;
+
+    .modal-body {
+      max-height: calc(100vh - 140px);
+      margin-top: 25px;
+      overflow: hidden;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &--prompt {
+    max-width: 500px;
+  }
 }
 
 .modal-content {

@@ -1,0 +1,107 @@
+$company-profile-main-bg: #fafafa;
+
+.company-profile {
+  padding: 10px 20px 20px;
+
+  @media all and (max-width: 360px) {
+    padding: 10px 0 20px;
+  }
+
+  &__media {
+    text-align: center;
+    background: #fdfdfd;
+    padding: 20px 0;
+    &__img {
+      max-height: 250px;
+      max-width: 100%;
+    }
+  }
+
+  &__name {
+    background: -webkit-linear-gradient(90deg, #d7d7d7 0%, #ffffff 100%);
+    background: -moz-linear-gradient(90deg, #d7d7d7 0%, #ffffff 100%);
+    background: -o-linear-gradient(90deg, #d7d7d7 0%, #ffffff 100%);
+    background: -ms-linear-gradient(90deg, #d7d7d7 0%, #ffffff 100%);
+    background: linear-gradient(0deg, #d7d7d7 0%, #ffffff 100%);
+
+    color: #000;
+    font-size: 25px;
+    font-weight: 500;
+    text-align: justify;
+    padding: 20px 20px 30px;
+  }
+
+  &__main {
+    background: $company-profile-main-bg;
+
+    &__row {
+      padding: 35px 20px;
+      border-bottom: 1px solid #ebebeb;
+    }
+
+    &__title {
+      color: #666;
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    &__description {
+      color: #8b8b8b;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 20px;
+      padding-left: 15px;
+    }
+  }
+
+  &__contact {
+    padding-left: 51px;
+    position: relative;
+    margin-bottom: 25px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 41px;
+      height: 41px;
+    }
+
+    &--phone {
+      &:before {
+        background: url('../img/icon-contact-phone.png') no-repeat 0 0;
+      }
+    }
+
+    &--address {
+      &:before {
+        background: url('../img/icon-contact-marker.png') no-repeat 0 0;
+      }
+    }
+
+    &--message {
+      &:before {
+        background: url('../img/icon-contact-msg.png') no-repeat 0 0;
+      }
+    }
+
+    &__row {
+      padding-top: 12px;
+    }
+
+    &__label {
+      color: #000;
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 15px;
+    }
+
+    &__value {
+      color: #767676;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
