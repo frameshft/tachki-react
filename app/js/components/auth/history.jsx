@@ -24,8 +24,8 @@ class HistoryPosts extends React.Component {
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const postsRender = [];
 
-    if (posts.list.length > 0) {
-      posts.list.forEach((i) => {
+    if (posts.length > 0) {
+      posts.forEach((i) => {
         if (entities[i] !== undefined) {
           const post = HistoryPosts.getPostComponent(entities[i]);
           postsRender.push(post);
@@ -46,13 +46,13 @@ class HistoryPosts extends React.Component {
 HistoryPosts.propTypes = {
   listView: React.PropTypes.number.isRequired,
   entities: React.PropTypes.object.isRequired,
-  posts: React.PropTypes.object.isRequired,
+  posts: React.PropTypes.array.isRequired,
 };
 
 function mapToProps(state) {
   return {
     entities: state.entities.posts,
-    posts: state.views.history,
+    posts: state.views.history.list,
     listView: state.views.listView,
   };
 }
