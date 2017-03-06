@@ -1,0 +1,51 @@
+.profile {
+  &__contact {
+    padding-left: 51px;
+    position: relative;
+    margin-bottom: 25px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 41px;
+      height: 41px;
+    }
+
+    &--phone {
+      &:before {
+        background: url('../img/icon-contact-phone.png') no-repeat 0 0;
+      }
+    }
+
+    &--address {
+      &:before {
+        background: url('../img/icon-contact-marker.png') no-repeat 0 0;
+      }
+    }
+
+    &--message {
+      &:before {
+        background: url('../img/icon-contact-msg.png') no-repeat 0 0;
+      }
+    }
+
+    &__row {
+      padding-top: 12px;
+    }
+
+    &__label {
+      color: #000;
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 15px;
+    }
+
+    &__value {
+      color: #767676;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}

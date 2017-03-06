@@ -47,14 +47,38 @@ export default class Controls extends React.Component {
     );
   }
 
-  renderAnonymous(car) {
+  renderAnonymous() {
     return (
       <ul className='controls-links__list'>
         <li className='controls-links__item'>
-          <button onClick={ this.onDeleteClick }>Удалить</button>
+          <Link to='/' className='controls-links__link controls-links__link--comment'>
+            Написать комментарий
+          </Link>
         </li>
         <li className='controls-links__item'>
-          <Link to={ `/up/${car.id}` }>Поднять объявления</Link>
+          <Link to='/' className='controls-links__link controls-links__link--price'>
+            Предложить цену
+          </Link>
+        </li>
+        <li className='controls-links__item'>
+          <Link to='/' className='controls-links__link controls-links__link--share'>
+            Поделиться
+          </Link>
+        </li>
+        <li className='controls-links__item'>
+          <Link to='/' className='controls-links__link controls-links__link--message'>
+            Написать сообщение
+          </Link>
+        </li>
+        <li className='controls-links__item'>
+          <Link to='/' className='controls-links__link controls-links__link--report'>
+            Пожаловаться
+          </Link>
+        </li>
+        <li className='controls-links__item'>
+          <Link to='/' className='controls-links__link controls-links__link--call'>
+            Позвонить
+          </Link>
         </li>
       </ul>
     );
@@ -63,14 +87,14 @@ export default class Controls extends React.Component {
   render() {
     const { car, user } = this.props;
     const { showPrompt, showLinks } = this.state;
-    const renderLink = user.token ? this.renderAuthed(car) : this.renderAnonymous(car);
+    const renderLink = user.token ? this.renderAuthed(car) : this.renderAnonymous();
 
     return (
       <div>
         <button className='settings-button' onClick={ this.onShowLinks }>+</button>
         { showLinks &&
           <div className='controls-links'>
-            <div className='controls-links__mask' />
+            <div className='controls-links__mask' onClick={ this.onShowLinks } />
             { renderLink }
           </div>
         }

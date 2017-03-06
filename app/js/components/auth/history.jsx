@@ -4,7 +4,7 @@ import * as listViewType from '../../constants/listView';
 
 import store from '../../store';
 import Car from '../cars/car';
-import SparePart from '../spare-parts/sparePart';
+import SparePart from '../spare-parts/part';
 import { CLEAR_HISTORY_POST } from '../../actions/list';
 
 class HistoryPosts extends React.Component {

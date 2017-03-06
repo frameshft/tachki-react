@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 
 import * as listViewType from '../../constants/listView';
-import SparePart from './sparePart';
+import SparePart from './part';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_SPARE_PARTS_LIST } from '../../actions/list';
 import { STORE_A_POST } from '../../actions/posts';

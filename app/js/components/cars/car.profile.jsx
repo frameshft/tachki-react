@@ -6,6 +6,7 @@ import VipPost from '../shared/vip.post.btn';
 import Controls from '../shared/controls.post';
 
 import profileNames from '../../constants/car.profile.names';
+import ContactInfo from '../shared/profile.contact.info';
 
 import { getPost } from '../../actions/posts';
 
@@ -66,7 +67,6 @@ class CarProfile extends React.Component {
       <div>
         { user.token && !car.isMy && <FavoriteToggle postId={ car.id } /> }
         {car && <Controls car={ car } user={ user } /> }
-
         <div className='car-profile'>
           <div className='car-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
@@ -80,27 +80,28 @@ class CarProfile extends React.Component {
               { car.price } сом
             </div>
           </div>
-          <h3 className='car-profile__name car-profile__row'>
-            { car.title }
-          </h3>
-          {car.profile && <div className='car-profile__profile car-profile__row'>
-            {this.renderProfile()}
-          </div>}
-          <div className='car-profile__main'>
-            { car.description && <div className='car-profile__row'>
-              <h3 className='car-profile__main__title'>
-                Описание
-              </h3>
-              <div className='car-profile__main__description'>
-                { car.description }
-              </div>
+          <div className='car-profile__wrapper'>
+            <h3 className='car-profile__name car-profile__row'>
+              { car.title }
+            </h3>
+            {car.profile && <div className='car-profile__profile car-profile__row'>
+              {this.renderProfile()}
             </div>}
-          </div>
-          <div>
-            { car.phone }
-          </div>
-          <div>
-            { car.address }
+            <div className='car-profile__main'>
+              { car.description && <div className='car-profile__row'>
+                <h3 className='car-profile__main__title'>
+                  Описание
+                </h3>
+                <div className='car-profile__main__description'>
+                  { car.description }
+                </div>
+              </div>}
+            </div>
+            <div className='car-profile__box car-profile__views'>
+              Это объявление посмотрели
+              <div className='car-profile__views__num'>{ car.num_views } раз</div>
+            </div>
+            <ContactInfo post={ car } parentCls='' />
           </div>
         </div>
         { car.isMy && !car.is_vip && <VipPost postId={ car.id } /> }

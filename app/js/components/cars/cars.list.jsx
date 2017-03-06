@@ -41,7 +41,7 @@ class CarList extends React.Component {
 
     const paginationProps = {
       totalPages: cars.totalPages,
-      view: 'cars',
+      view: 'automobiles',
       currentPage,
     };
 

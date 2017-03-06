@@ -6,7 +6,7 @@ import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_MY_FAVORITE_POSTS, FETCH_MY_FAVORITE_POSTS } from '../../actions/list';
 
 import Car from '../cars/car';
-import SparePart from '../spare-parts/sparePart';
+import SparePart from '../spare-parts/part';
 import Pagination from '../shared/pagination';
 import { STORE_A_POST } from '../../actions/posts';
 

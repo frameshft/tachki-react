@@ -7,10 +7,15 @@
     padding: 10px 0 20px;
   }
 
+  &__wrapper {
+    padding: 0 15px;
+    background: #fafafa;
+  }
+
   &__media {
     text-align: center;
     background: #fdfdfd;
-    margin: 20px 0;
+    margin: 20px 0 0;
     height: 250px;
     overflow: hidden;
     object-fit: contain;
@@ -89,6 +94,28 @@
     &__value {
       font-weight: 700;
       color: #525252;
+    }
+  }
+
+  &__box {
+    margin-top: 25px;
+    border-radius: 6px;
+    border: 2px solid #e2e2e2;
+    background-color: #fff;
+    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+  }
+
+  &__views {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #606060;
+    margin-bottom: 35px;
+
+    &__num {
+      color: #d72b01;
+      margin-top: 10px;
     }
   }
 }

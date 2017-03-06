@@ -6,6 +6,7 @@ import store from '../../store';
 import CompanyServices from './company.services';
 import ImageModal from '../shared/image.modal';
 import { getCompany } from '../../actions/companies';
+import ContactInfo from '../shared/profile.contact.info';
 
 import '../../../style/profile.scss';
 
@@ -84,38 +85,7 @@ class CompanyProfile extends React.Component {
                 { services }
               </div>
             </div>
-            <div className='company-profile__main__row'>
-              <div className='company-profile__contact company-profile__contact--phone'>
-                <div className='company-profile__contact__row'>
-                  <div className='company-profile__contact__label'>
-                    Контактная информация
-                  </div>
-                  <div className='company-profile__contact__value'>
-                    { company.phone }
-                  </div>
-                </div>
-              </div>
-              <div className='company-profile__contact company-profile__contact--address'>
-                <div className='company-profile__contact__row'>
-                  <div className='company-profile__contact__label'>
-                    Адрес
-                  </div>
-                  <div className='company-profile__contact__value'>
-                    { company.address }
-                  </div>
-                </div>
-              </div>
-              <div className='company-profile__contact company-profile__contact--message'>
-                <div className='company-profile__contact__row'>
-                  <div className='company-profile__contact__label'>
-                    Напишите пользователю
-                  </div>
-                  <div className='company-profile__contact__value'>
-                    был(-а) { moment(company.last_login).format('MMMM Do YYYY, hh:mm:ss') }
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ContactInfo post={ company } parentCls='company-profile__main__row' />
           </div>
           {showModal &&
             <ImageModal
