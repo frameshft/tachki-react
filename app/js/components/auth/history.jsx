@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as listViewType from '../../constants/listView';
 
+import store from '../../store';
 import Car from '../cars/car';
 import SparePart from '../spare-parts/sparePart';
+import { CLEAR_HISTORY_POST } from '../../actions/list';
 
 class HistoryPosts extends React.Component {
   // TODO add clear history action
@@ -16,6 +18,10 @@ class HistoryPosts extends React.Component {
       default:
         return (<Car key={ item.id } car={ item } />);
     }
+  }
+
+  clearPage() {
+    store.dispatch({ type: CLEAR_HISTORY_POST });
   }
 
   render() {
@@ -35,6 +41,9 @@ class HistoryPosts extends React.Component {
 
     return (
       <div className='body companies'>
+        <div>
+          <button onClick={ this.clearPage }>Очистить</button>
+        </div>
         <div className={ `list${listsCls}` }>
           { postsRender }
         </div>
