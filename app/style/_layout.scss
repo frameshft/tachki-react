@@ -69,6 +69,30 @@ body {
   }
 }
 
+.body-fade {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-color: #000;
+
+  &.fade {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+
+    &.in {
+      filter: alpha(opacity=50);
+      opacity: .5;
+      z-index: 1040;
+    }
+  }
+}
+
 .search-btn {
   position: fixed;
   right: 20px;

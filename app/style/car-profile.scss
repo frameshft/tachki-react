@@ -1,0 +1,94 @@
+@import "mixins";
+
+.car-profile {
+  padding: 10px 20px 20px;
+
+  @media all and (max-width: 360px) {
+    padding: 10px 0 20px;
+  }
+
+  &__media {
+    text-align: center;
+    background: #fdfdfd;
+    margin: 20px 0;
+    height: 250px;
+    overflow: hidden;
+    object-fit: contain;
+    position: relative;
+
+    button {
+      height: 250px;
+      overflow: hidden;
+    }
+
+    &__img {
+      min-height: 100%;
+      width: auto;
+    }
+  }
+
+  &__price {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px;
+    background: rgba(#ccc, 0.5);
+  }
+
+  &__name {
+    color:  #000000;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 28px;
+  }
+
+  &__row {
+    padding: 20px 0;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  &__main {
+    &__title {
+      color: #666;
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    &__description {
+      color: #8b8b8b;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 20px;
+      padding-left: 15px;
+    }
+  }
+
+  &__profile {
+    &__row {
+      @include clearfix;
+      margin-bottom: 15px;
+    }
+
+    &__label,
+    &__value {
+      float: left;
+      width: 50%;
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    &__label {
+      color: #8b8b8b;
+      font-weight: 500;
+    }
+
+    &__value {
+      font-weight: 700;
+      color: #525252;
+    }
+  }
+}
