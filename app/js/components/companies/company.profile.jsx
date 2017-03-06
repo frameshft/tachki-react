@@ -11,8 +11,8 @@ import { GET_A_COMPANY } from '../../actions/companies';
 import '../../../style/profile.scss';
 
 class CompanyProfile extends React.Component {
-  static fetchCompanies() {
-    API.fetch(window.location.pathname)
+  static fetchCompanies(id) {
+    API.fetch(`/companies/${id}/`)
       .then((res) => {
         store.dispatch({
           type: GET_A_COMPANY,
@@ -33,7 +33,7 @@ class CompanyProfile extends React.Component {
   }
 
   componentDidMount() {
-    CompanyProfile.fetchCompanies();
+    CompanyProfile.fetchCompanies(this.props.params.id);
   }
 
   onModalClose() {

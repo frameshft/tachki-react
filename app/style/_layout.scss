@@ -206,3 +206,65 @@ body {
     }
   }
 }
+
+.settings-button {
+  position: fixed;
+  bottom: 15px;
+  right: 35px;
+  width: 70px;
+  height: 70px;
+  line-height: 50px;
+  background-color: #f61e1e;
+  border: none;
+  color: #fff;
+  font-size: 38px;
+  border-radius: 50%;
+  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  z-index: 11;
+  cursor: pointer;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.controls-links {
+  &__list {
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    bottom: 95px;
+    right: 35px;
+    text-align: right;
+    z-index: 100;
+
+    button,
+    a {
+      font-size: 18px;
+      font-weight: 500;
+      text-align: justify;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__item {
+    margin-bottom: 15px;
+    padding-right: 75px;
+  }
+
+  &__mask {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}

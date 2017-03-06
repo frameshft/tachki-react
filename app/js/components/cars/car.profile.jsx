@@ -41,17 +41,26 @@ class CarProfile extends React.Component {
     if (car !== undefined && car.profile !== undefined) {
       const keys = Object.keys(car.profile);
 
-      keys.forEach((profile) => {
-        services.push(
-          <div className='car-profile__profile__row'>
-            <div className='car-profile__profile__label'>
-              { profileNames[profile] }
-            </div>
-            <div className='car-profile__profile__value'>
-              { car.profile[profile] }
-            </div>
-          </div>,
-        );
+      keys.forEach((profile, i) => {
+        let profileValue;
+        if (profile === 'is_custom_cleared' || profile === 'is_document_issued' || profile === 'is_exchangeable') {
+          profileValue = car.profile[profile] ? 'Да' : 'Нет';
+        } else {
+          profileValue = car.profile[profile];
+        }
+
+        if (car.profile[profile] !== '') {
+          services.push(
+            <div className='car-profile__profile__row' key={ i }>
+              <div className='car-profile__profile__label'>
+                { profileNames[profile] }
+              </div>
+              <div className='car-profile__profile__value'>
+                { profileValue }
+              </div>
+            </div>,
+          );
+        }
       });
     }
 
@@ -60,18 +69,18 @@ class CarProfile extends React.Component {
 
   render() {
     const { car, user } = this.props;
-
-    let image;
-
-    if (car !== undefined) {
-      image = car.image ? car.image : '';
+    if (car.id === undefined) {
+      return null;
     }
+
+    const image = car.image ? car.image : '';
 
     return (
       <div>
-        { user.token && car && !car.isMy && <FavoriteToggle postId={ car.id } /> }
-        { car && car.isMy && <Controls car={ car } /> }
-        {car && <div className='car-profile'>
+        { user.token && !car.isMy && <FavoriteToggle postId={ car.id } /> }
+        {car && <Controls car={ car } user={ user } /> }
+
+        <div className='car-profile'>
           <div className='car-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
               <img
@@ -106,20 +115,21 @@ class CarProfile extends React.Component {
           <div>
             { car.address }
           </div>
-        </div>}
-        { car && car.isMy && !car.is_vip && <VipPost postId={ car.id } /> }
+        </div>
+        { car.isMy && !car.is_vip && <VipPost postId={ car.id } /> }
       </div>
     );
   }
 }
 
 CarProfile.propTypes = {
+  car: React.PropTypes.object.isRequired,
   user: React.PropTypes.object.isRequired,
 };
 
 function mapToProps(state, props) {
   const cars = state.entities.posts;
-  const car = cars[props.params.id];
+  const car = cars[props.params.id] || {};
   const user = state.auth.user;
 
   return {
