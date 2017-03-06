@@ -1,26 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import API from '../../api';
 import store from '../../store';
 
 import CompanyServices from './company.services';
 import ImageModal from '../shared/image.modal';
-import { GET_A_COMPANY } from '../../actions/companies';
+import { getCompany } from '../../actions/companies';
 
 import '../../../style/profile.scss';
 
 class CompanyProfile extends React.Component {
-  static fetchCompanies(id) {
-    API.fetch(`/companies/${id}/`)
-      .then((res) => {
-        store.dispatch({
-          type: GET_A_COMPANY,
-          data: res,
-        });
-      });
-  }
-
   constructor(props) {
     super(props);
 
@@ -30,10 +19,12 @@ class CompanyProfile extends React.Component {
     this.state = {
       showModal: false,
     };
+
+    moment.locale('ru');
   }
 
   componentDidMount() {
-    CompanyProfile.fetchCompanies(this.props.params.id);
+    store.dispatch(getCompany(this.props.params.id));
   }
 
   onModalClose() {
@@ -51,23 +42,23 @@ class CompanyProfile extends React.Component {
   render() {
     const { company } = this.props;
     const { showModal } = this.state;
-    const services = [];
 
-    if (company !== undefined && company.services !== undefined) {
-      const keys = Object.keys(company.services);
-
-      keys.forEach((x, i) => {
-        services.push(
-          <CompanyServices key={ i } name={ x } services={ company.services[x] } />,
-        );
-      });
+    if (company.id === undefined) {
+      return null;
     }
 
-    moment.locale('ru');
+    let services = [];
+
+    if (company.services !== undefined) {
+      const keys = Object.keys(company.services);
+      services = keys.map((x, i) =>
+        <CompanyServices key={ i } name={ x } services={ company.services[x] } />,
+      );
+    }
 
     return (
       <div>
-        {company && <div className='company-profile'>
+        <div className='company-profile'>
           <div className='company-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
               <img
@@ -133,15 +124,20 @@ class CompanyProfile extends React.Component {
               onClose={ this.onModalClose }
             />
           }
-        </div>}
+        </div>
       </div>
     );
   }
 }
 
+CompanyProfile.propTypes = {
+  company: React.PropTypes.object.isRequired,
+};
+
+
 function mapToProps(state, props) {
   const companies = state.entities.users;
-  const company = companies[props.params.id];
+  const company = companies[props.params.id] || {};
 
   return {
     company,

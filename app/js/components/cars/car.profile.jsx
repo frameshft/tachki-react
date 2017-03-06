@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import API from '../../api';
 import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
 import VipPost from '../shared/vip.post.btn';
@@ -8,30 +7,18 @@ import Controls from '../shared/controls.post';
 
 import profileNames from '../../constants/car.profile.names';
 
-import { STORE_A_POST } from '../../actions/posts';
+import { getPost } from '../../actions/posts';
 
 import '../../../style/car-profile.scss';
 
 class CarProfile extends React.Component {
-  static fetchCompanies(id) {
-    API.fetch(`/automobiles/${id}/`)
-      .then((res) => {
-        store.dispatch({
-          type: STORE_A_POST,
-          data: {
-            [res.id]: res,
-          },
-        });
-      });
-  }
-
   componentDidMount() {
-    CarProfile.fetchCompanies(this.props.params.id);
+    store.dispatch(getPost('automobiles', this.props.params.id));
   }
 
   componentWillUpdate(nextProps) {
     if (nextProps.user.token !== this.props.user.token) {
-      CarProfile.fetchCompanies(this.props.params.id);
+      store.dispatch(getPost('automobiles', this.props.params.id));
     }
   }
 

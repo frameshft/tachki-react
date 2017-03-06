@@ -31,6 +31,12 @@ export function deletePost(postId) {
     ;
 }
 
+export function getPost(postType, postId) {
+  return dispatch =>
+    API.fetch(`/${postType}/${postId}/`)
+      .then(res => dispatch({ type: STORE_A_POST, data: { [res.id]: res } }));
+}
+
 export function votePostUp(postId) {
   return dispatch =>
     API.create(`/posts/${postId}/up/`)
