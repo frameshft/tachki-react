@@ -67,7 +67,7 @@ class CarProfile extends React.Component {
     return (
       <div>
         { user.token && !car.isMy && <FavoriteToggle postId={ car.id } /> }
-        {car && <Controls car={ car } user={ user } /> }
+        {car && <Controls post={ car } user={ user } /> }
         <div className='car-profile'>
           <div className='car-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
