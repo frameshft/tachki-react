@@ -14,14 +14,15 @@ class VipPostBtn extends React.Component {
 
   renderBtn() {
     return (
-      <button onClick={ this.onClick }>make VIP</button>
+      <button onClick={ this.onClick } className='btn btn--vip'>
+        Сделать VIP
+      </button>
     );
   }
 
-  //
   renderMsg() {
     return (
-      <div>Already VIP</div>
+      <div className='vip__is-vip'>Это объявление уже VIP</div>
     );
   }
 

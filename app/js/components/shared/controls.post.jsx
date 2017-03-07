@@ -38,10 +38,17 @@ export default class Controls extends React.Component {
     return (
       <ul className='controls-links__list'>
         <li className='controls-links__item'>
-          <button onClick={ this.onDeleteClick } className='button__transparent'>Удалить</button>
+          <Link to={ `/up/${car.id}` } className='controls-links__link controls-links__link--up'>
+            Поднять объявления
+          </Link>
         </li>
         <li className='controls-links__item'>
-          <Link to={ `/up/${car.id}` }>Поднять объявления</Link>
+          <button
+            onClick={ this.onDeleteClick }
+            className='button__transparent controls-links__link controls-links__link--delete'
+          >
+            Удалить
+          </button>
         </li>
       </ul>
     );
@@ -94,7 +101,10 @@ export default class Controls extends React.Component {
         <button className='settings-button' onClick={ this.onShowLinks }>+</button>
         { showLinks &&
           <div className='controls-links'>
-            <div className='controls-links__mask' onClick={ this.onShowLinks } />
+            <button
+              className='controls-links__mask button__transparent'
+              onClick={ this.onShowLinks }
+            >&nbsp;</button>
             { renderLink }
           </div>
         }

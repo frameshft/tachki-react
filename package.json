@@ -16,6 +16,10 @@
     "Daniyar Chambylov <dan.chambylov@gmail.com>",
     "Azim Shigaibaev <shigaibaev.a@gmail.com>"
   ],
+  "precommit": {
+    "run": "eslint",
+    "silent": true
+  },
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.7.2",

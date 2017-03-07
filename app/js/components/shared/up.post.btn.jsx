@@ -22,7 +22,9 @@ class UpPostBtn extends React.Component {
 
   render() {
     return (
-      <button onClick={ this.onClick }>Up</button>
+      <button onClick={ this.onClick } className='btn btn--up'>
+        Поднять объявление
+      </button>
     );
   }
 }
