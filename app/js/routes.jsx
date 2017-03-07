@@ -7,6 +7,7 @@ import AuthComponents from './components/auth';
 import CompanyList from './components/companies/companies.list';
 import CarList from './components/cars/cars.list';
 import PartsList from './components/spare-parts/parts.list';
+import ServicesList from './components/services/services.list';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
 import UpPost from './components/shared/up.post';
@@ -26,6 +27,7 @@ export default (store) => {
         <Route path='automobiles' component={ CarList } />
         <Route path='automobiles/:id' components={ CarProfile } />
         <Route path='spare-parts' component={ PartsList } />
+        <Route path='services' component={ ServicesList } />
         <Route path='my/posts' component={ AuthComponents.MyPostsList } />
         <Route path='my/favorites' component={ AuthComponents.FavoritePosts } />
         <Route path='my/history' component={ AuthComponents.HistoryPosts } />

@@ -9,7 +9,12 @@ class VipPostBtn extends React.Component {
   }
 
   onClick() {
-    store.dispatch(makePostVIP(this.state.props.post.id));
+    const balance = 0;
+    if (balance < 100) {
+      alert('Недостаточно средств');  // eslint-disable-line no-alert
+    } else {
+      store.dispatch(makePostVIP(this.props.post.id));
+    }
   }
 
   renderBtn() {

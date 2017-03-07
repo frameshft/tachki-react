@@ -6,6 +6,7 @@ import spareParts from './spareparts';
 import myPosts from './myPosts';
 import favorites from './favorites';
 import history from './history';
+import services from './services';
 
 
 const combinedReducer = combineReducers({
@@ -16,6 +17,7 @@ const combinedReducer = combineReducers({
   myPosts,
   history,
   favorites,
+  services,
 });
 
 export default function views(state, action) {

@@ -31,7 +31,14 @@ class SignIn extends React.Component {
     const { loginValue, passwordValue } = this.state;
     const mask = '996';
     const login = mask.concat(loginValue);
-    store.dispatch(AuthActions.signin({ phone: login, password: passwordValue }));
+    store.dispatch(AuthActions.signin({ phone: login, password: passwordValue }))
+      .catch((res) => {
+      // do something with error
+        switch (res.status) {
+          default:
+            return 'error';
+        }
+      });
   }
 
   loginHandle(e) {
