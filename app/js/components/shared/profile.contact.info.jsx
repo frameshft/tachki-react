@@ -8,16 +8,24 @@ export default class ProfileContactInfo extends React.Component {
     return (
       <div className={ parentCls }>
         <div className='profile__contact profile__contact--phone'>
-          <div className='profile__contact__row'>
+          {post.contactPhone && <div className='profile__contact__row'>
             <div className='profile__contact__label'>
-              Контактная информация
+              Контактный телефон
+            </div>
+            <div className='profile__contact__value'>
+              { post.contactPhone }
+            </div>
+          </div>}
+          {post.phone && <div className='profile__contact__row'>
+            <div className='profile__contact__label'>
+              Телефон пользователя
             </div>
             <div className='profile__contact__value'>
               { post.phone }
             </div>
-          </div>
+          </div>}
         </div>
-        <div className='profile__contact profile__contact--address'>
+        {post.address && <div className='profile__contact profile__contact--address'>
           <div className='profile__contact__row'>
             <div className='profile__contact__label'>
               Адрес
@@ -26,7 +34,7 @@ export default class ProfileContactInfo extends React.Component {
               { post.address }
             </div>
           </div>
-        </div>
+        </div>}
         <div className='profile__contact profile__contact--message'>
           <div className='profile__contact__row'>
             <div className='profile__contact__label'>

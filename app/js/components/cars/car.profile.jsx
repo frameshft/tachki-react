@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
 import VipPost from '../shared/vip.post.btn';
@@ -100,6 +101,17 @@ class CarProfile extends React.Component {
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз</div>
+              { car.isMy &&
+                <div className='car-profile__up'>
+                  <div className='car-profile__up__description'>
+                    Для того, чтобы повысить количество просмотров Вашего
+                    объявления, Вы можете поднять объявление в ТОП
+                  </div>
+                  <Link to={ `/up/${car.id}` } className='btn btn--vip'>
+                    Поднять объявление
+                  </Link>
+                </div>
+              }
             </div>
             <ContactInfo post={ car } parentCls='' />
           </div>
