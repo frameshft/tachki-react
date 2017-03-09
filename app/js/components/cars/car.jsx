@@ -7,7 +7,7 @@ class Car extends React.Component {
   render() {
     const { car } = this.props;
 
-    const isVip = car.is_vip;
+    const isVip = car.isVip;
     const image = car.image;
 
     return (

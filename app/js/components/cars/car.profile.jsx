@@ -116,7 +116,7 @@ class CarProfile extends React.Component {
             <ContactInfo post={ car } parentCls='' />
           </div>
         </div>
-        { car.isMy && !car.is_vip && <VipPost postId={ car.id } /> }
+        { car.isMy && !car.isVip && <VipPost postId={ car.id } /> }
       </div>
     );
   }

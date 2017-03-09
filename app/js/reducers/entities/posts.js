@@ -49,7 +49,7 @@ export default function posts(state = {}, action) {
         ...state,
         [action.data]: {
           ...state[action.data],
-          is_vip: true,
+          isVip: true,
         },
       };
     default:

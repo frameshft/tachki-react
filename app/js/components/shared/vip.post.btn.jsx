@@ -32,7 +32,7 @@ class VipPostBtn extends React.Component {
   }
 
   render() {
-    return this.props.post.is_vip ? this.renderMsg() : this.renderBtn();
+    return this.props.post.isVip ? this.renderMsg() : this.renderBtn();
   }
 }
 

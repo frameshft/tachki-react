@@ -5,7 +5,7 @@ class SparePart extends React.Component {
   render() {
     const { part } = this.props;
 
-    const isVip = part.is_vip;
+    const isVip = part.isVip;
     const image = part.image;
 
     return (
