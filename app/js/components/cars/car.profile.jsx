@@ -13,6 +13,8 @@ import { getPost } from '../../actions/posts';
 
 import '../../../style/car-profile.scss';
 
+import SimilarPosts from '../shared/similar.post';
+
 class CarProfile extends React.Component {
   componentDidMount() {
     store.dispatch(getPost('automobiles', this.props.params.id));
@@ -114,6 +116,7 @@ class CarProfile extends React.Component {
               }
             </div>
             <ContactInfo post={ car } parentCls='' />
+            <SimilarPosts post={ car } />
           </div>
         </div>
         { car.isMy && !car.isVip && <VipPost postId={ car.id } /> }
