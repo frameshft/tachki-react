@@ -15,13 +15,15 @@ class CommentsPost extends React.Component {
   componentWillReceiveProps(nextProps) {
     const x = nextProps.post;
     const y = this.props.post;
+    const { comments } = this.state;
     const isPostFound = x !== y && y === undefined;
     const predicate = y !== undefined && JSON.stringify(x.comments) !== JSON.stringify(y.comments);
-
     if (isPostFound) {
       store.dispatch(fetchComments(x.id));
     } else if (predicate) {
       this.setState({ comments: x.comments });
+    } else if (y.comments.length !== comments.length) {
+      this.setState({ comments: y.comments });
     }
   }
 
@@ -34,8 +36,11 @@ class CommentsPost extends React.Component {
     const renderComments = comments.map(x => <li key={ x.id }>{ x.id }</li>);
     return (
       <div>
-        <h2>Похожие объявления</h2>
         <ul>{ renderComments }</ul>
+        <div>
+          <input type='text' placeholder='Введите комментарий' />
+          <button>Отправить</button>
+        </div>
       </div>
     );
   }
