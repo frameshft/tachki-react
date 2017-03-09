@@ -8,6 +8,7 @@ export const UP_A_POST = 'UP_A_POST';
 export const MARK_POST_AS_FAVORITE = 'MARK_POST_AS_FAVORITE';
 export const UNMARK_POST_AS_FAVORITE = 'UNMARK_POST_AS_FAVORITE';
 export const MAKE_POST_VIP = 'MAKE_POST_VIP';
+export const STORE_COMMENTS_LIST = 'STORE_COMMENTS_LIST';
 
 
 export function markPostAsFavorite(postId) {
@@ -69,4 +70,11 @@ export function makePostVIP(postId) {
         return message;
       })
     ;
+}
+
+export function fetchComments(postId) {
+  return dispatch =>
+    API.fetch(`/posts/${postId}/comments/`)
+      .then(comments => dispatch({ type: STORE_COMMENTS_LIST, data: { id: postId, comments } }))
+  ;
 }

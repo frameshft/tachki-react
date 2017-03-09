@@ -1,5 +1,5 @@
 import { GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE,
-  REMOVE_A_POST, UP_A_POST, MAKE_POST_VIP,
+  REMOVE_A_POST, UP_A_POST, MAKE_POST_VIP, STORE_COMMENTS_LIST,
 } from '../../actions/posts';
 
 export default function posts(state = {}, action) {
@@ -50,6 +50,14 @@ export default function posts(state = {}, action) {
         [action.data]: {
           ...state[action.data],
           isVip: true,
+        },
+      };
+    case STORE_COMMENTS_LIST:
+      return {
+        ...state,
+        [action.data.id]: {
+          ...state[action.data.id],
+          comments: action.data.comments,
         },
       };
     default:

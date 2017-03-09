@@ -11,6 +11,7 @@ import ServicesList from './components/services/services.list';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
 import UpPost from './components/shared/up.post';
+import CommentsPost from './components/shared/comments.post';
 import HeaderControls from './constants/header.controls';
 
 export default (store) => {
@@ -69,6 +70,7 @@ export default (store) => {
           title='Просмотренные' controls={ HeaderControls.POSTS }
         />
         <Route path='up/:id' component={ UpPost } title='Поднять объявление' />
+        <Route path='comments/:id' component={ CommentsPost } title='Комментарии' />
       </Route>
     </Router>
   );
