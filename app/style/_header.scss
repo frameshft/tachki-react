@@ -18,10 +18,16 @@ $header-padding-top: 8.335%;
   &__tools {
     float: right;
     position: relative;
-    top: -20px;
+
+    li {
+      display: inline;
+    }
 
     &__btn {
       display: inline-block;
+      cursor: pointer;
+      border: none;
+
       &--map {
         background: url('../img/icon-marker.png') no-repeat 0 0;
         width: 18px;
@@ -31,19 +37,69 @@ $header-padding-top: 8.335%;
       }
 
       &--view {
-        width: 22px;
-        height: 17px;
+        width: 34px;
+        height: 28px;
         position: relative;
-        top: -5px;
+        top: -3px;
         &--big {
-          background: url('../img/icon-view-big.png') no-repeat 0 0;
-          background-size: 22px 17px;
+          background: url('../img/ic_view_list_white_24px.svg') no-repeat 0 0;
+          background-size: 100%;
         }
 
         &--small {
-          background: url('../img/icon-view-small.png') no-repeat 0 0;
+          background: url('../img/ic_view_agenda_white_24px.svg') no-repeat 0 0;
           background-size: 100%;
         }
+      }
+
+      &--sort {
+        width: 32px;
+        height: 26px;
+        background: url('../img/ic_sort_white_24px.svg') no-repeat 0 0;
+        background-size: 100%;
+        margin-right: 20px;
+        position: relative;
+        top: -3px;
+      }
+
+      &--edit {
+        width: 32px;
+        height: 26px;
+        background: url('../img/ic_mode_edit_white_24px.svg') no-repeat 0 0;
+        background-size: 100%;
+        margin-right: 20px;
+        position: relative;
+        top: -3px;
+      }
+
+      &--bookmark {
+        border: none;
+        cursor: pointer;
+        width: 32px;
+        height: 26px;
+        background: url('../img/ic_bookmark_border_white_24px.svg') no-repeat 0 0;
+        background-size: 100%;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      &--bookmarked {
+        border: none;
+        cursor: pointer;
+        width: 32px;
+        height: 26px;
+        background: url('../img/ic_bookmark_white_24px.svg') no-repeat 0 0;
+        background-size: 100%;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      &:focus {
+        outline: none;
       }
     }
   }

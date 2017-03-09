@@ -7,6 +7,7 @@ import Sidebar from './sidebar';
 import LIST_VIEW_TYPE from '../../actions/listView';
 import * as listViewType from '../../constants/listView';
 
+import ListControls from './list.controls';
 import '../../../style/_header.scss';
 
 class Header extends React.Component {
@@ -48,20 +49,17 @@ class Header extends React.Component {
   }
 
   render() {
-    const { showSidebar, listType } = this.state;
-    const listViewIconCls = (listType === listViewType.LIST_VIEW_NORMAL)
-      ? ' header__tools__btn--view--big' : ' header__tools__btn--view--small';
+    const { controls, post, user } = this.props;
+    const { showSidebar } = this.state;
+    const isAuthenticated = !!user.token;
 
     return (
       <div className='header'>
         <button className='sandwich__toggle button__noaction' onClick={ this.toggleSidebar } />
         <div className='header__location'>
-          главная
+          { this.props.title }
         </div>
-        <div className='header__tools'>
-          <a href='/' className='header__tools__btn header__tools__btn--map' />
-          <a href='/' className={ `header__tools__btn header__tools__btn--view${listViewIconCls}` } onClick={ this.listViewClick } />
-        </div>
+        <ListControls controls={ controls } post={ post } isAuthenticated={ isAuthenticated } />
 
         { showSidebar && <Sidebar toggle={ this.toggleSidebar } /> }
         <div className={ `body-fade fade${(showSidebar ? ' in' : '')}` } onClick={ this.toggleSidebar } />
@@ -70,9 +68,13 @@ class Header extends React.Component {
   }
 }
 
-function mapToProps(state) {
+function mapToProps(state, props) {
+  const post = state.entities.posts[props.params];
+  const user = state.auth.user;
+
   return {
-    ...state,
+    post,
+    user,
   };
 }
 

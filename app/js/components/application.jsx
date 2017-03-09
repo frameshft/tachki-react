@@ -9,9 +9,13 @@ import '../../style/style.scss';
 export default class Application extends React.Component {
 
   render() {
+    const pathName = this.props.routes[1].title;
+    const controls = this.props.routes[1].controls;
+    const params = this.props.params.id || '';
+
     return (
       <div className='app'>
-        <Header />
+        <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
         { this.props.children }
         <div className='footer'>

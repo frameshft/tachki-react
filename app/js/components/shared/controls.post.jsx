@@ -86,9 +86,11 @@ export default class Controls extends React.Component {
     const { showPrompt, showLinks } = this.state;
     const renderLink = this.buildButtons(post);
 
+    const btnCls = !showLinks ? 'settings-button' : 'settings-button settings-button--toggled';
+
     return (
       <div>
-        <button className='settings-button' onClick={ this.onShowLinks }>+</button>
+        <button className={ btnCls } onClick={ this.onShowLinks }>+</button>
         { showLinks &&
           <div className='controls-links'>
             <button
