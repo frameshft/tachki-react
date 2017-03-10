@@ -9,6 +9,7 @@ export const MARK_POST_AS_FAVORITE = 'MARK_POST_AS_FAVORITE';
 export const UNMARK_POST_AS_FAVORITE = 'UNMARK_POST_AS_FAVORITE';
 export const MAKE_POST_VIP = 'MAKE_POST_VIP';
 export const STORE_COMMENTS_LIST = 'STORE_COMMENTS_LIST';
+export const ADD_NEW_COMMENTS = 'ADD_NEW_COMMENTS';
 
 
 export function markPostAsFavorite(postId) {
@@ -76,5 +77,21 @@ export function fetchComments(postId) {
   return dispatch =>
     API.fetch(`/posts/${postId}/comments/`)
       .then(comments => dispatch({ type: STORE_COMMENTS_LIST, data: { id: postId, comments } }))
+  ;
+}
+
+export function postComments(post, description, comment = null) {
+  const data = {
+    post,
+    description,
+  };
+
+  if (comment !== null) {
+    data.comment = comment;
+  }
+
+  return dispatch =>
+    API.create('/comments/', data)
+      .then(comments => dispatch({ type: STORE_COMMENTS_LIST, data: { id: post, comments } }))
   ;
 }

@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchComments } from '../../actions/posts';
+import { fetchComments, postComments } from '../../actions/posts';
 import store from '../../store';
 
 class CommentsPost extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onSendComment = this.onSendComment.bind(this);
 
     this.state = {
       comments: [],
@@ -27,6 +29,12 @@ class CommentsPost extends React.Component {
     }
   }
 
+  onSendComment(e) {
+    e.preventDefault(e);
+    // TODO: save comment
+    store.dispatch(postComments(this.props.params.id, 'kkkkkkkkkk'));
+  }
+
   render() {
     const { post } = this.props;
     if (post === undefined) {
@@ -39,7 +47,7 @@ class CommentsPost extends React.Component {
         <ul>{ renderComments }</ul>
         <div>
           <input type='text' placeholder='Введите комментарий' />
-          <button>Отправить</button>
+          <button onClick={ this.onSendComment }>Отправить</button>
         </div>
       </div>
     );
