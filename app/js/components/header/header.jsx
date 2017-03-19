@@ -55,12 +55,13 @@ class Header extends React.Component {
 
     return (
       <div className='header'>
-        <button className='sandwich__toggle button__noaction' onClick={ this.toggleSidebar } />
-        <div className='header__location'>
-          { this.props.title }
+        <div className='mobile'>
+          <button className='sandwich__toggle button__noaction' onClick={ this.toggleSidebar } />
+          <div className='header__location'>
+            { this.props.title }
+          </div>
+          <ListControls controls={ controls } post={ post } isAuthenticated={ isAuthenticated } />
         </div>
-        <ListControls controls={ controls } post={ post } isAuthenticated={ isAuthenticated } />
-
         { showSidebar && <Sidebar toggle={ this.toggleSidebar } /> }
         <div className={ `body-fade fade${(showSidebar ? ' in' : '')}` } onClick={ this.toggleSidebar } />
       </div>

@@ -3,10 +3,12 @@
 $header-padding-top: 8.335%;
 
 .header {
-  background: $red-primary;
-  max-height: 70px;
-  padding: 23px $header-padding-top;
-  position: relative;
+  @media all and (max-width: 767px) {
+    background: $red-primary;
+    max-height: 70px;
+    padding: 23px $header-padding-top;
+    position: relative;
+  }
 
   &__location {
     display: inline-block;
@@ -118,113 +120,243 @@ $header-padding-top: 8.335%;
   }
 }
 
-.sidebar {
-  z-index: 1050;
-  position: fixed;
-  height: 100vh;
-  top: 0;
-  background: #fff;
-  max-width: 335px;
-  width: 81%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  left: 0;
+@media all and (max-width: 767px) {
+  .sidebar {
+    z-index: 1050;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    background: #fff;
+    max-width: 335px;
+    width: 81%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    left: 0;
 
-  &__profile {
-    background-color: #d32323;
-    padding: 22px 15px 14px;
-    color:  #fff;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 18px;
-
-    &__media {
-      margin-bottom: 15px;
-      width: 112px;
-      height: 112px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    &__title {
-      margin-bottom: 18px;
-    }
-  }
-
-  &__navigation {
-    padding: 20px 10px;
-
-    &__item {
-      list-style: none;
-      margin-bottom: 35px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      &:before {
-        content: '';
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        background: url('../img/sidebar-user-icons.png') no-repeat;
-      }
-
-      &--my {
-        &:before {
-          background-position: 0 -65px;
-        }
-      }
-
-      &--messages {
-        &:before {
-          background-position: 0 -128px;
-        }
-      }
-
-      &--saved {
-        &:before {
-          background-position: 0 -191px;
-        }
-      }
-
-      &--viewed {
-        &:before {
-          background-position: 0 -256px;
-        }
-      }
-
-      &--settings {
-        &:before {
-          background-position: 0 -319px;
-        }
-      }
-
-      &--recommend {
-        &:before {
-          background-position: 0 -385px;
-        }
-      }
-
-      &--signout {
-        &:before {
-          background-position: 0 -448px;
-        }
-      }
-
-    }
-
-    &__link {
-      vertical-align: top;
-      position: relative;
-      top: 7px;
-      color:  #000;
-      text-decoration: none;
-      margin-left: 10px;
-      font-size: 16px;
+    &__profile {
+      background-color: #d32323;
+      padding: 22px 15px 14px;
+      color:  #fff;
+      font-size: 18px;
       font-weight: 700;
-      display: inline-block;
+      margin-bottom: 18px;
+
+      &__media {
+        margin-bottom: 15px;
+        width: 112px;
+        height: 112px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      &__title {
+        margin-bottom: 18px;
+      }
+    }
+
+    &__navigation {
+      padding: 20px 10px;
+
+      &__item {
+        list-style: none;
+        margin-bottom: 35px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          background: url('../img/sidebar-user-icons.png') no-repeat;
+        }
+
+        &--my {
+          &:before {
+            background-position: 0 -65px;
+          }
+        }
+
+        &--messages {
+          &:before {
+            background-position: 0 -128px;
+          }
+        }
+
+        &--saved {
+          &:before {
+            background-position: 0 -191px;
+          }
+        }
+
+        &--viewed {
+          &:before {
+            background-position: 0 -256px;
+          }
+        }
+
+        &--settings {
+          &:before {
+            background-position: 0 -319px;
+          }
+        }
+
+        &--recommend {
+          &:before {
+            background-position: 0 -385px;
+          }
+        }
+
+        &--signout {
+          &:before {
+            background-position: 0 -448px;
+          }
+        }
+
+      }
+
+      &__link {
+        vertical-align: top;
+        position: relative;
+        top: 7px;
+        color:  #000;
+        text-decoration: none;
+        margin-left: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        display: inline-block;
+      }
     }
   }
 }
 
+@media all and (min-width: 767px) {
+  .sidebar {
+    width: 261px;
+    float: left;
+    border-right: 3px solid rgba(#000, 0.2);
+    padding: 40px 0;
+
+    & + div {
+      padding: 0;
+      float: left;
+      width: calc(100% - 261px);
+    }
+
+    &__profile {
+      border-bottom: 1px solid #dcdcdc;
+      padding: 0 20px 50px;
+      font-weight: 500;
+
+      &__media {
+        text-align: center;
+        margin-bottom: 25px;
+        padding: 0 20px;
+
+        &__img {
+          width: 112px;
+          height: 112px;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    &__navigation {
+      padding: 0 15px 0 40px;
+      &__item {
+        &--main {
+          .sidebar__navigation__link {
+            color: #000;
+            font-weight: 500;
+          }
+        }
+      }
+
+      &__link {
+        display: block;
+        margin: 50px 0;
+        text-decoration: none;
+        color: #646464;
+        font-size: 14px;
+        font-weight: 300;
+        text-transform: uppercase;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+.bottom-banner,
+.main-banner {
+  .download {
+    margin: 35px 0 0;
+  }
+
+  @media all and (min-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__text {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 15px;
+
+    &--main {
+      font-size: 48px;
+      font-weight: 100;
+      line-height: 49px;
+    }
+
+    &--secondary {
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 49px;
+    }
+  }
+}
+
+.main-banner {
+  background: url('../img/header.jpg') no-repeat 0 0;
+  background-size: cover;
+  height: 100vh;
+}
+
+.bottom-banner {
+  background: url('../img/banner-bottom.jpg') no-repeat 0 0;
+  background-size: cover;
+  height: 307px;
+
+  &--main {
+    font-size: 31px;
+  }
+
+  &--secondary {
+    font-size: 21px;
+  }
+}
+
+.download {
+  text-align: center;
+  &__item {
+    width: 156px;
+    height: 48px;
+    margin: 0 25px;
+    display: inline-block;
+
+    &--appstore {
+      background: url('../img/appstore-big.png') no-repeat 0 0;
+    }
+
+    &--playmarket {
+      background: url('../img/playmarket-big.png') no-repeat 0 0;
+    }
+  }
+}

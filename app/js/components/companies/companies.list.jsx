@@ -64,7 +64,12 @@ class CompanyList extends React.Component {
 
     return (
       <div className='body companies'>
-        {showAlert && <div className='alert alert--red'>
+        <div className='frontpage__block__head desktop'>
+          <h3 className='frontpage__block__title'>
+            Компании
+          </h3>
+        </div>
+        {showAlert && <div className='alert alert--red mobile'>
           Хотите стать компанией?
           <button className='alert__close button__transparent' onClick={ this.alertClose }>
             <i className='fa fa-times' />

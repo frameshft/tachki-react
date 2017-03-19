@@ -35,6 +35,9 @@ class Sidebar extends React.Component {
       <div className='sidebar'>
         <div className='sidebar__profile' />
         <ul className='sidebar__navigation'>
+          <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
+            <a href='/' className='sidebar__navigation__link'>Главная</a>
+          </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
             <Link
               to='/my/history' className='sidebar__navigation__link'
@@ -87,6 +90,9 @@ class Sidebar extends React.Component {
           </div>
         </div>
         <ul className='sidebar__navigation'>
+          <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
+            <a href='/' className='sidebar__navigation__link'>Главная</a>
+          </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--create'>
             <a href='/' className='sidebar__navigation__link'>Оформить объявление</a>
           </li>
@@ -146,7 +152,7 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   auth: React.PropTypes.object.isRequired,
-  toggle: React.PropTypes.func.isRequired,
+  toggle: React.PropTypes.func,
 };
 
 function mapToProps(state) {

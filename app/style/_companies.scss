@@ -30,6 +30,8 @@
 .companies {
   padding-bottom: 40px;
   .list {
-    margin-top: 22px;
+    @media all and (max-width: 767px) {
+      margin-top: 22px;
+    }
   }
 }

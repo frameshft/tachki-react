@@ -3,6 +3,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import Application from './components/application';
+import Frontpage from './components/frontpage';
 import AuthComponents from './components/auth';
 import CompanyList from './components/companies/companies.list';
 import CarList from './components/cars/cars.list';
@@ -21,8 +22,8 @@ export default (store) => {
     <Router history={ history }>
       <Route path='/' component={ Application }>
         <IndexRoute
-          component={ CompanyList }
-          title='Компании' controls={ HeaderControls.COMPANIES }
+          component={ Frontpage }
+          title='Главная' controls={ HeaderControls.COMPANIES }
         />
         <Route path='sign-in' component={ AuthComponents.SignIn } title='Войти' />
         <Route path='registration' component={ AuthComponents.Registration } title='Регистрация' />

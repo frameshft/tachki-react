@@ -46,7 +46,12 @@ class CarList extends React.Component {
     };
 
     return (
-      <div className='body companies'>
+      <div className='body cars'>
+        <div className='frontpage__block__head desktop'>
+          <h3 className='frontpage__block__title'>
+            Автомобили
+          </h3>
+        </div>
         <div className={ `list${listsCls}` }>
           { carsRender }
         </div>

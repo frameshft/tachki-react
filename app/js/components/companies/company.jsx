@@ -9,13 +9,22 @@ class Company extends React.Component {
   render() {
     const { company } = this.props;
     const types = company.types;
+    const img = company.image || require('../../../img/no-photo.jpg');
 
     return (
-      <div className='list__item'>
+      <div className='list__item list__item--company'>
         <Link to={ `/companies/${company.id}` } activeStyle={ { textDecoration: 'none' } }>
           <div className='list__item__left'>
             <div className='list__item__media'>
-              <img src={ company.image } className='list__item__media__img' alt={ company.name } />
+              <img src={ img } className='list__item__media__img' alt={ company.name } />
+              <div className='list__item__about'>
+                <h3 className='list__item__title desktop'>
+                  { company.name }
+                </h3>
+                { company.profile_info && <div className='list__item__description'>
+                  { company.profile_info }
+                </div> }
+              </div>
             </div>
           </div>
           <div className='list__item__content'>

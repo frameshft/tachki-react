@@ -16,6 +16,16 @@ body {
 
 .body {
   padding: 12px 15px 0;
+
+  @media all and (min-width: 767px) {
+    padding: 0;
+  }
+
+  &.cars {
+    .frontpage__block__head {
+      margin-bottom: 25px;
+    }
+  }
 }
 
 .cf {
@@ -27,6 +37,23 @@ body {
 
   &:after {
     clear: both;
+  }
+}
+
+.tab-wrapper {
+  @media all and (min-width: 767px) {
+    margin-top: 57px;
+  }
+}
+
+.main {
+  @media all and (min-width: 767px) {
+    display: flex;
+  }
+  .sidebar {
+    @media all and (max-width: 767px) {
+      display: none;
+    }
   }
 }
 

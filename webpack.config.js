@@ -47,7 +47,7 @@ module.exports = {
         loader: 'style-loader!css-loader?sourceMap&!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
       },
       {
-        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png$/,
+        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.jpg$|\.png$/,
         loader: ['url-loader'],
       },
     ],
