@@ -57,6 +57,25 @@ body {
   }
 }
 
+.body-bottom {
+  text-align: right;
+  margin-right: 36px;
+
+  .total-item-num {
+    color: #323232;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 17px;
+    margin-right: 32px;
+    font-variant: small-caps;
+  }
+
+  .total-item-num,
+  .pagination {
+    display: inline-block;
+  }
+}
+
 .pagination {
   text-align: center;
   margin-top: 40px;
@@ -71,12 +90,18 @@ body {
     &:last-child {
       margin-right: 0;
     }
+
+    &--prev {
+
+    }
   }
 
   &__link {
     text-decoration: none;
+    width: 30px;
+    height: 30px;
     border-radius: 3px;
-    border: 1px solid #bababa;
+    border: 1px solid #000000;
     background-color: #fff;
     line-height: 25px;
     display: block;
@@ -84,6 +109,11 @@ body {
     color:  #4e4e4e;
     font-size: 20px;
     cursor: pointer;
+
+    .fa {
+      position: relative;
+      top: 1px;
+    }
 
     &--active {
       background: #bababa;

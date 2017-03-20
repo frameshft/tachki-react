@@ -1,6 +1,8 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
+import '../../../style/sort-modal.scss';
+
 export default class SortModal extends React.Component {
   constructor(props) {
     super(props);
@@ -39,8 +41,8 @@ export default class SortModal extends React.Component {
     const { onClose } = this.props;
     return (
       <div>
-        <div className='modal fade in'>
-          <div className='modal-dialog modal-dialog--image'>
+        <div className='modal fade in modal--sort'>
+          <div className='modal-dialog'>
             <div className='modal-content'>
               <div className='modal-header'>
                 <button
@@ -80,7 +82,7 @@ export default class SortModal extends React.Component {
                 </ul>
                 <div className=''>
                   <button onClick={ this.onSubmit } className='btn btn--primary'>
-                    ОК
+                    Остортировать
                   </button>
                 </div>
               </div>

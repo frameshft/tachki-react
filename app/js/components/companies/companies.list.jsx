@@ -104,8 +104,10 @@ class CompanyList extends React.Component {
         <div className={ `list${listsCls}` }>
           { companiesRender }
         </div>
-        <h2>Total companies: { companies.total }</h2>
-        <Pagination { ...paginationProps } />
+        <div className='body-bottom'>
+          <h3 className='total-item-num'>Показано компаний 12 из { companies.total }</h3>
+          <Pagination { ...paginationProps } />
+        </div>
       </div>
     );
   }

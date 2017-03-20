@@ -43,6 +43,9 @@ export default class Tabber extends React.Component {
             <a href='/' className='download__item download__item--appstore'>&nbsp;</a>
             <a href='/' className='download__item download__item--playmarket'>&nbsp;</a>
           </div>
+          <button className='button-to button-to--down button__transparent'>
+            <i className='fa fa-chevron-down' />
+          </button>
         </div>}
       </div>
     );

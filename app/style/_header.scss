@@ -326,7 +326,7 @@ $header-padding-top: 8.335%;
 .main-banner {
   background: url('../img/header.jpg') no-repeat 0 0;
   background-size: cover;
-  height: 100vh;
+  height: calc(100vh - 57px);
 }
 
 .bottom-banner {

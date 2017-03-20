@@ -8,14 +8,14 @@ class Pagination extends React.Component {
 
     return (
       <ul className='pagination'>
-        {prevLink && <li className='pagination__item'>
+        {prevLink && <li className='pagination__item pagination__item--prev'>
           <Link to={ `/${this.props.view}?page=${this.props.currentPage - 1}` } className='pagination__link'>
-            Пред.
+            <i className='fa fa-angle-left' />
           </Link>
         </li>}
-        {nextLink && <li className='pagination__item'>
+        {nextLink && <li className='pagination__item pagination__item--next'>
           <Link to={ `/${this.props.view}?page=${this.props.currentPage + 1}` } className='pagination__link'>
-            Следующая
+            <i className='fa fa-angle-right' />
           </Link>
         </li>}
       </ul>

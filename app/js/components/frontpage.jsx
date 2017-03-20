@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import Companies from '../components/companies/companies.list';
 import Cars from '../components/cars/cars.list';
 
@@ -14,6 +15,9 @@ class Frontpage extends React.Component {
         <div className='frontpage'>
           <div className='frontpage__block'>
             <Companies isFrontPage />
+            <Link to='/companies' className='frontpage__block__more'>
+              Больше объявлений
+            </Link>
           </div>
           <div className='middle-banner desktop'>
             <div className='middle-banner__content'>
@@ -32,6 +36,9 @@ class Frontpage extends React.Component {
           </div>
           <div className='frontpage__block desktop'>
             <Cars isFrontPage />
+            <Link to='/automboiles' className='frontpage__block__more'>
+              Больше объявлений
+            </Link>
           </div>
           <div className='desktop bottom-banner'>
             <div className='bottom-banner__text bottom-banner__text--main'>
