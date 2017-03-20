@@ -8,8 +8,6 @@ import * as AuthActions from '../../actions/auth';
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-
-    this.onToggleSidebar = this.onToggleSidebar.bind(this);
     this.onSignoutClick = this.onSignoutClick.bind(this);
   }
 
@@ -21,10 +19,6 @@ class Sidebar extends React.Component {
     }
   }
 
-  onToggleSidebar() {
-    this.props.toggle();
-  }
-
   onSignoutClick() {
     this.props.toggle();
     store.dispatch(AuthActions.signOut());
@@ -33,16 +27,12 @@ class Sidebar extends React.Component {
   renderAnonymous() {
     return (
       <div className='sidebar'>
-        <div className='sidebar__profile' />
         <ul className='sidebar__navigation'>
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
             <a href='/' className='sidebar__navigation__link'>Главная</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
-            <Link
-              to='/my/history' className='sidebar__navigation__link'
-              onClick={ this.onToggleSidebar }
-            >
+            <Link to='/my/history' className='sidebar__navigation__link'>
               Просмотренные
             </Link>
           </li>
@@ -53,18 +43,12 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
-            <Link
-              to='/registration'
-              className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
-            >
+            <Link to='/registration' className='sidebar__navigation__link'>
               Регистрация
             </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
-            <Link
-              to='/sign-in'
-              className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
-            >
+            <Link to='/sign-in' className='sidebar__navigation__link'>
               Войти
             </Link>
           </li>
@@ -97,10 +81,7 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Оформить объявление</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--my'>
-            <Link
-              to='/my/posts'
-              className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
-            >
+            <Link to='/my/posts' className='sidebar__navigation__link'>
               Мои объявления
             </Link>
           </li>
@@ -108,18 +89,12 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Сообщения</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--saved'>
-            <Link
-              to='/my/favorites'
-              className='sidebar__navigation__link' onClick={ this.onToggleSidebar }
-            >
+            <Link to='/my/favorites' className='sidebar__navigation__link'>
               Сохраненные
             </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
-            <Link
-              to='/my/history' className='sidebar__navigation__link'
-              onClick={ this.onToggleSidebar }
-            >
+            <Link to='/my/history' className='sidebar__navigation__link'>
               Просмотренные
             </Link>
           </li>
@@ -130,11 +105,7 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--signout'>
-            {/* FIXME: replace logout with btn */}
-            <button
-              className='sidebar__navigation__link button__transparent'
-              onClick={ this.onSignoutClick }
-            >
+            <button className='sidebar__navigation__link button__transparent'>
               Выйти
             </button>
           </li>
@@ -152,7 +123,6 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   auth: React.PropTypes.object.isRequired,
-  toggle: React.PropTypes.func,
 };
 
 function mapToProps(state) {

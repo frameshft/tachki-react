@@ -4,42 +4,46 @@ import Companies from '../components/companies/companies.list';
 import Cars from '../components/cars/cars.list';
 
 import '../../style/frontpage.scss';
+import Sidebar from './header/sidebar';
 
 class Frontpage extends React.Component {
   render() {
     return (
-      <div className='frontpage'>
-        <div className='frontpage__block'>
-          <Companies />
-        </div>
-        <div className='middle-banner desktop'>
-          <div className='middle-banner__content'>
-            <div className='middle-banner__title'>
-                Заявите о себе
+      <div>
+        <Sidebar />
+        <div className='frontpage'>
+          <div className='frontpage__block'>
+            <Companies isFrontPage />
           </div>
-            <div className='middle-banner__text'>
-              Занимаетесь ли вы продажей запчастей,
-              либо предоставлением автомобильных услуг,
-              дайте о себе знать с нашей помощью.
+          <div className='middle-banner desktop'>
+            <div className='middle-banner__content'>
+              <div className='middle-banner__title'>
+                  Заявите о себе
             </div>
-            <a href='/' className='middle-banner__more'>
-              Узнать больше
-            </a>
+              <div className='middle-banner__text'>
+                Занимаетесь ли вы продажей запчастей,
+                либо предоставлением автомобильных услуг,
+                дайте о себе знать с нашей помощью.
+              </div>
+              <a href='/' className='middle-banner__more'>
+                Узнать больше
+              </a>
+            </div>
           </div>
-        </div>
-        <div className='frontpage__block desktop'>
-          <Cars />
-        </div>
-        <div className='desktop bottom-banner'>
-          <div className='bottom-banner__text bottom-banner__text--main'>
-            Скачайте наше официальное приложение
+          <div className='frontpage__block desktop'>
+            <Cars isFrontPage />
           </div>
-          <div className='bottom-banner__text bottom-banner__text--secondary'>
-            Будьте вместе с нами, где бы вы ни были
-          </div>
-          <div className='download'>
-            <a href='/' className='download__item download__item--appstore'>&nbsp;</a>
-            <a href='/' className='download__item download__item--playmarket'>&nbsp;</a>
+          <div className='desktop bottom-banner'>
+            <div className='bottom-banner__text bottom-banner__text--main'>
+              Скачайте наше официальное приложение
+            </div>
+            <div className='bottom-banner__text bottom-banner__text--secondary'>
+              Будьте вместе с нами, где бы вы ни были
+            </div>
+            <div className='download'>
+              <a href='/' className='download__item download__item--appstore'>&nbsp;</a>
+              <a href='/' className='download__item download__item--playmarket'>&nbsp;</a>
+            </div>
           </div>
         </div>
       </div>

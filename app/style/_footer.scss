@@ -43,6 +43,10 @@
     padding-left: 261px;
     position: relative;
 
+    .copyright {
+      padding-right: 227px;
+    }
+
     &:before {
       content: '';
       width: 62px;
@@ -54,7 +58,8 @@
     }
 
     .download {
-      float: right;
+      position: absolute;
+      right: 15px;
     }
 
     .download__item {

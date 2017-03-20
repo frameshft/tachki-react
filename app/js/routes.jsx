@@ -23,7 +23,7 @@ export default (store) => {
       <Route path='/' component={ Application }>
         <IndexRoute
           component={ Frontpage }
-          title='Главная' controls={ HeaderControls.COMPANIES }
+          title='Главная'
         />
         <Route path='sign-in' component={ AuthComponents.SignIn } title='Войти' />
         <Route path='registration' component={ AuthComponents.Registration } title='Регистрация' />

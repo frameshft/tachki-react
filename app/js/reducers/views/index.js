@@ -7,6 +7,7 @@ import myPosts from './myPosts';
 import favorites from './favorites';
 import history from './history';
 import services from './services';
+import isShownMobileSidebar from './isShownMobileSidebar';
 
 
 const combinedReducer = combineReducers({
@@ -18,6 +19,7 @@ const combinedReducer = combineReducers({
   history,
   favorites,
   services,
+  isShownMobileSidebar,
 });
 
 export default function views(state, action) {

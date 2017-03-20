@@ -25,9 +25,15 @@ class Header extends React.Component {
     this.listViewClick = this.listViewClick.bind(this);
 
     this.state = {
-      showSidebar: false,
+      showSidebar: this.props.isShownMobileSidebar,
       listType: listViewType.LIST_VIEW_NORMAL,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isShownMobileSidebar !== this.state.showSidebar) {
+      this.toggleSidebar();
+    }
   }
 
   listViewClick(e) {
@@ -43,8 +49,9 @@ class Header extends React.Component {
   }
 
   toggleSidebar() {
+    const { showSidebar } = this.state;
     this.setState({
-      showSidebar: !this.state.showSidebar,
+      showSidebar: !showSidebar,
     });
   }
 
@@ -62,7 +69,7 @@ class Header extends React.Component {
           </div>
           <ListControls controls={ controls } post={ post } isAuthenticated={ isAuthenticated } />
         </div>
-        { showSidebar && <Sidebar toggle={ this.toggleSidebar } /> }
+        { showSidebar && <Sidebar /> }
         <div className={ `body-fade fade${(showSidebar ? ' in' : '')}` } onClick={ this.toggleSidebar } />
       </div>
     );
@@ -72,10 +79,12 @@ class Header extends React.Component {
 function mapToProps(state, props) {
   const post = state.entities.posts[props.params];
   const user = state.auth.user;
+  const { isShownMobileSidebar } = state.views;
 
   return {
     post,
     user,
+    isShownMobileSidebar,
   };
 }
 

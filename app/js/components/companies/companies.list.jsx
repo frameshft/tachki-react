@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../actions/list';
@@ -40,6 +41,33 @@ class CompanyList extends React.Component {
     });
   }
 
+  renderFrontpage() {
+    const { isFrontPage } = this.props;
+
+    return isFrontPage ?
+      <Link to='/companies' className='frontpage__block__all-links'>
+        Все компании
+        <i className='fa fa-arrow-right' />
+      </Link> :
+      <ul className='head-tools'>
+        <li className='head-tools__item head-tools__item--search'>
+          <button className='button__transparent'>
+            Поиск
+          </button>
+        </li>
+        <li className='head-tools__item head-tools__item--sort'>
+          <button className='button__transparent'>
+            Сортировка
+          </button>
+        </li>
+        <li className='head-tools__item head-tools__item--marker'>
+          <button className='button__transparent'>
+            Показать на карте
+          </button>
+        </li>
+      </ul>;
+  }
+
   render() {
     const { showAlert } = this.state;
     const { companies, listView, currentPage, entities } = this.props;
@@ -68,6 +96,7 @@ class CompanyList extends React.Component {
           <h3 className='frontpage__block__title'>
             Компании
           </h3>
+          { this.renderFrontpage() }
         </div>
         {showAlert && <div className='alert alert--red mobile'>
           Хотите стать компанией?
@@ -89,6 +118,11 @@ CompanyList.propTypes = {
   companies: React.PropTypes.object.isRequired,
   entities: React.PropTypes.object.isRequired,
   currentPage: React.PropTypes.number.isRequired,
+  isFrontPage: React.PropTypes.bool,
+};
+
+CompanyList.defaultProps = {
+  isFrontPage: false,
 };
 
 function mapToProps(state) {

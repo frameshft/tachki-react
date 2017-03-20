@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import Car from './car';
@@ -22,6 +23,33 @@ class CarList extends React.Component {
         component: SUCCESS_FETCH_CARS_LIST,
       }, '/automobiles', this.props.currentPage));
     }
+  }
+
+  renderFrontpage() {
+    const { isFrontPage } = this.props;
+
+    return isFrontPage ?
+      <Link to='/cars' className='frontpage__block__all-links'>
+        Все объявления
+        <i className='fa fa-arrow-right' />
+      </Link> :
+      <ul className='head-tools'>
+        <li className='head-tools__item head-tools__item--search'>
+          <button className='button__transparent'>
+            Поиск
+          </button>
+        </li>
+        <li className='head-tools__item head-tools__item--sort'>
+          <button className='button__transparent'>
+            Сортировка
+          </button>
+        </li>
+        <li className='head-tools__item head-tools__item--marker'>
+          <button className='button__transparent'>
+            Показать на карте
+          </button>
+        </li>
+      </ul>;
   }
 
   render() {
@@ -51,6 +79,7 @@ class CarList extends React.Component {
           <h3 className='frontpage__block__title'>
             Автомобили
           </h3>
+          { this.renderFrontpage() }
         </div>
         <div className={ `list${listsCls}` }>
           { carsRender }
@@ -65,6 +94,11 @@ CarList.PropTypes = {
   listView: React.PropTypes.number.isRequired,
   cars: React.PropTypes.object.isRequired,
   currentPage: React.PropTypes.number.isRequired,
+  isFrontPage: React.PropTypes.bool,
+};
+
+CarList.defaultProps = {
+  isFrontPage: false,
 };
 
 

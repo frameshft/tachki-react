@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import importImage from '../../utils';
 
 class Company extends React.Component {
   static renderTypes(types) {
@@ -9,7 +10,7 @@ class Company extends React.Component {
   render() {
     const { company } = this.props;
     const types = company.types;
-    const img = company.image || require('../../../img/no-photo.jpg');
+    const img = importImage(company.image);
 
     return (
       <div className='list__item list__item--company'>

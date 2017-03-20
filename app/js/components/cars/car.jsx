@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
+import importImage from '../../utils';
 
 
 class Car extends React.Component {
@@ -8,7 +9,7 @@ class Car extends React.Component {
     const { car } = this.props;
 
     const isVip = car.is_vip;
-    const image = car.image || require('../../../img/no-photo.jpg');
+    const image = importImage(car.image);
 
     return (
       <div className='list__item list__item--car'>
@@ -40,6 +41,9 @@ class Car extends React.Component {
               <div className='list__item__date mobile'>
                 <strong>{ car.city }</strong>&nbsp;{ moment().format('MM.YY.DD, h:mm') }
               </div>
+            </div>
+            <div className='list__item__price desktop'>
+              { car.price }
             </div>
             <div className='list__item__bottom' />
           </div>

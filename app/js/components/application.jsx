@@ -3,7 +3,6 @@ import React from 'react';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
-import Sidebar from './header/sidebar';
 
 import '../../style/style.scss';
 
@@ -19,12 +18,10 @@ export default class Application extends React.Component {
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
         <div className='main cf'>
-          <Sidebar />
           { this.props.children }
         </div>
 
         <div className='footer'>
-          <a href='/' className='footer__logo desktop'>&nbsp;</a>
           <div className='download'>
             <a href='/' className='download__item download__item--android'>
               <img src={ require('../../img/playmarket.png') } className='download__item__img' alt='' />

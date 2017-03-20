@@ -26,7 +26,7 @@ class Registration extends React.Component {
     const { auth } = this.props;
     const user = auth.user;
     if (user !== nextProps.auth.user) {
-      browserHistory.push('/companies');
+      browserHistory.push('/');
     }
   }
 
