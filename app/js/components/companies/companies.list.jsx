@@ -7,7 +7,7 @@ import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../acti
 
 import Company from './company';
 import Pagination from '../shared/pagination';
-import { STORE_A_COMPANY } from '../../actions/companies';
+import { STORE_A_COMPANY, fetchCompaniesCount } from '../../actions/companies';
 
 class CompanyList extends React.Component {
   constructor(props) {
@@ -24,6 +24,8 @@ class CompanyList extends React.Component {
       entities: STORE_A_COMPANY,
       component: SUCCESS_FETCH_COMPANIES_LIST,
     }, '/companies', this.props.currentPage));
+
+    store.dispatch(fetchCompaniesCount());
   }
 
   componentDidUpdate(prevProps) {
@@ -107,6 +109,7 @@ class CompanyList extends React.Component {
         <div className={ `list${listsCls}` }>
           { companiesRender }
         </div>
+        <h2>Total companies: { companies.total }</h2>
         <Pagination { ...paginationProps } />
       </div>
     );
