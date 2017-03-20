@@ -1,28 +1,66 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import Car from './car';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST } from '../../actions/list';
 import { STORE_A_POST } from '../../actions/posts';
+import SortModal from '../shared/sort.modal';
+
 
 class CarList extends React.Component {
-  componentDidMount() {
-    store.dispatch(fetchPaginatedResponse({
+  constructor(props) {
+    super(props);
+    this.toggleSortModal = this.toggleSortModal.bind(this);
+
+    const currentLocation = browserHistory.getCurrentLocation();
+    const { sort } = currentLocation.query;
+
+    this.actionTypes = {
       entities: STORE_A_POST,
       component: SUCCESS_FETCH_CARS_LIST,
-    }, '/automobiles', this.props.currentPage));
+    };
+
+    this.endpoint = sort ? `/automobiles/?sort=${sort}` : '/automobiles/';
+
+    this.state = {
+      showSortModal: false,
+      currentSearch: currentLocation.search,
+    };
+  }
+
+  componentDidMount() {
+    store.dispatch(fetchPaginatedResponse(this.actionTypes, this.endpoint, this.props.currentPage));
+  }
+
+  componentWillReceiveProps(nextState) {
+    const nextSearch = nextState.routing.locationBeforeTransitions.search;
+
+    if (nextSearch !== this.state.currentSearch) {
+      const currentLocation = browserHistory.getCurrentLocation();
+      const { sort } = currentLocation.query;
+      this.endpoint = sort ? `/automobiles/?sort=${sort}` : '/automobiles/';
+      this.setState({
+        currentSearch: currentLocation.search,
+      });
+      store.dispatch(fetchPaginatedResponse(this.actionTypes,
+        this.endpoint, this.props.currentPage));
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(fetchPaginatedResponse({
-        entities: STORE_A_POST,
-        component: SUCCESS_FETCH_CARS_LIST,
-      }, '/automobiles', this.props.currentPage));
+      store.dispatch(fetchPaginatedResponse(this.actionTypes,
+        this.endpoint, this.props.currentPage));
     }
+  }
+
+  toggleSortModal() {
+    this.setState({
+      showSortModal: !this.state.showSortModal,
+    });
   }
 
   renderFrontpage() {
@@ -40,7 +78,7 @@ class CarList extends React.Component {
           </button>
         </li>
         <li className='head-tools__item head-tools__item--sort'>
-          <button className='button__transparent'>
+          <button className='button__transparent' onClick={ this.toggleSortModal }>
             Сортировка
           </button>
         </li>
@@ -54,6 +92,7 @@ class CarList extends React.Component {
 
   render() {
     const { listView, cars, currentPage, entities } = this.props;
+    const { showSortModal } = this.state;
     const carsRender = [];
 
     if (cars.list.length > 0) {
@@ -85,6 +124,13 @@ class CarList extends React.Component {
           { carsRender }
         </div>
         <Pagination { ...paginationProps } />
+        {showSortModal &&
+        <SortModal
+          onClose={ this.toggleSortModal }
+          endpoint={ this.endpoint }
+          actionTypes={ this.actionTypes }
+        />
+        }
       </div>
     );
   }
@@ -110,6 +156,7 @@ function mapToProps(state) {
     entities: state.entities.posts,
     cars: state.views.automobiles,
     listView: state.views.listView,
+    routing: state.routing,
     currentPage,
   };
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class PromptDelete extends React.Component {
+export default class ImageModal extends React.Component {
   render() {
     const { image, alt, onClose } = this.props;
     return (
@@ -29,7 +29,7 @@ export default class PromptDelete extends React.Component {
   }
 }
 
-PromptDelete.PropTypes = {
+ImageModal.PropTypes = {
   image: React.PropTypes.number.isRequired,
   alt: React.PropTypes.string.isRequired,
   onClose: React.PropTypes.func.isRequired,

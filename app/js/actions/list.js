@@ -65,7 +65,10 @@ export function fetchPaginatedResponse(actions, endpoint, page = 1) {
     if (actions.fetching !== undefined) {
       dispatch({ type: actions.fetching });
     }
-    return API.fetch(`${endpoint}/?page=${page}`)
+    const pageParam = `page=${page}`;
+    const parsedEndpoint = endpoint.indexOf('?') > -1 ? `${endpoint}&${pageParam}` : `${endpoint}?${pageParam}`;
+
+    return API.fetch(parsedEndpoint)
       .then((res) => {
         const { objects, results } = parsePaginatedData(res);
         return Promise.all([

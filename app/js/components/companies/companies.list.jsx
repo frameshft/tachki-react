@@ -57,11 +57,6 @@ class CompanyList extends React.Component {
             Поиск
           </button>
         </li>
-        <li className='head-tools__item head-tools__item--sort'>
-          <button className='button__transparent'>
-            Сортировка
-          </button>
-        </li>
         <li className='head-tools__item head-tools__item--marker'>
           <button className='button__transparent'>
             Показать на карте
