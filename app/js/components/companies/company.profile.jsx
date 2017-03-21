@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import moment from 'moment';
 import store from '../../store';
 
@@ -57,9 +58,11 @@ class CompanyProfile extends React.Component {
       );
     }
 
+    const contactPhone = company.contactPhone || company.phone;
+
     return (
-      <div>
-        <div className='company-profile'>
+      <div className='company-profile'>
+        <MediaQuery maxWidth={ 767 }>
           <div className='company-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
               <img
@@ -94,7 +97,60 @@ class CompanyProfile extends React.Component {
               onClose={ this.onModalClose }
             />
           }
-        </div>
+        </MediaQuery>
+
+        <MediaQuery minWidth={ 767 }>
+          <div className='company-profile__top'>
+            <div className='company-profile__media'>
+              <img
+                src={ company.image }
+                alt={ company.name }
+                className='company-profile__media__img'
+              />
+            </div>
+            <div className='company-profile__summary'>
+              <h1 className='company-profile__name'>
+                { company.name }
+              </h1>
+              <div className='company-profile__address'>
+                { company.address }
+              </div>
+            </div>
+            <div className='company-profile__top__right'>
+              <div className='company-profile__top__contact'>
+                Контактный телефон
+                <div className='company-profile__top__contact__value'>
+                  { contactPhone }
+                </div>
+              </div>
+              <div className='company-profile__top__controls'>
+                <button className='button__transparent btn--bookmark' />
+                <button className='button__transparent btn--edit' />
+                <button className='button__transparent btn--marker'>
+                  Показать на карте
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className='company-profile__main'>
+            <div className='company-profile__main__row'>
+              <h3 className='company-profile__main__title'>О компании</h3>
+              <div className='company-profile__main__description'>
+                { company.profile_info }
+              </div>
+            </div>
+            <div className='company-profile__main__row'>
+              <h3 className='company-profile__main__title'>Предоставляемые услуги</h3>
+              <div className='company-profile__main__description'>
+                { services }
+              </div>
+            </div>
+            <ContactInfo
+              post={ company }
+              parentCls='company-profile__main__row company-profile__main__row--contacts'
+            />
+          </div>
+        </MediaQuery>
       </div>
     );
   }
