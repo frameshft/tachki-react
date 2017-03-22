@@ -3,22 +3,11 @@ import { connect } from 'react-redux';
 import * as listViewType from '../../constants/listView';
 
 import store from '../../store';
-import Car from '../cars/car';
-import SparePart from '../spare-parts/part';
+import { getPostComponent } from '../shared/utils';
 import { CLEAR_HISTORY_POST } from '../../actions/list';
 
 class HistoryPosts extends React.Component {
   // TODO add clear history action
-
-  static getPostComponent(item) {
-    switch (item.post_type) {
-      // TODO: add services and cargo
-      case 'sparepart':
-        return (<SparePart key={ item.id } part={ item } />);
-      default:
-        return (<Car key={ item.id } car={ item } />);
-    }
-  }
 
   clearPage() {
     store.dispatch({ type: CLEAR_HISTORY_POST });
@@ -33,7 +22,7 @@ class HistoryPosts extends React.Component {
     if (posts.length > 0) {
       posts.forEach((i) => {
         if (entities[i] !== undefined) {
-          const post = HistoryPosts.getPostComponent(entities[i]);
+          const post = getPostComponent(entities[i]);
           postsRender.push(post);
         }
       });

@@ -5,22 +5,11 @@ import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_MY_FAVORITE_POSTS, FETCH_MY_FAVORITE_POSTS } from '../../actions/list';
 
-import Car from '../cars/car';
-import SparePart from '../spare-parts/part';
 import Pagination from '../shared/pagination';
 import { STORE_A_POST } from '../../actions/posts';
+import { getPostComponent } from '../shared/utils';
 
 class FavoritePosts extends React.Component {
-  static getPostComponent(item) {
-    switch (item.post_type) {
-      // TODO: add services and cargo
-      case 'sparepart':
-        return (<SparePart key={ item.id } part={ item } />);
-      default:
-        return (<Car key={ item.id } car={ item } />);
-    }
-  }
-
   componentDidMount() {
     if (this.props.user.token !== undefined) {
       store.dispatch(fetchPaginatedResponse({
@@ -52,7 +41,7 @@ class FavoritePosts extends React.Component {
     if (posts.list.length > 0) {
       posts.list.forEach((i) => {
         if (entities[i] !== undefined) {
-          const post = FavoritePosts.getPostComponent(entities[i]);
+          const post = getPostComponent(entities[i]);
           postsRender.push(post);
         }
       });

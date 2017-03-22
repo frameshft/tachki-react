@@ -6,10 +6,11 @@ import store from '../../store';
 
 import CompanyServices from './company.services';
 import ImageModal from '../shared/image.modal';
-import { getCompany } from '../../actions/companies';
+import { getCompany, getCompaniyPosts } from '../../actions/companies';
 import ContactInfo from '../shared/profile.contact.info';
 
 import '../../../style/profile.scss';
+import { getPostComponent } from '../shared/utils';
 
 class CompanyProfile extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class CompanyProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getCompany(this.props.params.id));
+    store.dispatch(getCompaniyPosts(this.props.params.id));
   }
 
   onModalClose() {
@@ -41,13 +43,33 @@ class CompanyProfile extends React.Component {
     });
   }
 
+  listPosts(posts) {
+    if (!posts) {
+      return [];
+    }
+    return posts.map(x => getPostComponent(x));
+  }
+
+  renderPosts(posts) {
+    const myPosts = this.listPosts(posts);
+    if (myPosts.length < 1) return null;
+    return (
+      <div>
+        <h1>Объявления компании</h1>
+        <div>{ myPosts }</div>
+      </div>
+    );
+  }
+
   render() {
-    const { company } = this.props;
+    const { company, posts } = this.props;
     const { showModal } = this.state;
 
     if (company.id === undefined) {
       return null;
     }
+
+    const myPosts = this.renderPosts(posts);
 
     let services = [];
 
@@ -90,6 +112,7 @@ class CompanyProfile extends React.Component {
             </div>
             <ContactInfo post={ company } parentCls='company-profile__main__row' />
           </div>
+          { myPosts }
           {showModal &&
             <ImageModal
               image={ company.image }
@@ -163,10 +186,13 @@ CompanyProfile.propTypes = {
 
 function mapToProps(state, props) {
   const companies = state.entities.users;
+  const allPosts = state.entities.posts;
   const company = companies[props.params.id] || {};
-
+  const companyPosts = company.posts || [];
+  const posts = companyPosts.map(x => allPosts[x]).filter(x => !!x);
   return {
     company,
+    posts,
   };
 }
 

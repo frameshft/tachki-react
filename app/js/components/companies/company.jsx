@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import importImage from '../../utils';
+import { importImage } from '../../utils';
 
 class Company extends React.Component {
   static renderTypes(types) {

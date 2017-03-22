@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
-import importImage from '../../utils';
+import { importImage } from '../../utils';
 
 
 class Car extends React.Component {
