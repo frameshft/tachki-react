@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../../api';
+import { getPostComponent } from './utils';
 
 class SimilarPosts extends React.Component {
   constructor(props) {
@@ -17,16 +18,27 @@ class SimilarPosts extends React.Component {
       .then(posts => this.setState({ posts }));
   }
 
-  render() {
-    const { posts } = this.state;
-    const renderPosts = posts.map(post => <li key={ post.id }>{ post.id } - { post.title }</li>);
+  listPosts(posts) {
+    if (!posts) {
+      return [];
+    }
+    return posts.map(x => getPostComponent(x));
+  }
 
+  renderPosts(posts) {
+    const myPosts = this.listPosts(posts);
+    if (myPosts.length < 1) return null;
     return (
-      <div>
-        <h2>Похожие объявления</h2>
-        <ul>{ renderPosts }</ul>
+      <div className='company-posts'>
+        <h3 className='company-posts__title'>Похожие объявления</h3>
+        <div className='company-posts__list'>{ myPosts }</div>
       </div>
     );
+  }
+
+  render() {
+    const { posts } = this.state;
+    return this.renderPosts(posts);
   }
 }
 

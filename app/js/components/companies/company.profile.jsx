@@ -54,9 +54,9 @@ class CompanyProfile extends React.Component {
     const myPosts = this.listPosts(posts);
     if (myPosts.length < 1) return null;
     return (
-      <div>
-        <h1>Объявления компании</h1>
-        <div>{ myPosts }</div>
+      <div className='company-posts'>
+        <h3 className='company-posts__title'>Объявления компании</h3>
+        <div className='company-posts__list'>{ myPosts }</div>
       </div>
     );
   }
@@ -173,6 +173,7 @@ class CompanyProfile extends React.Component {
               parentCls='company-profile__main__row company-profile__main__row--contacts'
             />
           </div>
+          { myPosts }
         </MediaQuery>
       </div>
     );

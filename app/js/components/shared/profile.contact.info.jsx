@@ -1,13 +1,13 @@
 import React from 'react';
-import moment from 'moment';
 
 export default class ProfileContactInfo extends React.Component {
   render() {
     const { post, parentCls } = this.props;
+    const showPhones = post.contactPhone !== '' || post.phone;
 
     return (
       <div className={ parentCls }>
-        <div className='profile__contact profile__contact--phone'>
+        {showPhones && <div className='profile__contact profile__contact--phone'>
           {post.contactPhone && <div className='profile__contact__row'>
             <div className='profile__contact__label'>
               Контактный телефон
@@ -24,7 +24,7 @@ export default class ProfileContactInfo extends React.Component {
               { post.phone }
             </div>
           </div>}
-        </div>
+        </div>}
         {post.address && <div className='profile__contact profile__contact--address'>
           <div className='profile__contact__row'>
             <div className='profile__contact__label'>
@@ -35,16 +35,6 @@ export default class ProfileContactInfo extends React.Component {
             </div>
           </div>
         </div>}
-        <div className='profile__contact profile__contact--message'>
-          <div className='profile__contact__row'>
-            <div className='profile__contact__label'>
-              Напишите пользователю
-            </div>
-            <div className='profile__contact__value'>
-              был(-а) { moment(post.last_login).format('MMMM Do YYYY, hh:mm:ss') }
-            </div>
-          </div>
-        </div>
       </div>
     );
   }

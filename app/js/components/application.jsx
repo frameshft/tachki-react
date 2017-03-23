@@ -3,6 +3,7 @@ import React from 'react';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
+import Sidebar from './header/sidebar';
 
 import '../../style/style.scss';
 
@@ -18,6 +19,7 @@ export default class Application extends React.Component {
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
         <div className='main cf'>
+          <Sidebar />
           { this.props.children }
         </div>
 

@@ -1,3 +1,5 @@
+@import 'mixins';
+
 $company-profile-main-bg: #fafafa;
 
 @media all and (max-width: 767px) {
@@ -524,5 +526,173 @@ $company-profile-main-bg: #fafafa;
         background: url('../img/mail.jpg') no-repeat 0 0;
       }
     }
+  }
+}
+
+@media all and (min-width: 767px) {
+  .company-posts {
+    background: #fff;
+    padding: 30px 10px 20px;
+
+    .list__item--car {
+      padding: 10px;
+      border-radius: 0;
+    }
+
+    &__title {
+      color: #000;
+      font-size: 22px;
+      font-weight: 700;
+      padding-left: 10px;
+      margin-bottom: 30px;
+    }
+
+    &__list {
+      @include clearfix;
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .company-posts {
+    background: #fafafa;
+    padding: 20px 10px;
+
+    .list__item--car {
+      padding: 10px;
+      border-radius: 0;
+    }
+
+    &__title {
+      color: #000;
+      font-size: 22px;
+      padding-left: 10px;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    &__list {
+      @include clearfix;
+    }
+  }
+}
+
+@media all and (min-width: 767px) {
+  .car-profile {
+    background-color: #ebebeb;
+    &__profile {
+      width: 50%;
+      float: left;
+    }
+
+    .car-profile__name {
+      margin-bottom: 25px;
+      height: 28px;
+      overflow: hidden;
+      /*white-space: nowrap;
+      text-overflow: ellipsis;*/
+    }
+
+    &__top {
+      display: flex;
+      flex-wrap: nowrap;
+      background: #fff;
+      padding: 18px 10px;
+      margin-bottom: 20px;
+
+      &__media {
+        width: 100px;
+        overflow: hidden;
+
+        img {
+          width: 74px;
+          height: 74px;
+          border-radius: 50%;
+        }
+      }
+
+      &__info {
+        color: #969696;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 35px;
+        float: right;
+
+        span {
+          margin-left: 15px;
+        }
+      }
+
+      &__price {
+        &__value {
+          color: #000;
+          font-size: 30px;
+          font-weight: 700;
+          text-align: center;
+          margin-bottom: 15px;
+        }
+      }
+
+      .is-exchangeable {
+        width: 210px;
+        line-height: 48px;
+        border-radius: 3px;
+        border: 1px solid #c6c6c6;
+        background-color: #ffffff;
+        color: #000;
+        font-size: 18px;
+        font-weight: 300;
+        text-align: center;
+      }
+
+      &__center {
+        flex-grow: 2;
+        padding: 0 25px;
+      }
+
+      &__controls {
+        @include clearfix;
+      }
+
+      .btn--edit,
+      .btn--bookmark {
+        width: 35px;
+        height: 35px;
+        border-radius: 3px;
+        border: 1px solid #c6c6c6;
+        margin-right: 10px;
+        float: left;
+      }
+
+      .btn--bookmark {
+        background: #fff url('../img/ic_bookmark_border_black_24px.svg') no-repeat 50% 50%;
+      }
+
+      .btn--edit {
+        background: #fff url('../img/ic_mode_edit_black_24px.svg') no-repeat 50% 50%;
+      }
+
+      .btn--marker {
+        float: left;
+        height: 35px;
+        background: #fff url('../img/ic_place_red_24px.svg') no-repeat 0;
+        padding-left: 35px;
+        margin-left: 10px;
+        color: #000;
+        font-size: 14px;
+      }
+    }
+
+    &__body {
+      padding: 18px 10px;
+      background: #fff;
+      margin-bottom: 25px;
+    }
+
+    &__head{
+      @include clearfix;
+    }
+
+
   }
 }

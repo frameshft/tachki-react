@@ -1,7 +1,9 @@
 @import "mixins";
 
 .car-profile {
-  padding: 10px 20px 20px;
+  @media all and (max-width: 767px) {
+    padding: 10px 20px 20px;
+  }
 
   @media all and (max-width: 360px) {
     padding: 10px 0 20px;

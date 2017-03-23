@@ -1,4 +1,5 @@
 const profileNames = {
+  year_issued: 'Год выпуска',
   transmission: 'КПП',
   color: 'Цвет',
   mileage: 'Пробег',

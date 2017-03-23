@@ -5,13 +5,11 @@ import Companies from '../components/companies/companies.list';
 import Cars from '../components/cars/cars.list';
 
 import '../../style/frontpage.scss';
-import Sidebar from './header/sidebar';
 
 class Frontpage extends React.Component {
   render() {
     return (
       <div>
-        <Sidebar />
         <div className='frontpage'>
           <div className='frontpage__block'>
             <Companies isFrontPage />
