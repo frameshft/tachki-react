@@ -6,6 +6,7 @@ import Application from './components/application';
 import Frontpage from './components/frontpage';
 import AuthComponents from './components/auth';
 import CompanyList from './components/companies/companies.list';
+import CompanySearch from './components/companies/companies.search';
 import CarList from './components/cars/cars.list';
 import PartsList from './components/spare-parts/parts.list';
 import ServicesList from './components/services/services.list';
@@ -34,6 +35,10 @@ export default (store) => {
         <Route
           path='companies'
           component={ CompanyList } title='Компании' controls={ HeaderControls.COMPANIES }
+        />
+        <Route
+          path='companies/search'
+          component={ CompanySearch } title='Поиск'
         />
         <Route
           path='companies/:id'

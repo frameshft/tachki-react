@@ -1,12 +1,12 @@
 /* eslint-disable global-require */
 
-export function listToMap(list) {
+export function listToMap(list, key = 'id') {
   let objects = {};
 
   list.forEach((item) => {
     objects = {
       ...objects,
-      [item.id]: Object.assign({}, item),
+      [item[key]]: Object.assign({}, item),
     };
   });
 

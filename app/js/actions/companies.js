@@ -15,9 +15,9 @@ export function getCompany(companyId) {
       .then(data => dispatch({ type: GET_A_COMPANY, data }));
 }
 
-export function fetchCompaniesCount() {
+export function fetchCompaniesCount(query) {
   return dispatch =>
-    API.fetch('/companies/count/')
+    API.fetch(`/companies/count/${query}`)
       .then(data => dispatch({ type: FETCH_COUNT_COMPANY, data }));
 }
 

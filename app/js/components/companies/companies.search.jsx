@@ -1,140 +1,127 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import store from '../../store';
-import * as listViewType from '../../constants/listView';
-import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../actions/list';
+import { browserHistory } from 'react-router';
+import API from '../../api';
+import { listToMap } from '../../utils';
 
-import Company from './company';
-import Pagination from '../shared/pagination';
-import { STORE_A_COMPANY, fetchCompaniesCount } from '../../actions/companies';
-
-class CompanyList extends React.Component {
+class CompanySearch extends React.Component {
   constructor(props) {
     super(props);
-    this.alertClose = this.alertClose.bind(this);
+
+    this.onCategoryChange = this.onCategoryChange.bind(this);
+    this.onCityChange = this.onCityChange.bind(this);
+    this.onServiceChange = this.onServiceChange.bind(this);
+    this.onSearch = this.onSearch.bind(this);
 
     this.state = {
-      showAlert: true,
+      total: 0,
+      category: 'all',
+      services: null,
+      service: null,
+      city: 'all',
+      cities: {},
+      categories: {},
     };
   }
 
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse({
-      entities: STORE_A_COMPANY,
-      component: SUCCESS_FETCH_COMPANIES_LIST,
-    }, '/companies', this.props.currentPage));
+    API.fetch('/companies/search_init/')
+      .then((res) => {
+        let { cities, categories } = res;
+        cities = listToMap(cities, 'key');
+        categories = listToMap(categories, 'key');
+        this.setState({ cities, categories });
+      })
+    ;
 
-    store.dispatch(fetchCompaniesCount());
+    this.fetchCount();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(fetchPaginatedResponse({
-        entities: STORE_A_COMPANY,
-        component: SUCCESS_FETCH_COMPANIES_LIST,
-      }, '/companies', this.props.currentPage));
+  onCategoryChange(e) {
+    const { services } = this.state.categories[e.target.value];
+    this.setState({ category: e.target.value, services, service: null });
+    setTimeout(() => {
+      this.fetchCount();
+    }, 0);
+  }
+
+  onCityChange(e) {
+    this.setState({ city: e.target.value });
+    setTimeout(() => {
+      this.fetchCount();
+    }, 0);
+  }
+
+  onServiceChange(e) {
+    let service = this.state.service;
+
+    if (!service) {
+      service = [];
     }
+
+    if (!e.target.checked) {
+      service = service.filter(x => x !== e.target.value);
+    } else {
+      service.push(e.target.value);
+    }
+
+    if (service.length < 1) {
+      service = null;
+    }
+
+    this.setState({ service });
+    setTimeout(() => {
+      this.fetchCount();
+    }, 0);
   }
 
-  alertClose() {
-    this.setState({
-      showAlert: false,
-    });
+  onSearch() {
+    const query = this.buildQueryString();
+    const url = `/companies${query}`;
+    browserHistory.push(url);
   }
 
-  renderFrontpage() {
-    const { isFrontPage } = this.props;
+  getSortedItems(collection) {
+    const keys = Object.keys(collection).sort();
+    return keys.map(x =>
+      <option key={ x } value={ collection[x].key }>{ collection[x].value }</option>);
+  }
 
-    return isFrontPage ?
-      <Link to='/companies' className='frontpage__block__all-links'>
-        Все компании
-        <i className='fa fa-arrow-right' />
-      </Link> :
-      <ul className='head-tools'>
-        <li className='head-tools__item head-tools__item--search'>
-          <button className='button__transparent'>
-            Поиск
-          </button>
-        </li>
-        <li className='head-tools__item head-tools__item--marker'>
-          <button className='button__transparent'>
-            Показать на карте
-          </button>
-        </li>
-      </ul>;
+  buildQueryString() {
+    const { city, category, service } = this.state;
+    let query = `?city=${city}&category=${category}`;
+    if (service) {
+      query += `&${service.map(x => `services=${x}`).join('&')}`;
+    }
+
+    return query;
+  }
+
+  fetchCount() {
+    const queryString = this.buildQueryString();
+    const url = `/companies/count/${queryString}`;
+    API.fetch(url).then(total => this.setState({ total }));
   }
 
   render() {
-    const { showAlert } = this.state;
-    const { companies, listView, currentPage, entities } = this.props;
-
-    const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
-    const companiesRender = [];
-
-    if (companies.list.length > 0) {
-      companies.list.forEach((i) => {
-        const item = entities[i];
-        companiesRender.push(
-          <Company key={ item.id } company={ item } />,
-        );
-      });
-    }
-
-    const paginationProps = {
-      totalPages: companies.totalPages,
-      view: 'companies',
-      currentPage,
-    };
+    const { cities, categories, services, total } = this.state;
+    const citiesOpts = this.getSortedItems(cities);
+    const categoriesOpts = this.getSortedItems(categories);
+    const servicesOpts = !services ? null : services.map(x => (
+      <li key={ x.key }>
+        <input type='checkbox' name='sevice' value={ x.key } onChange={ this.onServiceChange } />
+        { x.value }
+      </li>
+    ));
 
     return (
-      <div className='body companies'>
-        <div className='frontpage__block__head desktop'>
-          <h3 className='frontpage__block__title'>
-            Компании
-          </h3>
-          { this.renderFrontpage() }
-        </div>
-        {showAlert && <div className='alert alert--red mobile'>
-          Хотите стать компанией?
-          <button className='alert__close button__transparent' onClick={ this.alertClose }>
-            <i className='fa fa-times' />
-          </button>
-        </div>}
-        <div className={ `list${listsCls}` }>
-          { companiesRender }
-        </div>
-        <div className='body-bottom'>
-          <h3 className='total-item-num'>Показано компаний 12 из { companies.total }</h3>
-          <Pagination { ...paginationProps } />
-        </div>
+      <div>
+        <div>Категория <select onChange={ this.onCategoryChange }>{ categoriesOpts }</select></div>
+        { servicesOpts && <div>Тип <ul>{ servicesOpts }</ul></div>}
+        <div>Город <select onChange={ this.onCityChange }>{ citiesOpts }</select></div>
+        <button onClick={ this.onSearch } >Поиск { total > 0 && <span>({ total })</span>}</button>
       </div>
     );
   }
 }
 
-CompanyList.propTypes = {
-  listView: React.PropTypes.number.isRequired,
-  companies: React.PropTypes.object.isRequired,
-  entities: React.PropTypes.object.isRequired,
-  currentPage: React.PropTypes.number.isRequired,
-  isFrontPage: React.PropTypes.bool,
-};
-
-CompanyList.defaultProps = {
-  isFrontPage: false,
-};
-
-function mapToProps(state) {
-  let currentPage = state.routing.locationBeforeTransitions.query.page;
-  currentPage = currentPage !== undefined ? +currentPage : 1;
-
-  return {
-    entities: state.entities.users,
-    companies: state.views.companies,
-    listView: state.views.listView,
-    currentPage,
-  };
-}
-
-export default connect(mapToProps)(CompanyList);
+export default CompanySearch;

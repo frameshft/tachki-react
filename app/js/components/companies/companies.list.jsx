@@ -20,21 +20,23 @@ class CompanyList extends React.Component {
   }
 
   componentDidMount() {
-    store.dispatch(fetchPaginatedResponse({
-      entities: STORE_A_COMPANY,
-      component: SUCCESS_FETCH_COMPANIES_LIST,
-    }, '/companies', this.props.currentPage));
-
-    store.dispatch(fetchCompaniesCount());
+    this.getPosts();
+    const { url } = this.props;
+    store.dispatch(fetchCompaniesCount(url.search));
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(fetchPaginatedResponse({
-        entities: STORE_A_COMPANY,
-        component: SUCCESS_FETCH_COMPANIES_LIST,
-      }, '/companies', this.props.currentPage));
+      this.getPosts();
     }
+  }
+
+  getPosts() {
+    const { url } = this.props;
+    store.dispatch(fetchPaginatedResponse({
+      entities: STORE_A_COMPANY,
+      component: SUCCESS_FETCH_COMPANIES_LIST,
+    }, `/companies/${url.search}`, this.props.currentPage));
   }
 
   alertClose() {
@@ -105,7 +107,9 @@ class CompanyList extends React.Component {
           { companiesRender }
         </div>
         <div className='body-bottom'>
-          <h3 className='total-item-num'>Показано компаний 12 из { companies.total }</h3>
+          <h3 className='total-item-num'>
+            Показано компаний { companiesRender.length } из { companies.total }
+          </h3>
           <Pagination { ...paginationProps } />
         </div>
       </div>
@@ -133,6 +137,7 @@ function mapToProps(state) {
     entities: state.entities.users,
     companies: state.views.companies,
     listView: state.views.listView,
+    url: state.routing.locationBeforeTransitions,
     currentPage,
   };
 }
