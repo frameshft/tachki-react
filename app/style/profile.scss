@@ -658,6 +658,7 @@ $company-profile-main-bg: #fafafa;
       }
 
       .btn--edit,
+      .btn--bookmark-svg,
       .btn--bookmark {
         width: 35px;
         height: 35px;
@@ -669,6 +670,11 @@ $company-profile-main-bg: #fafafa;
 
       .btn--bookmark {
         background: #fff url('../img/ic_bookmark_border_black_24px.svg') no-repeat 50% 50%;
+
+        &.active {
+          // TODO: #
+          background-color: red;
+        }
       }
 
       .btn--edit {

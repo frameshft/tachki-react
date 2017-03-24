@@ -29,9 +29,20 @@ class FavoriteToggle extends React.Component {
   }
 
   render() {
-    const cls = this.state.post.isFavorite ? 'header__tools__btn--bookmark' : 'header__tools__btn--bookmarked';
+    const { isDesktop } = this.props;
+    let cls;
+    if (isDesktop) {
+      // TODO: #[BOOKMARK] clean active state for bookmarked state
+      cls = 'button__transparent btn--bookmark';
+      if (this.state.post.isFavorite) {
+        cls += ' btn--bookmark active';
+      }
+    } else {
+      cls = 'header__tools__btn ';
+      cls += this.state.post.isFavorite ? 'header__tools__btn--bookmark' : 'header__tools__btn--bookmarked';
+    }
     return (
-      <button onClick={ this.onClick } className={ `header__tools__btn ${cls}` } />
+      <button onClick={ this.onClick } className={ cls } />
     );
   }
 }

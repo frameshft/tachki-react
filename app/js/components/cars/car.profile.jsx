@@ -141,7 +141,7 @@ class CarProfile extends React.Component {
                 </div>
               </h1>
               <div className='car-profile__top__controls'>
-                <button className='button__transparent btn--bookmark' />
+                <FavoriteToggle postId={ car.id } isDesktop />
                 <button className='button__transparent btn--edit' />
                 <button className='button__transparent btn--marker'>
                   Показать на карте
