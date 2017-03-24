@@ -108,7 +108,7 @@ class CarProfile extends React.Component {
             </div>
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
-              <div className='car-profile__views__num'>{ car.num_views } раз</div>
+              <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>
               { car.isMy &&
                 <div className='car-profile__up'>
                   <div className='car-profile__up__description'>
@@ -148,7 +148,6 @@ class CarProfile extends React.Component {
                 </button>
                 <div className='car-profile__top__info'>
                   <span> { moment(car.created_at).format('DD MMMM') }</span>
-                  <span>{ car.num_views } <i className='fa fa-eye' /></span>
                 </div>
               </div>
             </div>
@@ -178,7 +177,7 @@ class CarProfile extends React.Component {
             </div>
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
-              <div className='car-profile__views__num'>{ car.num_views } раз</div>
+              <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>
               { car.isMy &&
               <div className='car-profile__up'>
                 <div className='car-profile__up__description'>

@@ -5,12 +5,12 @@ import moment from 'moment';
 import store from '../../store';
 
 import CompanyServices from './company.services';
+import CompanyPosts from './companies.posts';
 import ImageModal from '../shared/image.modal';
-import { getCompany, getCompaniyPosts } from '../../actions/companies';
+import { getCompany } from '../../actions/companies';
 import ContactInfo from '../shared/profile.contact.info';
 
 import '../../../style/profile.scss';
-import { getPostComponent } from '../shared/utils';
 
 class CompanyProfile extends React.Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class CompanyProfile extends React.Component {
 
     this.state = {
       showModal: false,
+      postsPage: 1,
     };
 
     moment.locale('ru');
@@ -28,7 +29,6 @@ class CompanyProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getCompany(this.props.params.id));
-    store.dispatch(getCompaniyPosts(this.props.params.id));
   }
 
   onModalClose() {
@@ -43,33 +43,13 @@ class CompanyProfile extends React.Component {
     });
   }
 
-  listPosts(posts) {
-    if (!posts) {
-      return [];
-    }
-    return posts.map(x => getPostComponent(x));
-  }
-
-  renderPosts(posts) {
-    const myPosts = this.listPosts(posts);
-    if (myPosts.length < 1) return null;
-    return (
-      <div className='company-posts'>
-        <h3 className='company-posts__title'>Объявления компании</h3>
-        <div className='company-posts__list'>{ myPosts }</div>
-      </div>
-    );
-  }
-
   render() {
-    const { company, posts } = this.props;
+    const { company } = this.props;
     const { showModal } = this.state;
 
     if (company.id === undefined) {
       return null;
     }
-
-    const myPosts = this.renderPosts(posts);
 
     let services = [];
 
@@ -112,7 +92,7 @@ class CompanyProfile extends React.Component {
             </div>
             <ContactInfo post={ company } parentCls='company-profile__main__row' />
           </div>
-          { myPosts }
+          <CompanyPosts company={ company } />
           {showModal &&
             <ImageModal
               image={ company.image }
@@ -173,7 +153,7 @@ class CompanyProfile extends React.Component {
               parentCls='company-profile__main__row company-profile__main__row--contacts'
             />
           </div>
-          { myPosts }
+          <CompanyPosts company={ company } />
         </MediaQuery>
       </div>
     );

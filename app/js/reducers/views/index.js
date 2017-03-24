@@ -8,11 +8,13 @@ import favorites from './favorites';
 import history from './history';
 import services from './services';
 import isShownMobileSidebar from './isShownMobileSidebar';
+import companyPosts from './companyPosts';
 
 
 const combinedReducer = combineReducers({
   automobiles,
   companies,
+  companyPosts,
   listView,
   spareParts,
   myPosts,

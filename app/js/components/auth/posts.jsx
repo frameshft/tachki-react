@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_MY_POSTS_LIST, FETCH_MY_POSTS_LIST } from '../../actions/list';
@@ -11,13 +11,11 @@ import { STORE_A_POST } from '../../actions/posts';
 
 class MyPostsList extends React.Component {
   componentDidMount() {
-    if (this.props.user.token !== undefined) {
-      store.dispatch(fetchPaginatedResponse({
-        entities: STORE_A_POST,
-        component: SUCCESS_FETCH_MY_POSTS_LIST,
-        fetching: FETCH_MY_POSTS_LIST,
-      }, '/my/posts', this.props.currentPage, true));
-    }
+    store.dispatch(fetchPaginatedResponse({
+      entities: STORE_A_POST,
+      component: SUCCESS_FETCH_MY_POSTS_LIST,
+      fetching: FETCH_MY_POSTS_LIST,
+    }, '/my/posts/', this.props.currentPage, true));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,12 +26,15 @@ class MyPostsList extends React.Component {
         entities: STORE_A_POST,
         component: SUCCESS_FETCH_MY_POSTS_LIST,
         fetching: FETCH_MY_POSTS_LIST,
-      }, '/my/posts', nextProps.currentPage, true));
+      }, '/my/posts/', nextProps.currentPage, true));
     }
   }
 
   render() {
-    const { listView, currentPage, posts, entities } = this.props;
+    const { listView, currentPage, posts, entities, user } = this.props;
+    if (user.token === undefined) {
+      return null;
+    }
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const postsRender = [];
@@ -42,7 +43,7 @@ class MyPostsList extends React.Component {
       posts.list.forEach((i) => {
         if (entities[i] !== undefined) {
           const post = getPostComponent(entities[i]);
-          if (post !== null) {
+          if (post) {
             postsRender.push(post);
           }
         }
@@ -55,10 +56,20 @@ class MyPostsList extends React.Component {
       currentPage,
     };
 
+    const renderer = postsRender.length > 0 ?
+      postsRender :
+      (<div className='no-posts'>
+        <div className='no-posts__title'>У вас нет объявлений</div>
+        <div className='no-posts__body'>Может быть вы хотите создать объявление?</div>
+        <Link to='/automobiles' className='btn btn--primary'>
+          Создать объявление
+        </Link>
+      </div>);
+
     return (
       <div className='body companies'>
         <div className={ `list${listsCls}` }>
-          { postsRender }
+          { renderer }
         </div>
         <Pagination { ...paginationProps } />
       </div>

@@ -7,8 +7,10 @@ export function getPostComponent(item) {
     // TODO: add services and cargo
     case 'sparepart':
       return (<SparePart key={ item.id } part={ item } />);
-    default:
+    case 'automobile':
       return (<Car key={ item.id } car={ item } />);
+    default:
+      return null;
   }
 }
 

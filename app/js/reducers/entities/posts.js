@@ -1,5 +1,7 @@
-import { GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE,
+import {
+  GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE,
   REMOVE_A_POST, UP_A_POST, MAKE_POST_VIP, STORE_COMMENTS_LIST, ADD_NEW_COMMENTS,
+  REMOVE_ZOMBIE_POST,
 } from '../../actions/posts';
 
 export default function posts(state = {}, action) {
@@ -32,6 +34,7 @@ export default function posts(state = {}, action) {
           isFavorite: false,
         },
       };
+    case REMOVE_ZOMBIE_POST:
     case REMOVE_A_POST:
       newState = { ...state };
       delete newState[action.data];

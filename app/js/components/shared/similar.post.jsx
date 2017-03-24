@@ -22,7 +22,7 @@ class SimilarPosts extends React.Component {
     if (!posts) {
       return [];
     }
-    return posts.map(x => getPostComponent(x));
+    return posts.map(x => getPostComponent(x)).filter(x => !!x);
   }
 
   renderPosts(posts) {

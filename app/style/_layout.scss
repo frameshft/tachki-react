@@ -265,3 +265,28 @@ body {
     }
   }
 }
+
+.no-posts {
+  margin-top: 150px;
+  text-transform: uppercase;
+  text-align: center;
+
+  &__title {
+    font-size: 45px;
+    color: #ccc;
+    font-weight: 500;
+  }
+
+  &__body {
+    color: #000;
+    margin: 25px 0;
+    font-weight: 500;
+    text-transform: none;
+    font-size: 25px;
+  }
+
+  .btn {
+    text-decoration: none;
+    display: inline-block;
+  }
+}

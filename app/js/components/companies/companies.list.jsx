@@ -89,6 +89,10 @@ class CompanyList extends React.Component {
       currentPage,
     };
 
+    const currentItems = (currentPage * companiesRender.length) - (companiesRender.length + 1);
+
+    const showingElements = companies.totalPages === 1 ? companiesRender.length : `${currentItems}-${currentPage * companiesRender.length}`;
+
     return (
       <div className='body companies'>
         <div className='frontpage__block__head desktop'>
@@ -108,7 +112,7 @@ class CompanyList extends React.Component {
         </div>
         <div className='body-bottom'>
           <h3 className='total-item-num'>
-            Показано компаний { companiesRender.length } из { companies.total }
+            Показано компаний { showingElements } из { companies.total }
           </h3>
           <Pagination { ...paginationProps } />
         </div>

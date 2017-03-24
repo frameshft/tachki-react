@@ -602,7 +602,10 @@ $company-profile-main-bg: #fafafa;
 
       &__media {
         width: 100px;
+        min-width: 100px;
+        max-width: 100px;
         overflow: hidden;
+        text-align: center;
 
         img {
           width: 74px;
