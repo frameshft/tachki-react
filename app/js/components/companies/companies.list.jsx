@@ -39,6 +39,21 @@ class CompanyList extends React.Component {
     }, `/companies/${url.search}`, this.props.currentPage));
   }
 
+  getPageItemsCount(page, actualItemsLength, totalItemsCount, totalPages, maxPageSize = 12) {
+    const pageItemsLength = actualItemsLength >= maxPageSize ? actualItemsLength : maxPageSize;
+    const currentItems = (page * maxPageSize) - (maxPageSize - 1);
+    let totalItemsOnPage = page * pageItemsLength;
+    if (totalItemsCount < totalItemsOnPage) {
+      totalItemsOnPage = totalItemsCount;
+    }
+    const itemsCount = totalPages === 1 ? actualItemsLength : `${currentItems}-${totalItemsOnPage}`;
+
+    return {
+      itemsCount,
+      totalItemsCount,
+    };
+  }
+
   alertClose() {
     this.setState({
       showAlert: false,
@@ -89,9 +104,13 @@ class CompanyList extends React.Component {
       currentPage,
     };
 
-    const currentItems = (currentPage * companiesRender.length) - (companiesRender.length + 1);
-
-    const showingElements = companies.totalPages === 1 ? companiesRender.length : `${currentItems}-${currentPage * companiesRender.length}`;
+    const { itemsCount, totalItemsCount } = this.getPageItemsCount(
+      currentPage,
+      companiesRender.length,
+      companies.total,
+      companies.totalPages,
+      12,
+    );
 
     return (
       <div className='body companies'>
@@ -112,7 +131,7 @@ class CompanyList extends React.Component {
         </div>
         <div className='body-bottom'>
           <h3 className='total-item-num'>
-            Показано компаний { showingElements } из { companies.total }
+            Показано компаний { itemsCount } из { totalItemsCount }
           </h3>
           <Pagination { ...paginationProps } />
         </div>
