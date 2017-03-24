@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { markPostAsFavorite, unMarkPostAsFavorite } from '../../actions/posts';
 import store from '../../store';
 
@@ -7,39 +6,34 @@ class FavoriteToggle extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
-
-    this.state = {
-      post: this.props.posts[this.props.postId],
-    };
-  }
-
-  componentWillUpdate(nextProps) {
-    const post = nextProps.posts[nextProps.postId];
-    if (post.isFavorite !== this.state.post.isFavorite) {
-      this.state.post.isFavorite = post.isFavorite;
-    }
   }
 
   onClick() {
-    if (this.state.post.isFavorite) {
-      store.dispatch(unMarkPostAsFavorite(this.state.post.id));
+    const { post } = this.props;
+    if (post.isFavorite) {
+      store.dispatch(unMarkPostAsFavorite(post.id));
     } else {
-      store.dispatch(markPostAsFavorite(this.state.post.id));
+      store.dispatch(markPostAsFavorite(post.id));
     }
   }
 
   render() {
-    const { isDesktop } = this.props;
+    const { isDesktop, post } = this.props;
     let cls;
+
+    if (post.isMy) {
+      return null;
+    }
+
     if (isDesktop) {
       // TODO: #[BOOKMARK] clean active state for bookmarked state
       cls = 'button__transparent btn--bookmark';
-      if (this.state.post.isFavorite) {
+      if (post.isFavorite) {
         cls += ' btn--bookmark active';
       }
     } else {
       cls = 'header__tools__btn ';
-      cls += this.state.post.isFavorite ? 'header__tools__btn--bookmarked' : 'header__tools__btn--bookmark';
+      cls += post.isFavorite ? 'header__tools__btn--bookmarked' : 'header__tools__btn--bookmark';
     }
     return (
       <button onClick={ this.onClick } className={ cls } />
@@ -48,15 +42,13 @@ class FavoriteToggle extends React.Component {
 }
 
 FavoriteToggle.PropTypes = {
-  postId: React.PropTypes.number.isRequired,
-  posts: React.PropTypes.object.isRequired,
+  post: React.PropTypes.object.isRequired,
+  isDesktop: React.PropTypes.bool,
 };
 
-function mapToProps(state) {
-  const posts = state.entities.posts;
-  return {
-    posts,
-  };
-}
+FavoriteToggle.defaultProps = {
+  isDesktop: false,
+};
 
-export default connect(mapToProps)(FavoriteToggle);
+
+export default FavoriteToggle;

@@ -38,7 +38,7 @@ export default class extends React.Component {
       case HeaderControls.POST_DETAIL:
         if (isAuthenticated) {
           if (!post.isMy) {
-            renderControls.push(<FavouriteBtn postId={ post.id } />);
+            renderControls.push(<FavouriteBtn post={ post } />);
           } else {
             renderControls.push(<button className='header__tools__btn header__tools__btn--edit' />);
           }

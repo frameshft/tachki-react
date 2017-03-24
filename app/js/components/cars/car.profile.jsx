@@ -75,7 +75,7 @@ class CarProfile extends React.Component {
     return (
       <div className='car-profile'>
         <MediaQuery maxWidth={ 767 }>
-          { user.token && !car.isMy && <FavoriteToggle postId={ car.id } /> }
+          { user.token && <FavoriteToggle post={ car } /> }
           {car && <Controls post={ car } user={ user } /> }
           <div className='car-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
@@ -141,8 +141,8 @@ class CarProfile extends React.Component {
                 </div>
               </h1>
               <div className='car-profile__top__controls'>
-                <FavoriteToggle postId={ car.id } isDesktop />
-                <button className='button__transparent btn--edit' />
+                <FavoriteToggle post={ car } isDesktop />
+                { car.isMy && <button className='button__transparent btn--edit' /> }
                 <button className='button__transparent btn--marker'>
                   Показать на карте
                 </button>
