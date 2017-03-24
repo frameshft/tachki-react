@@ -39,7 +39,7 @@ class FavoriteToggle extends React.Component {
       }
     } else {
       cls = 'header__tools__btn ';
-      cls += this.state.post.isFavorite ? 'header__tools__btn--bookmark' : 'header__tools__btn--bookmarked';
+      cls += this.state.post.isFavorite ? 'header__tools__btn--bookmarked' : 'header__tools__btn--bookmark';
     }
     return (
       <button onClick={ this.onClick } className={ cls } />
