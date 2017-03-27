@@ -106,6 +106,25 @@ class CarProfile extends React.Component {
                 </div>
               </div>}
             </div>
+            <div className='car-profile__comments'>
+              <div className='car-profile__comments__top'>
+                <div className='car-profile__comments__media'>
+                  &nbsp;
+                </div>
+                <div className='car-profile__comments__user'>
+                  Александр
+                  <div className='car-profile__comments__date'>
+                    20-01-2017 15:44
+                  </div>
+                </div>
+              </div>
+              <div className='car-profile__comments__text'>
+                Желаю удачи в продаже!!! Единичный экземпляр
+              </div>
+              <Link to={ `/comments/${car.id}` } className='car-profile__comments__all'>
+                Комментарии 1
+              </Link>
+            </div>
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>
@@ -174,6 +193,25 @@ class CarProfile extends React.Component {
                   { car.description }
                 </div>
               </div>}
+            </div>
+            <div className='car-profile__comments'>
+              <div className='car-profile__comments__top'>
+                <div className='car-profile__comments__media'>
+                 &nbsp;
+                </div>
+                <div className='car-profile__comments__user'>
+                  Александр
+                  <div className='car-profile__comments__date'>
+                    20-01-2017 15:44
+                  </div>
+                </div>
+              </div>
+              <div className='car-profile__comments__text'>
+                Желаю удачи в продаже!!! Единичный экземпляр
+              </div>
+              <Link to={ `/comments/${car.id}` } className='car-profile__comments__all'>
+                Комментарии 1
+              </Link>
             </div>
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели

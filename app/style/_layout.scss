@@ -16,9 +16,21 @@ body {
 
 .body {
   padding: 12px 15px 0;
+  position: relative;
 
   @media all and (min-width: 767px) {
     padding: 0;
+  }
+
+  &.cars,
+  &.companies {
+    padding-bottom: 85px;
+
+    .body-bottom {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
   }
 
   &.cars {
@@ -78,8 +90,9 @@ body {
 }
 
 .pagination {
-  text-align: center;
+  text-align: right;
   margin-top: 40px;
+  margin-right: 30px;
   position: relative;
   z-index: 99;
   margin-bottom: 15px;
@@ -87,6 +100,7 @@ body {
   &__item {
     display: inline-block;
     margin-right: 5px;
+    text-align: center;
 
     &:last-child {
       margin-right: 0;

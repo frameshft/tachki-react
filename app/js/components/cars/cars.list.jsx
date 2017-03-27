@@ -57,6 +57,21 @@ class CarList extends React.Component {
     }
   }
 
+  getPageItemsCount(page, actualItemsLength, totalItemsCount, totalPages, maxPageSize = 12) {
+    const pageItemsLength = actualItemsLength >= maxPageSize ? actualItemsLength : maxPageSize;
+    const currentItems = (page * maxPageSize) - (maxPageSize - 1);
+    let totalItemsOnPage = page * pageItemsLength;
+    if (totalItemsCount < totalItemsOnPage) {
+      totalItemsOnPage = totalItemsCount;
+    }
+    const itemsCount = totalPages === 1 ? actualItemsLength : `${currentItems}-${totalItemsOnPage}`;
+
+    return {
+      itemsCount,
+      totalItemsCount,
+    };
+  }
+
   toggleSortModal() {
     this.setState({
       showSortModal: !this.state.showSortModal,
@@ -112,6 +127,14 @@ class CarList extends React.Component {
       currentPage,
     };
 
+    const { itemsCount, totalItemsCount } = this.getPageItemsCount(
+      currentPage,
+      carsRender.length,
+      cars.total,
+      cars.totalPages,
+      12,
+    );
+
     return (
       <div className='body cars'>
         <div className='frontpage__block__head desktop'>
@@ -123,7 +146,12 @@ class CarList extends React.Component {
         <div className={ `list${listsCls}` }>
           { carsRender }
         </div>
-        <Pagination { ...paginationProps } />
+        <div className='body-bottom'>
+          <h3 className='total-item-num'>
+            Показано объявлений { itemsCount } из { totalItemsCount }
+          </h3>
+          <Pagination { ...paginationProps } />
+        </div>
         {showSortModal &&
         <SortModal
           onClose={ this.toggleSortModal }

@@ -69,6 +69,14 @@
   position: relative;
   margin: 30px auto;
 
+  &--comment {
+    max-width: 520px;
+
+    .modal-body {
+      margin-top: 15px;
+    }
+  }
+
   &--image {
     width: 80%;
 
