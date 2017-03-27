@@ -12,6 +12,7 @@ import PartsList from './components/spare-parts/parts.list';
 import ServicesList from './components/services/services.list';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
+import CarSearch from './components/cars/car.search';
 import UpPost from './components/shared/up.post';
 import CommentsPost from './components/shared/comments.post';
 import HeaderControls from './constants/header.controls';
@@ -43,6 +44,10 @@ export default (store) => {
         <Route
           path='companies/:id'
           components={ CompanyProfile } title='О компании'
+        />
+        <Route
+          path='automobiles/search'
+          components={ CarSearch } title='Поиск'
         />
         <Route
           path='automobiles'

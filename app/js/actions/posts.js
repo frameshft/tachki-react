@@ -11,6 +11,7 @@ export const UNMARK_POST_AS_FAVORITE = 'UNMARK_POST_AS_FAVORITE';
 export const MAKE_POST_VIP = 'MAKE_POST_VIP';
 export const STORE_COMMENTS_LIST = 'STORE_COMMENTS_LIST';
 export const ADD_NEW_COMMENTS = 'ADD_NEW_COMMENTS';
+export const FETCH_CARS_COUNT = 'FETCH_CARS_COUNT';
 
 
 export function markPostAsFavorite(postId) {
@@ -95,4 +96,10 @@ export function postComments(post, description, comment = null) {
     API.create('/comments/', data)
       .then(comments => dispatch({ type: STORE_COMMENTS_LIST, data: { id: post, comments } }))
   ;
+}
+
+export function fetchCarsCount(query) {
+  return dispatch =>
+    API.fetch(`/automobiles/count/${query}`)
+      .then(data => dispatch({ type: FETCH_CARS_COUNT, data }));
 }
