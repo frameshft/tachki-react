@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../actions/list';
@@ -13,6 +13,7 @@ class CompanyList extends React.Component {
   constructor(props) {
     super(props);
     this.alertClose = this.alertClose.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this);
 
     this.state = {
       showAlert: true,
@@ -29,6 +30,11 @@ class CompanyList extends React.Component {
     if (prevProps.currentPage !== this.props.currentPage) {
       this.getPosts();
     }
+  }
+
+  onSearchClick() {
+    // TODO: make modal
+    browserHistory.push('/companies/search');
   }
 
   getPosts() {
@@ -70,7 +76,7 @@ class CompanyList extends React.Component {
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
-          <button className='button__transparent'>
+          <button className='button__transparent' onClick={ this.onSearchClick }>
             Поиск
           </button>
         </li>
