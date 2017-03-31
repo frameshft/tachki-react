@@ -77,7 +77,13 @@ class CompanySearch extends React.Component {
   onSearch() {
     const query = this.buildQueryString();
     const url = `/companies${query}`;
-    browserHistory.push(url);
+    const { onModalSubmit } = this.props;
+
+    if (onModalSubmit) {
+      onModalSubmit(query);
+    } else {
+      browserHistory.push(url);
+    }
   }
 
   getSortedItems(collection) {
@@ -114,14 +120,55 @@ class CompanySearch extends React.Component {
     ));
 
     return (
-      <div>
-        <div>Категория <select onChange={ this.onCategoryChange }>{ categoriesOpts }</select></div>
-        { servicesOpts && <div>Тип <ul>{ servicesOpts }</ul></div>}
-        <div>Город <select onChange={ this.onCityChange }>{ citiesOpts }</select></div>
-        <button onClick={ this.onSearch } >Поиск { total > 0 && <span>({ total })</span>}</button>
+      <div className='search-form'>
+        <div className='search-form__row'>
+          <div className='search-form__label'>
+            Категория
+          </div>
+          <div className='custom-select'>
+            <select
+              onChange={ this.onCategoryChange }
+              className='search-form__control search-form__control--select'
+            >
+              { categoriesOpts }
+            </select>
+            <i className='fa fa-caret-down' />
+          </div>
+        </div>
+        {servicesOpts && <div className='search-form__row'>
+          <div className='search-form__label'>
+            Тип
+          </div>
+          <ul className='search-form__control search-form__control--list'>{ servicesOpts }</ul>
+        </div>}
+        <div className='search-form__row'>
+          <div className='search-form__label'>Город</div>
+          <div className='custom-select'>
+            <select
+              onChange={ this.onCityChange }
+              className='search-form__control search-form__control--select'
+            >
+              { citiesOpts }
+            </select>
+            <i className='fa fa-caret-down' />
+          </div>
+        </div>
+        <div className='search-form__row'>
+          <button onClick={ this.onSearch } className='search-form__submit'>
+            Посмотреть объявления { total > 0 && <span>({ total })</span>}
+          </button>
+        </div>
       </div>
     );
   }
 }
+
+CompanySearch.PropTypes = {
+  onModalSubmit: React.PropTypes.func,
+};
+
+CompanySearch.defaultProps = {
+  onModalSubmit: null,
+};
 
 export default CompanySearch;

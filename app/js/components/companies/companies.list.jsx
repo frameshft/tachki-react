@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import { Link, browserHistory } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
@@ -7,6 +8,7 @@ import { fetchPaginatedResponse, SUCCESS_FETCH_COMPANIES_LIST } from '../../acti
 
 import Company from './company';
 import Pagination from '../shared/pagination';
+import Search from './companies.search';
 import { STORE_A_COMPANY, fetchCompaniesCount } from '../../actions/companies';
 
 class CompanyList extends React.Component {
@@ -14,9 +16,13 @@ class CompanyList extends React.Component {
     super(props);
     this.alertClose = this.alertClose.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
+    this.onSearchClickModal = this.onSearchClickModal.bind(this);
+    this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
+    this.onModalSubmit = this.onModalSubmit.bind(this);
 
     this.state = {
       showAlert: true,
+      showSearchModal: false,
     };
   }
 
@@ -26,9 +32,10 @@ class CompanyList extends React.Component {
     store.dispatch(fetchCompaniesCount(url.search));
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.currentPage !== this.props.currentPage) {
-      this.getPosts();
+  componentWillReceiveProps(nextProps) {
+    const { url } = this.props;
+    if (url.search !== nextProps.url.search) {
+      this.getPosts(nextProps.url.search);
     }
   }
 
@@ -37,12 +44,32 @@ class CompanyList extends React.Component {
     browserHistory.push('/companies/search');
   }
 
-  getPosts() {
+  onSearchClickModal() {
+    this.setState({
+      showSearchModal: true,
+    });
+  }
+
+  onCloseSearchModal() {
+    this.setState({
+      showSearchModal: false,
+    });
+  }
+
+  onModalSubmit(query) {
+    this.setState({
+      showSearchModal: false,
+    }, () => {
+      browserHistory.push(`/companies${query}`);
+    });
+  }
+
+  getPosts(query = null) {
     const { url } = this.props;
     store.dispatch(fetchPaginatedResponse({
       entities: STORE_A_COMPANY,
       component: SUCCESS_FETCH_COMPANIES_LIST,
-    }, `/companies/${url.search}`, this.props.currentPage));
+    }, `/companies/${query !== null ? query : url.search}`, this.props.currentPage));
   }
 
   getPageItemsCount(page, actualItemsLength, totalItemsCount, totalPages, maxPageSize = 12) {
@@ -76,9 +103,16 @@ class CompanyList extends React.Component {
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
-          <button className='button__transparent' onClick={ this.onSearchClick }>
-            Поиск
-          </button>
+          <MediaQuery maxWidth={ 767 }>
+            <button className='button__transparent' onClick={ this.onSearchClick }>
+              Поиск
+            </button>
+          </MediaQuery>
+          <MediaQuery minWidth={ 767 }>
+            <button className='button__transparent' onClick={ this.onSearchClickModal }>
+              Поиск
+            </button>
+          </MediaQuery>
         </li>
         <li className='head-tools__item head-tools__item--marker'>
           <button className='button__transparent'>
@@ -89,7 +123,7 @@ class CompanyList extends React.Component {
   }
 
   render() {
-    const { showAlert } = this.state;
+    const { showAlert, showSearchModal } = this.state;
     const { companies, listView, currentPage, entities } = this.props;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
@@ -141,6 +175,27 @@ class CompanyList extends React.Component {
           </h3>
           <Pagination { ...paginationProps } />
         </div>
+        {showSearchModal && <div>
+          <div className='modal fade in'>
+            <div className='modal-dialog modal-dialog--search'>
+              <div className='modal-content'>
+                <div className='modal-header'>
+                  <button
+                    className='button__transparent modal-close'
+                    onClick={ this.onCloseSearchModal }
+                    title='Закрыть окно'
+                  >
+                    <i className='fa fa-times' />
+                  </button>
+                </div>
+                <div className='modal-body'>
+                  <Search onModalSubmit={ this.onModalSubmit } />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='modal-backdrop fade in' />
+        </div>}
       </div>
     );
   }

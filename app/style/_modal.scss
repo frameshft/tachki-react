@@ -91,6 +91,16 @@
     }
   }
 
+  &--search {
+    max-width: 500px;
+
+    .modal-body {
+      max-height: calc(100vh - 140px);
+      margin-top: 25px;
+      overflow-y: auto;
+    }
+  }
+
   &--prompt {
     max-width: 500px;
   }

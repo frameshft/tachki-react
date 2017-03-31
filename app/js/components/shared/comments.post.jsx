@@ -173,15 +173,15 @@ class CommentsPost extends React.Component {
     const btnCls = (subCommentInput === '') ? 'disabled' : '';
 
     return (
-      <div className='comment__form'>
+      <form className='comment__form' onSubmit={ this.onSendSubComment }>
         <input
           value={ subCommentInput }
           type='text'
           placeholder='Введите комментарий'
           className='comment__input' onChange={ this.onHandleSubCommentChange }
         />
-        <button onClick={ this.onSendSubComment } className={ `comment__send ${btnCls}` } />
-      </div>
+        <button className={ `comment__send ${btnCls}` } />
+      </form>
     );
   }
 
@@ -198,15 +198,15 @@ class CommentsPost extends React.Component {
     return (
       <div className='comment-wrapper'>
         <ul>{ renderComments }</ul>
-        <div className='comment__form'>
+        <form className='comment__form' onSubmit={ this.onSendComment }>
           <input
             value={ commentInput }
             type='text'
             placeholder='Введите комментарий'
             className='comment__input' onChange={ this.onHandleChange }
           />
-          <button onClick={ this.onSendComment } className={ `comment__send ${btnCls}` } />
-        </div>
+          <button className={ `comment__send ${btnCls}` } />
+        </form>
         { showModal && this.renderModal() }
       </div>
     );

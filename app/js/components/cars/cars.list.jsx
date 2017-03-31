@@ -8,6 +8,7 @@ import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST } from '../../actions/list';
 import { fetchCarsCount, STORE_A_POST } from '../../actions/posts';
 import SortModal from '../shared/sort.modal';
+import Search from './car.search';
 
 
 class CarList extends React.Component {
@@ -15,6 +16,8 @@ class CarList extends React.Component {
     super(props);
     this.toggleSortModal = this.toggleSortModal.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
+    this.onSearchClickModal = this.onSearchClickModal.bind(this);
+    this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
     const currentLocation = browserHistory.getCurrentLocation();
 
     this.actionTypes = {
@@ -25,6 +28,7 @@ class CarList extends React.Component {
     this.state = {
       showSortModal: false,
       currentSearch: currentLocation.search,
+      showSearchModal: false,
     };
 
     this.buildEndPoint();
@@ -55,6 +59,18 @@ class CarList extends React.Component {
 
   onSearchClick() {
     browserHistory.push('/automobiles/search');
+  }
+
+  onSearchClickModal() {
+    this.setState({
+      showSearchModal: true,
+    });
+  }
+
+  onCloseSearchModal() {
+    this.setState({
+      showSearchModal: false,
+    });
   }
 
   getPageItemsCount(page, actualItemsLength, totalItemsCount, totalPages, maxPageSize = 12) {
@@ -102,7 +118,7 @@ class CarList extends React.Component {
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
-          <button className='button__transparent' onClick={ this.onSearchClick }>
+          <button className='button__transparent' onClick={ this.onSearchClickModal }>
             Поиск
           </button>
         </li>
@@ -121,7 +137,7 @@ class CarList extends React.Component {
 
   render() {
     const { listView, cars, currentPage, entities } = this.props;
-    const { showSortModal } = this.state;
+    const { showSortModal, showSearchModal } = this.state;
     const carsRender = [];
 
     if (cars.list.length > 0) {
@@ -175,6 +191,27 @@ class CarList extends React.Component {
           actionTypes={ this.actionTypes }
         />
         }
+        {showSearchModal && <div>
+          <div className='modal fade in'>
+            <div className='modal-dialog modal-dialog--search'>
+              <div className='modal-content'>
+                <div className='modal-header'>
+                  <button
+                    className='button__transparent modal-close'
+                    onClick={ this.onCloseSearchModal }
+                    title='Закрыть окно'
+                  >
+                    <i className='fa fa-times' />
+                  </button>
+                </div>
+                <div className='modal-body'>
+                  <Search onModalSubmit={ this.onModalSubmit } />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='modal-backdrop fade in' />
+        </div>}
       </div>
     );
   }
