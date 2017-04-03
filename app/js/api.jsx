@@ -3,6 +3,7 @@ import { SUCESS_FETCH_SIGNOUT } from './actions/auth/index';
 
 const axios = require('axios');
 
+// const baseUrl = 'http://92.245.109.160:1248/';
 const baseUrl = process.env.NODE_ENV === 'production' ? 'http://tachki.kg/' : 'http://92.245.109.160:1248/';
 const baseAPI = 'react';
 const locale = 'ru';
