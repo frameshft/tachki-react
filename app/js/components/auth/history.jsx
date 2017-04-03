@@ -7,26 +7,15 @@ import { getPostComponent } from '../shared/utils';
 import { CLEAR_HISTORY_POST } from '../../actions/list';
 
 class HistoryPosts extends React.Component {
-  // TODO add clear history action
-
   clearPage() {
     store.dispatch({ type: CLEAR_HISTORY_POST });
   }
 
   render() {
-    const { listView, posts, entities } = this.props;
+    const { listView, posts } = this.props;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
-    const postsRender = [];
-
-    if (posts.length > 0) {
-      posts.forEach((i) => {
-        if (entities[i] !== undefined) {
-          const post = getPostComponent(entities[i]);
-          postsRender.push(post);
-        }
-      });
-    }
+    const postsRender = posts.map(p => getPostComponent(p));
 
     return (
       <div className='body companies'>
@@ -43,14 +32,16 @@ class HistoryPosts extends React.Component {
 
 HistoryPosts.propTypes = {
   listView: React.PropTypes.number.isRequired,
-  entities: React.PropTypes.object.isRequired,
   posts: React.PropTypes.array.isRequired,
 };
 
 function mapToProps(state) {
+  const entities = state.entities.posts;
+  const ids = state.views.history.list;
+  const posts = ids.map(x => entities[x]);
+
   return {
-    entities: state.entities.posts,
-    posts: state.views.history.list,
+    posts,
     listView: state.views.listView,
   };
 }
