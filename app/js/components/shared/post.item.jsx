@@ -7,6 +7,7 @@ import { importImage } from '../../utils';
 class PostItem extends React.Component {
   render() {
     const { post } = this.props;
+    if (!post) return null;
 
     const isVip = post.isVip;
     const image = importImage(post.image);
