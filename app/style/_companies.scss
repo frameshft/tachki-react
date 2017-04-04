@@ -37,6 +37,7 @@
   }
 }
 
+.offer-price,
 .search-form {
   &__row {
     margin-bottom: 20px;
@@ -98,6 +99,20 @@
         border-color: #96dbfa;
       }
     }
+
+    &--textarea {
+      min-height: 125px;
+      border: 2px solid #d5d5d5;
+      width: 100%;
+      padding: 10px 15px 5px;
+      resize: vertical;
+      margin-top: 10px !important;
+
+      &:focus {
+        outline: none;
+        border-color: #96dbfa;
+      }
+    }
   }
 
   .custom-select {
@@ -147,6 +162,10 @@
     border: none;
     text-transform: uppercase;
     margin-top: 70px;
+  }
+
+  button {
+    cursor: pointer;
   }
 }
 

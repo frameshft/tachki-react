@@ -30,8 +30,8 @@ class CarSearch extends React.Component {
         { key: 'motor', value: 'Мото техника' },
         { key: 'water', value: 'Водный транспорт' },
       ],
-      priceFrom: 0,
-      priceTo: 0,
+      priceFrom: 1000000,
+      priceTo: 5000000,
       isExchangeable: false,
       hasImages: false,
       automobiles: {},
@@ -294,7 +294,7 @@ class CarSearch extends React.Component {
               </div>
             </div>
           </div>
-          <Range min={ 0 } max={ 10000000 } tipFormatter={ value => `${value}%` } onChange={ this.onPriceFromChange } step={ 10000 } />
+          <Range min={ 0 } max={ 10000000 } tipFormatter={ value => `${value}%` } onChange={ this.onPriceFromChange } step={ 10000 } defaultValue={ [priceFrom, priceTo] } />
         </div>
         <div className='search-form__row'>
           <div className='search-form__label'>

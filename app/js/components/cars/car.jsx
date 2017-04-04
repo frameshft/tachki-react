@@ -8,11 +8,13 @@ class Car extends React.Component {
   render() {
     const { car } = this.props;
 
-    const isVip = car.is_vip;
+    const isVip = car.isVip;
     const image = importImage(car.image);
 
+    const vipCls = isVip ? 'vip-item' : '';
+
     return (
-      <div className='list__item list__item--car'>
+      <div className={ `list__item list__item--car ${vipCls}` }>
         <Link to={ `/automobiles/${car.id}` } activeStyle={ { textDecoration: 'none' } }>
           <div className='list__item__left'>
             <div className='list__item__media'>

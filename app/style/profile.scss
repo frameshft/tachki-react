@@ -109,141 +109,6 @@ $company-profile-main-bg: #fafafa;
     }
   }
 
-  .settings-button {
-    position: fixed;
-    bottom: 15px;
-    right: 35px;
-    width: 70px;
-    height: 70px;
-    line-height: 50px;
-    background-color: #f61e1e;
-    border: none;
-    color: #fff;
-    font-size: 38px;
-    border-radius: 50%;
-    box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
-    z-index: 11;
-    cursor: pointer;
-    transition: transform ease-in-out 0.2s;
-
-    &--toggled {
-      transform: rotate(-45deg);
-    }
-
-    &:focus,
-    &:active {
-      outline: none;
-    }
-  }
-
-  $icon-size: 50px;
-
-  .controls-links {
-    &__list {
-      padding: 0;
-      margin: 0;
-      position: fixed;
-      bottom: 105px;
-      right: 35px;
-      text-align: right;
-      z-index: 100;
-    }
-
-    &__item {
-      margin-bottom: 15px;
-      padding-right: 10px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    button {
-      display: inline-block;
-    }
-
-    &__link {
-      font-size: 18px;
-      font-weight: 700;
-      padding-right: $icon-size + 15px;
-      display: block;
-      color: #fff;
-      cursor: pointer;
-      text-decoration: none;
-      position: relative;
-      min-height: $icon-size;
-      line-height: $icon-size;
-
-      &:before {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: $icon-size;
-        height: $icon-size;
-        border-radius: 50%;
-        background-color: #f61e1e;
-        background-repeat: no-repeat;
-        background-position: 50%;
-        background-size: 50%;
-
-        -webkit-box-shadow: 0px 0px 27px -1px rgba(0,0,0,0.5);
-        -moz-box-shadow: 0px 0px 27px -1px rgba(0,0,0,0.5);
-        box-shadow: 0px 0px 27px -1px rgba(0,0,0,0.5);
-      }
-
-      &--comment:before {
-        background-image: url('../img/ic_forum_white_24px.svg');
-      }
-
-      &--price:before {
-        background-image: url('../img/ic_attach_money_white_24px.svg');
-      }
-
-      &--share:before {
-        background-image: url('../img/ic_share_white_24px.svg');
-      }
-
-      &--message:before {
-        background-image: url('../img/ic_mode_comment_white_24px.svg');
-      }
-
-      &--report:before {
-        background-image: url('../img/ic_error_outline_white_24px.svg');
-      }
-
-      &--call:before {
-        background-image: url('../img/ic_phone_white_24px.svg');
-      }
-
-      &--delete:before {
-        background-image: url('../img/ic_delete_white_24px.svg');
-      }
-
-      &--up:before {
-        background-image: url('../img/ic_arrow_upward_white_24px.svg');
-      }
-
-      &--edit-post:before {
-        background-image: url('../img/ic_mode_edit_white_24px.svg');
-      }
-
-      &--edit-pics:before {
-        background-image: url('../img/ic_collections_white_24px.svg');
-      }
-    }
-
-    &__mask {
-      position: fixed;
-      height: 100%;
-      width: 100%;
-      z-index: 9;
-      top: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-  }
-
   .up-page {
     padding: 10px 20px 20px;
 
@@ -772,6 +637,164 @@ $company-profile-main-bg: #fafafa;
       color: #929292;
       font-size: 14px;
       font-weight: 400;
+    }
+  }
+}
+
+.settings-button {
+  position: fixed;
+  bottom: 15px;
+  right: 35px;
+  width: 70px;
+  height: 70px;
+  line-height: 50px;
+  background-color: #f61e1e;
+  border: none;
+  color: #fff;
+  font-size: 38px;
+  border-radius: 50%;
+  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  z-index: 11;
+  cursor: pointer;
+  transition: transform ease-in-out 0.2s;
+
+  &--toggled {
+    transform: rotate(-45deg);
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+$icon-size: 50px;
+
+.controls-links {
+  &__list {
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    bottom: 105px;
+    right: 35px;
+    text-align: right;
+    z-index: 100;
+  }
+
+  &__item {
+    margin-bottom: 15px;
+    padding-right: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  button {
+    display: inline-block;
+  }
+
+  &__link {
+    font-size: 18px;
+    font-weight: 700;
+    padding-right: $icon-size + 15px;
+    display: block;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    min-height: $icon-size;
+    line-height: $icon-size;
+
+    &:before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: $icon-size;
+      height: $icon-size;
+      border-radius: 50%;
+      background-color: #f61e1e;
+      background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: 50%;
+
+      -webkit-box-shadow: 0px 0px 27px -1px rgba(0,0,0,0.5);
+      -moz-box-shadow: 0px 0px 27px -1px rgba(0,0,0,0.5);
+      box-shadow: 0px 0px 27px -1px rgba(0,0,0,0.5);
+    }
+
+    &--comment:before {
+      background-image: url('../img/ic_forum_white_24px.svg');
+    }
+
+    &--price:before {
+      background-image: url('../img/ic_attach_money_white_24px.svg');
+    }
+
+    &--share:before {
+      background-image: url('../img/ic_share_white_24px.svg');
+    }
+
+    &--message:before {
+      background-image: url('../img/ic_mode_comment_white_24px.svg');
+    }
+
+    &--report:before {
+      background-image: url('../img/ic_error_outline_white_24px.svg');
+    }
+
+    &--call:before {
+      background-image: url('../img/ic_phone_white_24px.svg');
+    }
+
+    &--delete:before {
+      background-image: url('../img/ic_delete_white_24px.svg');
+    }
+
+    &--up:before {
+      background-image: url('../img/ic_arrow_upward_white_24px.svg');
+    }
+
+    &--edit-post:before {
+      background-image: url('../img/ic_mode_edit_white_24px.svg');
+    }
+
+    &--edit-pics:before {
+      background-image: url('../img/ic_collections_white_24px.svg');
+    }
+  }
+
+  &__mask {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.offer-price {
+  .offer-price__row--controls {
+    @include clearfix;
+
+    .offer-price__submit {
+      line-height: normal;
+      height: auto;
+      text-transform: none;
+      padding: 10px 0;
+
+      &:first-child {
+        margin-right: 10%;
+        border: 1px solid #c6c6c6;
+        background-color: #ffffff;
+        color: #000;
+      }
+      margin: 0;
+      width: 45%;
+      float: left;
     }
   }
 }

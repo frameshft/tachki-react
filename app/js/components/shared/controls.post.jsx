@@ -9,11 +9,14 @@ export default class Controls extends React.Component {
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onShowLinks = this.onShowLinks.bind(this);
+    this.showOfferPrice = this.showOfferPrice.bind(this);
+    this.closeOfferPrice = this.closeOfferPrice.bind(this);
 
     this.state = {
       showPrompt: false,
       showLinks: false,
       isAuthenticated: !!props.user.token,
+      offerprice: false,
     };
   }
 
@@ -32,6 +35,18 @@ export default class Controls extends React.Component {
   onShowLinks() {
     this.setState({
       showLinks: !this.state.showLinks,
+    });
+  }
+
+  showOfferPrice() {
+    this.setState({
+      offerprice: true,
+    });
+  }
+
+  closeOfferPrice() {
+    this.setState({
+      offerprice: false,
     });
   }
 
@@ -57,7 +72,7 @@ export default class Controls extends React.Component {
       { mods: [2], key: 'price', text: 'Предложить цену', link: '/' },
       { mods: [0, 1, 2], key: 'share', text: 'Поделиться', link: '/' },
       { mods: [2], key: 'message', text: 'Написать сообщение', link: '/' },
-      { mods: [2], key: 'report', text: 'Пожаловаться', link: '/' },
+      { mods: [2], key: 'report', text: 'Пожаловатcaься', link: '/' },
       { mods: [0, 2], key: 'call', text: 'Позвонить', link: '/' },
     ];
 
@@ -69,8 +84,14 @@ export default class Controls extends React.Component {
             className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
           >{ x.text }</button></li>
         );
-      }
-      if (x.mods.includes(mod)) {
+      } else if (x.key === 'price' && x.mods.includes(mod)) {
+        return (
+          <li key={ x.key } className='controls-links__item'><button
+            onClick={ this.showOfferPrice }
+            className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
+          >{ x.text }</button></li>
+        );
+      } else if (x.mods.includes(mod)) {
         return (
           <li key={ x.key } className='controls-links__item'>
             <Link to={ x.link } className={ `controls-links__link controls-links__link--${x.key}` }>{ x.text }</Link>
@@ -81,9 +102,65 @@ export default class Controls extends React.Component {
     }).filter(x => x !== null);
   }
 
+  renderOfferPrice() {
+    return (
+      <div>
+        <div className='modal fade in'>
+          <div className='modal-dialog modal-dialog--offer-price'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <button
+                  className='button__transparent modal-close'
+                  onClick={ this.closeOfferPrice }
+                  title='Закрыть окно'
+                >
+                  <i className='fa fa-times' />
+                </button>
+              </div>
+              <div className='modal-body'>
+                <form className='offer-price'>
+                  <div className='offer-price__row'>
+                    <div className='offer-price__label'>
+                      Стоимость
+                    </div>
+                    <input
+                      type='text'
+                      className='offer-price__control offer-price__control--input'
+                    />
+                  </div>
+                  <div className='offer-price__row'>
+                    <div className='offer-price__label'>
+                      Комментарий
+                    </div>
+                    <textarea
+                      type='text'
+                      className='offer-price__control offer-price__control--textarea'
+                    />
+                  </div>
+                  <div className='offer-price__row offer-price__row--controls'>
+                    <button
+                      type='button'
+                      className='offer-price__submit' onClick={ this.closeOfferPrice }
+                    >
+                      Отмена
+                    </button>
+                    <button type='submit' className='offer-price__submit'>
+                      Оправить
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='modal-backdrop fade in' />
+      </div>
+    );
+  }
+
   render() {
     const { post } = this.props;
-    const { showPrompt, showLinks } = this.state;
+    const { showPrompt, showLinks, offerprice } = this.state;
     const renderLink = this.buildButtons(post);
 
     const btnCls = !showLinks ? 'settings-button' : 'settings-button settings-button--toggled';
@@ -102,6 +179,8 @@ export default class Controls extends React.Component {
         }
         { showPrompt &&
           <PromptDelete postId={ post.id } cancel={ this.onCancelClick } /> }
+
+        { offerprice && this.renderOfferPrice() }
       </div>
     );
   }

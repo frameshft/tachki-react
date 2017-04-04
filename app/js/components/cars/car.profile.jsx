@@ -146,6 +146,7 @@ class CarProfile extends React.Component {
           { car.isMy && !car.isVip && <VipPost postId={ car.id } /> }
         </MediaQuery>
         <MediaQuery minWidth={ 767 }>
+          {car && <Controls post={ car } user={ user } /> }
           <div className='car-profile__top'>
             <div className='car-profile__top__media'>
               <img src={ importImage(postUser.image) } alt='' />
