@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
-import Service from './service';
+import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_FETCH_SERVICES_LIST } from '../../actions/list';
 import { STORE_A_POST } from '../../actions/posts';
@@ -32,7 +32,7 @@ class ServicesList extends React.Component {
       services.list.forEach((i) => {
         const item = entities[i];
         if (item !== undefined) {
-          carsRender.push(<Service key={ item.id } service={ item } />);
+          carsRender.push(<PostItem key={ item.id } post={ item } />);
         }
       });
     }

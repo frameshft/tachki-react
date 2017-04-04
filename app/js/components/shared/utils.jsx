@@ -1,17 +1,8 @@
 import React from 'react';
-import Car from '../cars/car';
-import SparePart from '../spare-parts/part';
+import PostItem from './post.item';
 
 export function getPostComponent(item) {
-  switch (item.postType) {
-    // TODO: add services and cargo
-    case 'sparepart':
-      return (<SparePart key={ item.id } part={ item } />);
-    case 'automobile':
-      return (<Car key={ item.id } car={ item } />);
-    default:
-      return null;
-  }
+  return <PostItem key={ item.id } poa={ item } />;
 }
 
 export default true;

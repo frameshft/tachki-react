@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 
 import * as listViewType from '../../constants/listView';
-import SparePart from './part';
+import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_SPARE_PARTS_LIST } from '../../actions/list';
 import { STORE_A_POST } from '../../actions/posts';
@@ -39,7 +39,7 @@ class PartsList extends React.Component {
     if (parts.list.length > 0) {
       parts.list.forEach((i) => {
         const item = entities[i];
-        render.push(<SparePart key={ item.id } part={ item } />);
+        render.push(<PostItem key={ item.id } post={ item } />);
       });
     }
 

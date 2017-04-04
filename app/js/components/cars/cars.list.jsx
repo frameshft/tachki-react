@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
-import Car from './car';
+import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
 import { fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST } from '../../actions/list';
 import { fetchCarsCount, STORE_A_POST } from '../../actions/posts';
@@ -144,7 +144,7 @@ class CarList extends React.Component {
       cars.list.forEach((i) => {
         const item = entities[i];
         if (item !== undefined) {
-          carsRender.push(<Car key={ item.id } car={ item } />);
+          carsRender.push(<PostItem key={ item.id } post={ item } />);
         }
       });
     }
