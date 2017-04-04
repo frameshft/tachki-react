@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import companies from './companies';
 import automobiles from './automobiles';
+import cargos from './cargos';
 import listView from './listView';
 import spareParts from './spareparts';
 import myPosts from './myPosts';
@@ -13,6 +14,7 @@ import companyPosts from './companyPosts';
 
 const combinedReducer = combineReducers({
   automobiles,
+  cargos,
   companies,
   companyPosts,
   listView,

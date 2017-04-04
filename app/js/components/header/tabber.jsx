@@ -31,6 +31,11 @@ export default class Tabber extends React.Component {
               Услуги
             </Link>
           </li>
+          <li className='tab__item'>
+            <Link to='/cargos' className='tab__link' activeClassName='tab__link--active'>
+              Грузовые
+            </Link>
+          </li>
         </ul>
         {showBanner && <div className='desktop main-banner'>
           <div className='main-banner__text main-banner__text--main'>
