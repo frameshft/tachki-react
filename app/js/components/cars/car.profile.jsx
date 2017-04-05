@@ -162,7 +162,8 @@ class CarProfile extends React.Component {
               </h1>
               <div className='car-profile__top__controls'>
                 <FavoriteToggle post={ car } isDesktop />
-                { car.isMy && <button className='button__transparent btn--edit' /> }
+                {/* TODO: add crud */}
+                {/* { car.isMy && <button className='button__transparent btn--edit' /> } */}
                 <button className='button__transparent btn--marker'>
                   Показать на карте
                 </button>

@@ -77,17 +77,18 @@ class Sidebar extends React.Component {
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
             <a href='/' className='sidebar__navigation__link'>Главная</a>
           </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--create'>
-            <a href='/' className='sidebar__navigation__link'>Оформить объявление</a>
-          </li>
+          {/* TODO: uncomment after component is ready */}
+          {/* <li className='sidebar__navigation__item sidebar__navigation__item--create'> */}
+          {/* <a href='/' className='sidebar__navigation__link'>Оформить объявление</a> */}
+          {/* </li> */}
           <li className='sidebar__navigation__item sidebar__navigation__item--my'>
             <Link to='/my/posts' className='sidebar__navigation__link'>
               Мои объявления
             </Link>
           </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--messages'>
+          {/* <li className='sidebar__navigation__item sidebar__navigation__item--messages'>
             <a href='/' className='sidebar__navigation__link'>Сообщения</a>
-          </li>
+          </li> */}
           <li className='sidebar__navigation__item sidebar__navigation__item--saved'>
             <Link to='/my/favorites' className='sidebar__navigation__link'>
               Сохраненные

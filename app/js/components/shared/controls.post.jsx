@@ -65,7 +65,8 @@ export default class Controls extends React.Component {
 
     const buttons = [
       { mods: [1], key: 'up', text: 'Поднять объявление', link: `/up/${post.id}` },
-      { mods: [1], key: 'edit-post', text: 'Редактировать объявление', link: '/' },
+      // TODO: add crud
+      // { mods: [1], key: 'edit-post', text: 'Редактировать объявление', link: '/' },
       { mods: [1], key: 'edit-pics', text: 'Редактировать изображения', link: '/' },
       { mods: [1], key: 'delete', text: 'Удалить' },
       { mods: [1, 2], key: 'comment', text: 'Написать комментарий', link: `/comments/${post.id}` },

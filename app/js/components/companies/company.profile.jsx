@@ -128,7 +128,8 @@ class CompanyProfile extends React.Component {
               </div>
               <div className='company-profile__top__controls'>
                 <button className='button__transparent btn--bookmark' />
-                <button className='button__transparent btn--edit' />
+                {/* TODO: add crud */}
+                {/* <button className='button__transparent btn--edit' /> */}
                 <button className='button__transparent btn--marker'>
                   Показать на карте
                 </button>
