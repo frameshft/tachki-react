@@ -19,6 +19,16 @@ import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
 
 class CarProfile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.thumbClick = this.thumbClick.bind(this);
+
+    this.state = {
+      mainImgIndex: 0,
+    };
+  }
+
   componentDidMount() {
     store.dispatch(getPost('automobiles', this.props.params.id));
   }
@@ -29,11 +39,31 @@ class CarProfile extends React.Component {
     }
   }
 
+  thumbClick(index) {
+    this.setState({
+      mainImgIndex: index,
+    });
+  }
+
+  renderEquiments(equipments) {
+    if (equipments && equipments.length > 0) {
+      return (<div className='car-profile__row'>
+        <h3 className='car-profile__main__title'>Комплектация</h3>
+        <div className='car-profile__main__description'>
+          { equipments }
+        </div>
+      </div>);
+    }
+    return null;
+  }
+
   renderProfile() {
     const { car } = this.props;
     const services = [];
     if (car !== undefined && car.profile !== undefined) {
       let keys = Object.keys(car.profile);
+      keys = keys.filter(x => x !== 'equipments');
+
 
       keys.forEach((profile, i) => {
         let profileValue;
@@ -42,8 +72,6 @@ class CarProfile extends React.Component {
         } else {
           profileValue = car.profile[profile];
         }
-
-        keys = keys.filter(x => x !== 'equipments');
 
         if (car.profile[profile] !== '') {
           services.push(
@@ -63,14 +91,27 @@ class CarProfile extends React.Component {
     return services;
   }
 
+  renderThumbs(images) {
+    return images.map((image, index) => (
+      <button
+        className='car-profile__gallery__thumb'
+        onClick={ this.thumbClick.bind(this, index) } // eslint-disable-line
+        key={ index }
+      >
+        <img src={ importImage(image) } alt={ index } />
+      </button>))
+      ;
+  }
+
   render() {
     const { car, user } = this.props;
+    const { mainImgIndex } = this.state;
     const postUser = car.user;
     if (car.profile === undefined) {
       return null;
     }
 
-    const image = importImage(car.image);
+    const image = importImage(car.images[0]);
 
     return (
       <div className='car-profile'>
@@ -96,6 +137,7 @@ class CarProfile extends React.Component {
             <div className='car-profile__profile car-profile__row'>
               {this.renderProfile()}
             </div>
+
             <div className='car-profile__main'>
               { car.description && <div className='car-profile__row'>
                 <h3 className='car-profile__main__title'>
@@ -129,15 +171,15 @@ class CarProfile extends React.Component {
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>
               { car.isMy &&
-                <div className='car-profile__up'>
-                  <div className='car-profile__up__description'>
-                    Для того, чтобы повысить количество просмотров Вашего
-                    объявления, Вы можете поднять объявление в ТОП
-                  </div>
-                  <Link to={ `/up/${car.id}` } className='btn btn--vip'>
-                    Поднять объявление
-                  </Link>
+              <div className='car-profile__up'>
+                <div className='car-profile__up__description'>
+                  Для того, чтобы повысить количество просмотров Вашего
+                  объявления, Вы можете поднять объявление в ТОП
                 </div>
+                <Link to={ `/up/${car.id}` } className='btn btn--vip'>
+                  Поднять объявление
+                </Link>
+              </div>
               }
             </div>
             <ContactInfo post={ car } parentCls='' />
@@ -161,7 +203,7 @@ class CarProfile extends React.Component {
                 </div>
               </h1>
               <div className='car-profile__top__controls'>
-                <FavoriteToggle post={ car } isDesktop />
+                { user.token && <FavoriteToggle post={ car } isDesktop /> }
                 {/* TODO: add crud */}
                 {/* { car.isMy && <button className='button__transparent btn--edit' /> } */}
                 <button className='button__transparent btn--marker'>
@@ -185,6 +227,14 @@ class CarProfile extends React.Component {
               <div className='car-profile__profile car-profile__row'>
                 {this.renderProfile()}
               </div>
+              <div className='car-profile__gallery'>
+                <div className='car-profile__gallery__main'>
+                  <img src={ importImage(car.images[mainImgIndex]) } alt='' />
+                </div>
+                <div className='car-profile__gallery_thumbs'>
+                  {this.renderThumbs(car.images)}
+                </div>
+              </div>
             </div>
             <div className='car-profile__main'>
               { car.description && <div className='car-profile__row'>
@@ -195,11 +245,12 @@ class CarProfile extends React.Component {
                   { car.description }
                 </div>
               </div>}
+              { this.renderEquiments(car.profile.equipments) }
             </div>
             <div className='car-profile__comments'>
               <div className='car-profile__comments__top'>
                 <div className='car-profile__comments__media'>
-                 &nbsp;
+                  &nbsp;
                 </div>
                 <div className='car-profile__comments__user'>
                   Александр

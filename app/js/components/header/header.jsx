@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import Swipeable from 'react-swipeable';
 import store from '../../store';
 import Sidebar from './sidebar';
 import LIST_VIEW_TYPE from '../../actions/listView';
@@ -21,8 +22,11 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
 
+    this.closeSidebar = this.closeSidebar.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.listViewClick = this.listViewClick.bind(this);
+    this.swipingLeft = this.swipingLeft.bind(this);
+
 
     this.state = {
       showSidebar: this.props.isShownMobileSidebar,
@@ -48,11 +52,21 @@ class Header extends React.Component {
     });
   }
 
+  closeSidebar() {
+    this.setState({
+      showSidebar: false,
+    });
+  }
+
   toggleSidebar() {
     const { showSidebar } = this.state;
     this.setState({
       showSidebar: !showSidebar,
     });
+  }
+
+  swipingLeft() {
+    this.closeSidebar();
   }
 
   render() {
@@ -69,8 +83,8 @@ class Header extends React.Component {
           </div>
           <ListControls controls={ controls } post={ post } isAuthenticated={ isAuthenticated } />
         </div>
-        { showSidebar && <Sidebar /> }
-        <div className={ `body-fade fade${(showSidebar ? ' in' : '')}` } onClick={ this.toggleSidebar } />
+        { showSidebar && <Sidebar onclose={ this.closeSidebar } /> }
+        <Swipeable className={ `body-fade fade${(showSidebar ? ' in' : '')}` } onSwipingLeft={ this.swipingLeft } onClick={ this.toggleSidebar } />
       </div>
     );
   }

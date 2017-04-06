@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
+import Swipeable from 'react-swipeable';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
@@ -9,6 +10,7 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.onSignoutClick = this.onSignoutClick.bind(this);
+    this.swiping = this.swiping.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,13 +22,19 @@ class Sidebar extends React.Component {
   }
 
   onSignoutClick() {
-    this.props.toggle();
+    if (this.props.toggle) {
+      this.props.toggle();
+    }
     store.dispatch(AuthActions.signOut());
+  }
+
+  swiping() {
+    this.props.onclose();
   }
 
   renderAnonymous() {
     return (
-      <div className='sidebar'>
+      <Swipeable className='sidebar' onSwipingLeft={ this.swiping }>
         <ul className='sidebar__navigation'>
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
             <a href='/' className='sidebar__navigation__link'>Главная</a>
@@ -53,13 +61,13 @@ class Sidebar extends React.Component {
             </Link>
           </li>
         </ul>
-      </div>
+      </Swipeable>
     );
   }
 
   renderAuthorized(user) {
     return (
-      <div className='sidebar'>
+      <Swipeable className='sidebar' onSwipingLeft={ this.swiping }>
         <div className='sidebar__profile'>
           <div className='sidebar__profile__media'>
             <img
@@ -106,12 +114,13 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--signout'>
-            <button className='sidebar__navigation__link button__transparent'>
-              Выйти
-            </button>
+            <button
+              className='sidebar__navigation__link button__transparent'
+              onClick={ this.onSignoutClick }
+            >Выйти</button>
           </li>
         </ul>
-      </div>
+      </Swipeable>
     );
   }
 

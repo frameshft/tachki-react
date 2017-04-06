@@ -27,7 +27,8 @@ class SignIn extends React.Component {
     }
   }
 
-  onSubmit() {
+  onSubmit(e) {
+    e.preventDefault();
     const { loginValue, passwordValue } = this.state;
     const mask = '996';
     const login = mask.concat(loginValue);
@@ -55,7 +56,7 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className='auth-form'>
+      <form className='auth-form' onSubmit={ this.onSubmit } >
         <input type='text' style={ { display: 'none' } } />
         <input type='password' style={ { display: 'none' } } />
         <div className='auth-form__row auth-form__row--phone'>
@@ -76,7 +77,7 @@ class SignIn extends React.Component {
           />
         </div>
         <div className='auth-form__row auth-form__row--submit text-center'>
-          <button onClick={ this.onSubmit } className='btn btn--primary'>
+          <button type='submit' className='btn btn--primary'>
             Login
           </button>
         </div>
@@ -85,7 +86,7 @@ class SignIn extends React.Component {
             Forgot Password?
           </Link>
         </div>
-      </div>
+      </form>
     );
   }
 }

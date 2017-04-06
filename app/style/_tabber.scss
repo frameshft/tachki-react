@@ -45,7 +45,6 @@
   }
 }
 
-
 @media all and (min-width: 767px) {
   .tab {
     padding: 6px 70px;
@@ -69,6 +68,7 @@
           height: 45px;
           margin-right: 100px;
           background: url('../img/logo.png') no-repeat 0 0;
+
         }
       }
     }
@@ -98,5 +98,18 @@
 .tab {
   &__item {
     display: inline-block;
+  }
+}
+
+@media all and (min-width: 767px) and (max-width: 992px) {
+  .tab {
+    padding: 6px 15px;
+    &__item {
+      &--logo {
+        .tab__link {
+          margin-right: 15px;
+        }
+      }
+    }
   }
 }

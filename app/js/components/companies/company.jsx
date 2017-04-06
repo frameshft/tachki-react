@@ -18,7 +18,7 @@ class Company extends React.Component {
           <div className='list__item__left'>
             <div className='list__item__media'>
               <img src={ img } className='list__item__media__img' alt={ company.name } />
-              <div className='list__item__about'>
+              <div className='list__item__about desktop'>
                 <h3 className='list__item__title desktop'>
                   { company.name }
                 </h3>

@@ -72,9 +72,7 @@ export default class Controls extends React.Component {
       { mods: [1, 2], key: 'comment', text: 'Написать комментарий', link: `/comments/${post.id}` },
       { mods: [2], key: 'price', text: 'Предложить цену', link: '/' },
       { mods: [0, 1, 2], key: 'share', text: 'Поделиться', link: '/' },
-      { mods: [2], key: 'message', text: 'Написать сообщение', link: '/' },
-      { mods: [2], key: 'report', text: 'Пожаловатcaься', link: '/' },
-      { mods: [0, 2], key: 'call', text: 'Позвонить', link: '/' },
+      // { mods: [2], key: 'report', text: 'Пожаловаться', link: '/' },
     ];
 
     return buttons.map((x) => {

@@ -127,7 +127,6 @@ class CompanyProfile extends React.Component {
                 </div>
               </div>
               <div className='company-profile__top__controls'>
-                <button className='button__transparent btn--bookmark' />
                 {/* TODO: add crud */}
                 {/* <button className='button__transparent btn--edit' /> */}
                 <button className='button__transparent btn--marker'>
