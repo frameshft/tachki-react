@@ -17,6 +17,7 @@ import '../../../style/car-profile.scss';
 
 import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
+import LastCommentsPost from '../shared/comments.last';
 
 class CarProfile extends React.Component {
   constructor(props) {
@@ -148,25 +149,7 @@ class CarProfile extends React.Component {
                 </div>
               </div>}
             </div>
-            <div className='car-profile__comments'>
-              <div className='car-profile__comments__top'>
-                <div className='car-profile__comments__media'>
-                  &nbsp;
-                </div>
-                <div className='car-profile__comments__user'>
-                  Александр
-                  <div className='car-profile__comments__date'>
-                    20-01-2017 15:44
-                  </div>
-                </div>
-              </div>
-              <div className='car-profile__comments__text'>
-                Желаю удачи в продаже!!! Единичный экземпляр
-              </div>
-              <Link to={ `/comments/${car.id}` } className='car-profile__comments__all'>
-                Комментарии 1
-              </Link>
-            </div>
+            <LastCommentsPost post={ car } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>
@@ -247,25 +230,7 @@ class CarProfile extends React.Component {
               </div>}
               { this.renderEquiments(car.profile.equipments) }
             </div>
-            <div className='car-profile__comments'>
-              <div className='car-profile__comments__top'>
-                <div className='car-profile__comments__media'>
-                  &nbsp;
-                </div>
-                <div className='car-profile__comments__user'>
-                  Александр
-                  <div className='car-profile__comments__date'>
-                    20-01-2017 15:44
-                  </div>
-                </div>
-              </div>
-              <div className='car-profile__comments__text'>
-                Желаю удачи в продаже!!! Единичный экземпляр
-              </div>
-              <Link to={ `/comments/${car.id}` } className='car-profile__comments__all'>
-                Комментарии 1
-              </Link>
-            </div>
+            <LastCommentsPost post={ car } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>

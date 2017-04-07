@@ -39,7 +39,7 @@ class PartsList extends React.Component {
     if (parts.list.length > 0) {
       parts.list.forEach((i) => {
         const item = entities[i];
-        render.push(<PostItem key={ item.id } post={ item } />);
+        render.push(<PostItem key={ item.id } post={ item } endpoint='/spare-parts' />);
       });
     }
 

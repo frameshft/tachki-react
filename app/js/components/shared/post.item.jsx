@@ -6,7 +6,7 @@ import { importImage } from '../../utils';
 
 class PostItem extends React.Component {
   render() {
-    const { post } = this.props;
+    const { post, endpoint } = this.props;
     if (!post) return null;
 
     const isVip = post.isVip;
@@ -16,7 +16,7 @@ class PostItem extends React.Component {
 
     return (
       <div className={ `list__item list__item--car ${vipCls}` }>
-        <Link to={ `/automobiles/${post.id}` } activeStyle={ { textDecoration: 'none' } }>
+        <Link to={ `${endpoint}/${post.id}` } activeStyle={ { textDecoration: 'none' } }>
           <div className='list__item__left'>
             <div className='list__item__media'>
               <img className='list__item__media__img' src={ image } alt={ post.title } />
@@ -58,6 +58,7 @@ class PostItem extends React.Component {
 
 PostItem.PropTypes = {
   post: React.PropTypes.object.isRequired,
+  endpoint: React.PropTypes.string.isRequired,
 };
 
 export default PostItem;
