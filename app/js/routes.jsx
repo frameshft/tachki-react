@@ -14,6 +14,7 @@ import ServicesList from './components/services/services.list';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
 import PartProfile from './components/spare-parts/part.profile';
+import ServiceProfile from './components/services/services.profile';
 import CarSearch from './components/cars/car.search';
 import UpPost from './components/shared/up.post';
 import CommentsPost from './components/shared/comments.post';
@@ -65,15 +66,19 @@ export default (store) => {
         />
         <Route
           path='spare-parts/:id'
-          components={ PartProfile } title='Объявление' controls={ HeaderControls.POST_DETAIL }
+          components={ PartProfile } title='Запчасти' controls={ HeaderControls.POST_DETAIL }
         />
         <Route
           path='services'
           component={ ServicesList } title='Услуги' controls={ HeaderControls.POSTS }
         />
         <Route
+          path='services/:id'
+          component={ ServiceProfile } title='Услуги' controls={ HeaderControls.POSTS }
+        />
+        <Route
           path='cargos'
-          component={ CargoList } title='Услуги' controls={ HeaderControls.POSTS }
+          component={ CargoList } title='Грузовые' controls={ HeaderControls.POSTS }
         />
         <Route
           path='my/posts'
