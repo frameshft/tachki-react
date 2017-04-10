@@ -32,7 +32,7 @@ class CargoList extends React.Component {
       cargos.list.forEach((i) => {
         const item = entities[i];
         if (item !== undefined) {
-          carsRender.push(<PostItem key={ item.id } post={ item } />);
+          carsRender.push(<PostItem key={ item.id } post={ item } endpoint='/cargo' />);
         }
       });
     }

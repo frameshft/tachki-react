@@ -9,6 +9,7 @@ import CompanyList from './components/companies/companies.list';
 import CompanySearch from './components/companies/companies.search';
 import CarList from './components/cars/cars.list';
 import CargoList from './components/cargo/cargos';
+import CargoProfile from './components/cargo/cargo.profile';
 import PartsList from './components/spare-parts/parts.list';
 import ServicesList from './components/services/services.list';
 import CompanyProfile from './components/companies/company.profile';
@@ -77,8 +78,12 @@ export default (store) => {
           component={ ServiceProfile } title='Услуги' controls={ HeaderControls.POSTS }
         />
         <Route
-          path='cargos'
+          path='cargo'
           component={ CargoList } title='Грузовые' controls={ HeaderControls.POSTS }
+        />
+        <Route
+          path='cargo/:id'
+          component={ CargoProfile } title='Грузовые' controls={ HeaderControls.POSTS }
         />
         <Route
           path='my/posts'

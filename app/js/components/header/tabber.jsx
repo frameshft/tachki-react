@@ -32,7 +32,7 @@ export default class Tabber extends React.Component {
             </Link>
           </li>
           <li className='tab__item'>
-            <Link to='/cargos' className='tab__link' activeClassName='tab__link--active'>
+            <Link to='/cargo' className='tab__link' activeClassName='tab__link--active'>
               Грузовые
             </Link>
           </li>
