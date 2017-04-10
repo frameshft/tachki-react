@@ -60,6 +60,15 @@
     border-bottom: 1px solid #ebebeb;
   }
 
+  &__head {
+    border-bottom: 1px solid #ebebeb;
+    .car-profile__row {
+      &:first-of-type {
+        border-bottom: none;
+      }
+    }
+  }
+
   &__main {
     &__title {
       color: #666;

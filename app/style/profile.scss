@@ -298,9 +298,9 @@ $company-profile-main-bg: #fafafa;
         float: left;
         height: 35px;
         background: #fff url('../img/ic_place_red_24px.svg') no-repeat 0;
-        padding-left: 35px;
-        margin-left: 10px;
+        padding-left: 30px;
         color: #000;
+        margin-right: 15px;
         font-size: 14px;
       }
     }
@@ -485,10 +485,9 @@ $company-profile-main-bg: #fafafa;
         font-size: 16px;
         font-weight: 300;
         line-height: 35px;
-        float: right;
+        float: left;
 
         span {
-          margin-left: 15px;
         }
       }
 
@@ -550,8 +549,8 @@ $company-profile-main-bg: #fafafa;
         float: left;
         height: 35px;
         background: #fff url('../img/ic_place_red_24px.svg') no-repeat 0;
-        padding-left: 35px;
-        margin-left: 10px;
+        padding-left: 30px;
+        margin-right: 10px;
         color: #000;
         font-size: 14px;
       }
@@ -796,5 +795,11 @@ $icon-size: 50px;
       width: 45%;
       float: left;
     }
+  }
+}
+
+.car-profile .header__tools__btn.header__tools__btn--bookmark {
+  @media all and (max-width: 767px) {
+    display: none;
   }
 }

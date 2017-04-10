@@ -9,6 +9,7 @@ body {
   line-height: 1;
   //display: table;
   width: 100%;
+  min-width: 300px;
   height: 100%;
   overflow-x: hidden;
 }
@@ -72,7 +73,7 @@ body {
 
 .body-bottom {
   text-align: right;
-  margin-right: 36px;
+  right: 15px;
 
   .total-item-num {
     color: #323232;
@@ -86,6 +87,16 @@ body {
   .total-item-num,
   .pagination {
     display: inline-block;
+    padding: 0;
+    margin: 0;
+  }
+
+  .total-item-num {
+    margin-right: 15px;
+  }
+
+  .pagination {
+    margin-bottom: 30px;
   }
 }
 

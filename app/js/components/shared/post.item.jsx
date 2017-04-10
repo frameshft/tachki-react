@@ -17,6 +17,9 @@ class PostItem extends React.Component {
     return (
       <div className={ `list__item list__item--car ${vipCls}` }>
         <Link to={ `${endpoint}/${post.id}` } activeStyle={ { textDecoration: 'none' } }>
+          <h3 className='list__item__name small-view'>
+            { post.title }
+          </h3>
           <div className='list__item__left'>
             <div className='list__item__media'>
               <img className='list__item__media__img' src={ image } alt={ post.title } />
@@ -32,6 +35,9 @@ class PostItem extends React.Component {
             <h3 className='list__item__name desktop'>
               { post.title }
             </h3>
+            <div className='list__item__price small-view'>
+              { post.price }
+            </div>
           </div>
 
           <div className='list__item__content list__item__content'>
