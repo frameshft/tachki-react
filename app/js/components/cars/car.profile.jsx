@@ -19,6 +19,8 @@ import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 
+moment.locale('ru');
+
 class CarProfile extends React.Component {
   constructor(props) {
     super(props);

@@ -5,9 +5,6 @@ export default class CompanyServices extends React.Component {
     return (
       <div>
         <div>
-          { this.props.name }
-        </div>
-        <div>
           { this.props.services.join(', ') }
         </div>
       </div>
@@ -16,6 +13,5 @@ export default class CompanyServices extends React.Component {
 }
 
 CompanyServices.propTypes = {
-  name: React.PropTypes.string.isRequired,
   services: React.PropTypes.array.isRequired,
 };
