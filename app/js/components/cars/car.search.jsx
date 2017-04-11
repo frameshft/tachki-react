@@ -8,7 +8,7 @@ class CarSearch extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onBrandChange = this.onBrandChange.bind(this);
+    this.onAutoBrandChange = this.onAutoBrandChange.bind(this);
     this.onCategoryChange = this.onCategoryChange.bind(this);
     this.onCityChange = this.onCityChange.bind(this);
     this.onAutoModelChange = this.onAutoModelChange.bind(this);
@@ -17,6 +17,7 @@ class CarSearch extends React.Component {
     this.onHasImagesClick = this.onHasImagesClick.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onYearChange = this.onYearChange.bind(this);
+    this.onYear2Change = this.onYear2Change.bind(this);
     this.onMileageChange = this.onMileageChange.bind(this);
     this.onGenerationChange = this.onGenerationChange.bind(this);
     this.onConditionChange = this.onConditionChange.bind(this);
@@ -27,6 +28,8 @@ class CarSearch extends React.Component {
     this.onWheelChange = this.onWheelChange.bind(this);
     this.onFuelChange = this.onFuelChange.bind(this);
     this.onVolumeChange = this.onVolumeChange.bind(this);
+    this.onMotorBrandChange = this.onMotorBrandChange.bind(this);
+    this.onMotorSubCategoryChange = this.onMotorSubCategoryChange.bind(this);
 
     this.state = {
       total: 0,
@@ -45,6 +48,7 @@ class CarSearch extends React.Component {
       isExchangeable: false,
       hasImages: false,
       automobiles: {},
+      motorcycles: {},
       yearFrom: null,
       yearTo: null,
       yearCurrentFrom: null,
@@ -61,15 +65,15 @@ class CarSearch extends React.Component {
   componentDidMount() {
     API.fetch('/automobiles/search_init/')
       .then((res) => {
-        const { cities, automobiles } = res;
-        this.setState({ cities: listToMap(cities, 'key'), automobiles });
+        const { cities, automobiles, motorcycles } = res;
+        this.setState({ cities: listToMap(cities, 'key'), automobiles, motorcycles });
       })
     ;
 
     this.fetchCount();
   }
 
-  onBrandChange(e) {
+  onAutoBrandChange(e) {
     const brandId = e.target.value;
     const { automobiles } = this.state;
     const { models, generations } = this.initAutomobileFilters();
@@ -94,6 +98,20 @@ class CarSearch extends React.Component {
       automobiles.brand = 'all';
       this.updateSate({ automobiles });
     }
+  }
+
+  onMotorBrandChange(e) {
+    const brandId = e.target.value;
+    const { motorcycles } = this.state;
+    motorcycles.brand = brandId;
+    this.updateSate({ motorcycles });
+  }
+
+  onMotorSubCategoryChange(e) {
+    const category = e.target.value;
+    const { motorcycles } = this.state;
+    motorcycles.category = category;
+    this.updateSate({ motorcycles });
   }
 
   onCategoryChange(e) {
@@ -125,6 +143,12 @@ class CarSearch extends React.Component {
         priceTo = 10000000;
         mileageFrom = 0;
         mileageTo = 1000000;
+        volumeFrom = 0;
+        volumeTo = 10;
+        break;
+      case 'motor':
+        priceFrom = 0;
+        priceTo = 10000000;
         volumeFrom = 0;
         volumeTo = 10;
         break;
@@ -179,6 +203,13 @@ class CarSearch extends React.Component {
     const yearCurrentFrom = e[0];
     const yearCurrentTo = e[1];
     this.fetchGeneration(yearCurrentFrom, yearCurrentTo);
+
+    this.updateSate({ yearCurrentFrom, yearCurrentTo });
+  }
+
+  onYear2Change(e) {
+    const yearCurrentFrom = e[0];
+    const yearCurrentTo = e[1];
 
     this.updateSate({ yearCurrentFrom, yearCurrentTo });
   }
@@ -334,11 +365,24 @@ class CarSearch extends React.Component {
     ;
   }
 
+  fetchMotorBrands() {
+    return API.fetch('/automobiles/motorcycles/')
+      .then((res) => {
+        const { motorcycles } = this.state;
+        motorcycles.brands = res;
+        this.setState({ motorcycles });
+        return true;
+      })
+    ;
+  }
+
   fetchCategoryAPI(category) {
     switch (category) {
       case 'light-new':
       case 'light-old':
         return this.fetchAutomobileBrands();
+      case 'motor':
+        return this.fetchMotorBrands();
       default:
         return null;
     }
@@ -351,6 +395,7 @@ class CarSearch extends React.Component {
       priceTo,
       isExchangeable,
       hasImages,
+      motorcycles,
       automobiles,
       yearCurrentFrom,
       yearCurrentTo,
@@ -443,6 +488,14 @@ class CarSearch extends React.Component {
       query += `&volume-to=${volumeTo}`;
     }
 
+    if (motorcycles.brand) {
+      query += `&motor-brand=${motorcycles.brand}`;
+    }
+
+    if (motorcycles.category) {
+      query += `&motor-category=${motorcycles.category}`;
+    }
+
     return query;
   }
 
@@ -464,7 +517,7 @@ class CarSearch extends React.Component {
         </div>
         <div className='custom-select'>
           <select
-            onChange={ this.onBrandChange }
+            onChange={ this.onAutoBrandChange }
             className='search-form__control search-form__control--select'
           >
             { brands.map(x => <option key={ x.id } value={ x.id }>{ x.name }</option>) }
@@ -720,12 +773,27 @@ class CarSearch extends React.Component {
     );
   }
 
+  renderMotor() {
+    const { motorcycles, yearCurrentFrom, yearCurrentTo, priceFrom, priceTo } = this.state;
+    return (
+      <div>
+        { this.renderSelectInput('Категория', this.getSortedItems(motorcycles.subcategories || {}), this.onMotorSubCategoryChange)}
+        { this.renderSelectInput('Марка', this.getSortedItems(motorcycles.brands || {}), this.onMotorBrandChange) }
+        { this.renderSelectInput('Состояние', this.getSortedItems(motorcycles.conditions || {}), this.onConditionChange)}
+        { this.renderRangeSlider('Год', yearCurrentFrom || 1900, yearCurrentTo || 2017, 1900, 2017, 1, this.onYear2Change) }
+        { this.renderRangeSlider('Цена', priceFrom || 0, priceTo || 10000000, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
+      </div>
+    );
+  }
+
   renderCategoryWidgets(category) {
     switch (category) {
       case 'light-new':
         return this.renderLightNew();
       case 'light-old':
         return this.renderLightOld();
+      case 'motor':
+        return this.renderMotor();
       default:
         return null;
     }
