@@ -269,7 +269,13 @@ class CarSearch extends React.Component {
   onSearch() {
     const query = this.buildQueryString();
     const url = `/automobiles${query}`;
-    browserHistory.push(url);
+    const { onModalSubmit } = this.props;
+
+    if (onModalSubmit) {
+      onModalSubmit(query);
+    } else {
+      browserHistory.push(url);
+    }
   }
 
   getSortedItems(collection) {

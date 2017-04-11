@@ -18,6 +18,7 @@ class CarList extends React.Component {
     this.onSearchClick = this.onSearchClick.bind(this);
     this.onSearchClickModal = this.onSearchClickModal.bind(this);
     this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
+    this.onModalSubmit = this.onModalSubmit.bind(this);
     const currentLocation = browserHistory.getCurrentLocation();
 
     this.actionTypes = {
@@ -35,25 +36,17 @@ class CarList extends React.Component {
   }
 
   componentDidMount() {
-    const currentLocation = browserHistory.getCurrentLocation();
+    const { url } = this.props;
     store.dispatch(this.fetchData());
-    store.dispatch(fetchCarsCount(currentLocation.search));
+    store.dispatch(fetchCarsCount(url.search));
   }
 
-  componentWillReceiveProps(nextState) {
-    const nextSearch = nextState.routing.locationBeforeTransitions.search;
+  componentWillReceiveProps(nextProps) {
+    const { url } = this.props;
 
-    if (nextSearch !== this.state.currentSearch) {
-      const currentLocation = browserHistory.getCurrentLocation();
-      this.setState({
-        currentSearch: currentLocation.search,
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.currentPage !== this.props.currentPage) {
-      store.dispatch(this.fetchData());
+    if (url.search !== nextProps.url.search) {
+      store.dispatch(this.fetchData(nextProps.url.search));
+      store.dispatch(fetchCarsCount(nextProps.url.search));
     }
   }
 
@@ -73,6 +66,14 @@ class CarList extends React.Component {
     });
   }
 
+  onModalSubmit(query) {
+    this.setState({
+      showSearchModal: false,
+    }, () => {
+      browserHistory.push(`/automobiles${query}`);
+    });
+  }
+
   getPageItemsCount(page, actualItemsLength, totalItemsCount, totalPages, maxPageSize = 12) {
     const pageItemsLength = actualItemsLength >= maxPageSize ? actualItemsLength : maxPageSize;
     const currentItems = (page * maxPageSize) - (maxPageSize - 1);
@@ -88,8 +89,9 @@ class CarList extends React.Component {
     };
   }
 
-  fetchData() {
-    const endpoint = this.buildEndPoint();
+  fetchData(query = null) {
+    const { url } = this.props;
+    const endpoint = `/automobiles/${query !== null ? query : url.search}`;
     return fetchPaginatedResponse(this.actionTypes, endpoint, this.props.currentPage);
   }
 
@@ -238,6 +240,7 @@ function mapToProps(state) {
     cars: state.views.automobiles,
     listView: state.views.listView,
     routing: state.routing,
+    url: state.routing.locationBeforeTransitions,
     currentPage,
   };
 }
