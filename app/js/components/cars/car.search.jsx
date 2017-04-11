@@ -99,13 +99,50 @@ class CarSearch extends React.Component {
   onCategoryChange(e) {
     const category = e.target.value;
     const { automobiles } = this.state;
+    let {
+      priceFrom,
+      priceTo,
+      mileageFrom,
+      mileageTo,
+      volumeFrom,
+      volumeTo,
+    } = this.state;
 
     automobiles.brand = null;
     automobiles.model = null;
     automobiles.generation = null;
+    priceFrom = null;
+    priceTo = null;
+    mileageFrom = null;
+    mileageTo = null;
+    volumeTo = null;
+    volumeFrom = null;
+
+    switch (category) {
+      case 'light-old':
+      case 'light-new':
+        priceFrom = 0;
+        priceTo = 10000000;
+        mileageFrom = 0;
+        mileageTo = 1000000;
+        volumeFrom = 0;
+        volumeTo = 10;
+        break;
+      default:
+        break;
+    }
 
     this.fetchCategoryAPI(category);
-    this.updateSate({ category, automobiles });
+    this.updateSate({
+      category,
+      automobiles,
+      priceFrom,
+      priceTo,
+      mileageFrom,
+      mileageTo,
+      volumeFrom,
+      volumeTo,
+    });
   }
 
   onCityChange(e) {
