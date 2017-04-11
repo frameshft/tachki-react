@@ -13,12 +13,20 @@ class CarSearch extends React.Component {
     this.onCityChange = this.onCityChange.bind(this);
     this.onAutoModelChange = this.onAutoModelChange.bind(this);
     this.onPriceFromChange = this.onPriceFromChange.bind(this);
-    this.onPriceToChange = this.onPriceToChange.bind(this);
     this.onIsExchangeableClick = this.onIsExchangeableClick.bind(this);
     this.onHasImagesClick = this.onHasImagesClick.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onYearChange = this.onYearChange.bind(this);
     this.onMileageChange = this.onMileageChange.bind(this);
+    this.onGenerationChange = this.onGenerationChange.bind(this);
+    this.onConditionChange = this.onConditionChange.bind(this);
+    this.onBodyTypeChange = this.onBodyTypeChange.bind(this);
+    this.onColorChange = this.onColorChange.bind(this);
+    this.onDriveUnitChange = this.onDriveUnitChange.bind(this);
+    this.onTransmissionChange = this.onTransmissionChange.bind(this);
+    this.onWheelChange = this.onWheelChange.bind(this);
+    this.onFuelChange = this.onFuelChange.bind(this);
+    this.onVolumeChange = this.onVolumeChange.bind(this);
 
     this.state = {
       total: 0,
@@ -44,6 +52,9 @@ class CarSearch extends React.Component {
       yearSelected: null,
       mileageFrom: 0,
       mileageTo: 1000000,
+      condition: 'all',
+      volumeFrom: 0,
+      volumeTo: 10,
     };
   }
 
@@ -62,7 +73,8 @@ class CarSearch extends React.Component {
     const brandId = e.target.value;
     const { automobiles } = this.state;
     const { models, generations } = this.initAutomobileFilters();
-
+    automobiles.model = null;
+    automobiles.generation = null;
     if (brandId !== 'all') {
       API.fetch(`/automobiles/${brandId}/models/`)
         .then((res) => {
@@ -87,6 +99,11 @@ class CarSearch extends React.Component {
   onCategoryChange(e) {
     const category = e.target.value;
     const { automobiles } = this.state;
+
+    automobiles.brand = null;
+    automobiles.model = null;
+    automobiles.generation = null;
+
     this.fetchCategoryAPI(category);
     this.updateSate({ category, automobiles });
   }
@@ -109,6 +126,7 @@ class CarSearch extends React.Component {
     const { automobiles } = this.state;
     automobiles.model = modelId;
     automobiles.generations = generations;
+    automobiles.generation = null;
 
     if (selectedOptionDataSet.minyear) {
       yearFrom = selectedOptionDataSet.minyear;
@@ -124,6 +142,14 @@ class CarSearch extends React.Component {
     const yearCurrentFrom = e[0];
     const yearCurrentTo = e[1];
     this.fetchGeneration(yearCurrentFrom, yearCurrentTo);
+
+    this.updateSate({ yearCurrentFrom, yearCurrentTo });
+  }
+
+  onGenerationChange(e) {
+    const { automobiles } = this.state;
+    automobiles.generation = e.target.value;
+    this.updateSate({ automobiles });
   }
 
   onMileageChange(e) {
@@ -133,15 +159,10 @@ class CarSearch extends React.Component {
   }
 
   onPriceFromChange(e) {
-    this.setState({
+    this.updateSate({
       priceFrom: e[0],
       priceTo: e[1],
     });
-  }
-
-  onPriceToChange(e) {
-    const priceTo = e.target.value;
-    this.updateSate({ priceTo });
   }
 
   onHasImagesClick() {
@@ -152,6 +173,60 @@ class CarSearch extends React.Component {
   onIsExchangeableClick() {
     const { isExchangeable } = this.state;
     this.updateSate({ isExchangeable: !isExchangeable });
+  }
+
+  onConditionChange(e) {
+    const condition = e.target.value;
+    this.updateSate({ condition });
+  }
+
+  onBodyTypeChange(e) {
+    const { automobiles } = this.state;
+    automobiles.bodyType = e.target.value;
+
+    this.updateSate({ automobiles });
+  }
+
+  onColorChange(e) {
+    const { automobiles } = this.state;
+    automobiles.color = e.target.value;
+
+    this.updateSate({ automobiles });
+  }
+
+  onDriveUnitChange(e) {
+    const { automobiles } = this.state;
+    automobiles.driveUnit = e.target.value;
+
+    this.updateSate({ automobiles });
+  }
+
+  onTransmissionChange(e) {
+    const { automobiles } = this.state;
+    automobiles.transmission = e.target.value;
+
+    this.updateSate({ automobiles });
+  }
+
+  onWheelChange(e) {
+    const { automobiles } = this.state;
+    automobiles.steeringWheel = e.target.value;
+
+    this.updateSate({ automobiles });
+  }
+
+  onFuelChange(e) {
+    const { automobiles } = this.state;
+    automobiles.fuelType = e.target.value;
+
+    this.updateSate({ automobiles });
+  }
+
+  onVolumeChange(e) {
+    this.updateSate({
+      volumeFrom: e[0],
+      volumeTo: e[1],
+    });
   }
 
   onSearch() {
@@ -169,8 +244,6 @@ class CarSearch extends React.Component {
   fetchGeneration(yearCurrentFrom, yearCurrentTo) {
     const { automobiles } = this.state;
     const url = `/automobiles/${automobiles.model}/generations/?year-from=${yearCurrentFrom}&year-to=${yearCurrentTo}`;
-
-    this.updateSate({ yearCurrentFrom, yearCurrentTo });
     automobiles.generations = null;
 
     API.fetch(url)
@@ -180,7 +253,7 @@ class CarSearch extends React.Component {
             ...[{ id: 'all', name: 'Все' }],
             ...res,
           ];
-          this.updateSate({ automobiles });
+          this.setState({ automobiles });
         }
       })
     ;
@@ -236,6 +309,13 @@ class CarSearch extends React.Component {
       isExchangeable,
       hasImages,
       automobiles,
+      yearCurrentFrom,
+      yearCurrentTo,
+      mileageFrom,
+      mileageTo,
+      condition,
+      volumeFrom,
+      volumeTo,
     } = this.state;
 
     let query = `?city=${city}&category=${category}`;
@@ -258,6 +338,66 @@ class CarSearch extends React.Component {
 
     if (automobiles.brand) {
       query += `&brand=${automobiles.brand}`;
+    }
+
+    if (automobiles.model) {
+      query += `&model=${automobiles.model}`;
+    }
+
+    if (yearCurrentFrom) {
+      query += `&year-from=${yearCurrentFrom}`;
+    }
+
+    if (yearCurrentTo) {
+      query += `&year-to=${yearCurrentTo}`;
+    }
+
+    if (mileageFrom) {
+      query += `&mileage-from=${mileageFrom}`;
+    }
+
+    if (mileageTo) {
+      query += `&mileage-to=${mileageTo}`;
+    }
+
+    if (automobiles.generation) {
+      query += `&generation=${automobiles.generation}`;
+    }
+
+    if (condition) {
+      query += `&condition=${condition}`;
+    }
+
+    if (automobiles.bodyType) {
+      query += `&body-type=${automobiles.bodyType}`;
+    }
+
+    if (automobiles.color) {
+      query += `&color=${automobiles.color}`;
+    }
+
+    if (automobiles.driveUnit) {
+      query += `&drive-unit=${automobiles.driveUnit}`;
+    }
+
+    if (automobiles.transmission) {
+      query += `&transmission=${automobiles.transmission}`;
+    }
+
+    if (automobiles.steeringWheel) {
+      query += `&steering-wheel=${automobiles.steeringWheel}`;
+    }
+
+    if (automobiles.fuelType) {
+      query += `&fuel-type=${automobiles.fuelType}`;
+    }
+
+    if (volumeFrom) {
+      query += `&volume-from=${volumeFrom}`;
+    }
+
+    if (volumeTo) {
+      query += `&volume-to=${volumeTo}`;
     }
 
     return query;
@@ -329,7 +469,7 @@ class CarSearch extends React.Component {
         </div>
         <div className='custom-select'>
           <select
-            // onChange={ this.onAutoModelChange }
+            onChange={ this.onGenerationChange }
             className='search-form__control search-form__control--select'
           >
             { generations.map(x =>
@@ -384,17 +524,92 @@ class CarSearch extends React.Component {
     </div>);
   }
 
-  // renderAutoConditiions(conditions) {
-  //   const opts = conditions.map(x => <option key={ x.key } value={ x.key }>{ x.value }</option>);
-  //
-  // }
-  //
+  renderAutoConditions(conditions) {
+    const ops = this.getSortedItems(conditions || {});
 
-  render() {
+    return (
+      <div className='search-form__row'>
+        <div className='search-form__label'>
+          Состояние
+        </div>
+        <div className='custom-select'>
+          <select
+            className='search-form__control search-form__control--select'
+            onChange={ this.onConditionChange }
+          >
+            { ops }
+          </select>
+          <i className='fa fa-caret-down' />
+        </div>
+      </div>
+    );
+  }
+
+  renderTextInput(label, handler) {
+    return (
+      <div className='search-form__row'>
+        <div className='search-form__label'>
+          { label }
+        </div>
+        <input
+          type='text'
+          className='search-form__control search-form__control--input' placeholder='Введите'
+          onChange={ handler }
+        />
+      </div>
+    );
+  }
+
+  renderSelectInput(label, options, handler) {
+    return (
+      <div className='search-form__row'>
+        <div className='search-form__label'>{ label }</div>
+        <div className='custom-select'>
+          <select
+            className='search-form__control search-form__control--select' onChange={ handler }
+          >{ options }</select>
+          <i className='fa fa-caret-down' />
+        </div>
+      </div>
+    );
+  }
+
+  renderRangeSlider(label, bindMin, bindMax, min, max, step, handler, suffix = '') {
+    return (
+      <div className='search-form__row search-form__row--slider'>
+        <div className='search-form__label'>
+          { label }
+          <div className='price-slider'>
+            <div className='price-slider__from'>от { bindMin } { suffix }</div>
+            <div className='price-slider__top'>&nbsp;до { bindMax } { suffix }</div>
+          </div>
+        </div>
+        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } defaultValue={ [bindMin, bindMax] } />
+      </div>
+    );
+  }
+
+  renderToggler(label, labelFor, toggler, handler) {
+    return (
+      <div className='search-form__row search-form__row--checkbox'>
+        <div className='search-form__label'>
+          { label }
+        </div>
+        <div className='custom-checkbox'>
+          <input
+            id={ labelFor }
+            type='checkbox'
+            onChange={ handler }
+            checked={ toggler } className='search-form__control custom-checkbox__input'
+          />
+          <label className='custom-checkbox__label' htmlFor={ labelFor } />
+        </div>
+      </div>
+    );
+  }
+
+  renderLightOld() {
     const {
-      cities,
-      categories,
-      total,
       hasImages,
       isExchangeable,
       automobiles,
@@ -405,97 +620,91 @@ class CarSearch extends React.Component {
       yearTo,
       yearCurrentFrom,
       yearCurrentTo,
+      volumeFrom,
+      volumeTo,
     } = this.state;
 
-    const citiesOpts = this.getSortedItems(cities);
-    const categoriesOpts = this.getSortedItems(categories);
-    const renderedBrands = this.renderAutomobileBrands(category, automobiles.brands);
-    const renderedModels = this.renderAutomobileModels(automobiles.models);
-    const renderedGenerations = this.renderAutomobileGenerations(automobiles.generations);
+    return (
+      <div>
+        { this.renderAutomobileBrands(category, automobiles.brands) }
+        { this.renderAutomobileModels(automobiles.models) }
+        { this.renderAutomobileGenerations(automobiles.generations) }
+        { this.renderAutoConditions(automobiles.conditions) }
+        { this.renderedMileage(0, 1000000) }
+        { this.renderedYear(yearFrom, yearTo, yearCurrentFrom, yearCurrentTo) }
+        { this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
+        { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
+        { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
+        { this.renderSelectInput('Тип кузова', this.getSortedItems(automobiles.bodyTypes || {}), this.onBodyTypeChange) }
+        { this.renderSelectInput('Цвет', this.getSortedItems(automobiles.colors || {}), this.onColorChange) }
+        { this.renderSelectInput('Привод', this.getSortedItems(automobiles.driveUnits || {}), this.onDriveUnitChange) }
+        { this.renderSelectInput('КПП', this.getSortedItems(automobiles.transmissions || {}), this.onTransmissionChange) }
+        { this.renderSelectInput('Руль', this.getSortedItems(automobiles.steeringWheels || {}), this.onWheelChange) }
+        { this.renderSelectInput('Тип двигателя', this.getSortedItems(automobiles.fuelTypes || {}), this.onFuelChange) }
+        { this.renderRangeSlider('Объем', volumeFrom, volumeTo, 0, 10, 0.1, this.onVolumeChange) }
+      </div>
+    );
+  }
+
+  renderLightNew() {
+    const {
+      hasImages,
+      isExchangeable,
+      automobiles,
+      category,
+      priceFrom,
+      priceTo,
+      volumeFrom,
+      volumeTo,
+    } = this.state;
+
+    return (
+      <div>
+        { this.renderAutomobileBrands(category, automobiles.brands) }
+        { this.renderAutomobileModels(automobiles.models) }
+        { this.renderAutomobileGenerations(automobiles.generations) }
+        { this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
+        { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
+        { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
+        { this.renderSelectInput('Тип кузова', this.getSortedItems(automobiles.bodyTypes || {}), this.onBodyTypeChange) }
+        { this.renderSelectInput('Цвет', this.getSortedItems(automobiles.colors || {}), this.onColorChange) }
+        { this.renderSelectInput('Привод', this.getSortedItems(automobiles.driveUnits || {}), this.onDriveUnitChange) }
+        { this.renderSelectInput('КПП', this.getSortedItems(automobiles.transmissions || {}), this.onTransmissionChange) }
+        { this.renderSelectInput('Руль', this.getSortedItems(automobiles.steeringWheels || {}), this.onWheelChange) }
+        { this.renderSelectInput('Тип двигателя', this.getSortedItems(automobiles.fuelTypes || {}), this.onFuelChange) }
+        { this.renderRangeSlider('Объем', volumeFrom, volumeTo, 0, 10, 0.1, this.onVolumeChange) }
+      </div>
+    );
+  }
+
+  renderCategoryWidgets(category) {
+    switch (category) {
+      case 'light-new':
+        return this.renderLightNew();
+      case 'light-old':
+        return this.renderLightOld();
+      default:
+        return null;
+    }
+  }
+
+  render() {
+    const {
+      cities,
+      category,
+      categories,
+      total,
+    } = this.state;
+
+    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange);
+    const renderedCategories = this.renderSelectInput('Тип транспорта', this.getSortedItems(categories), this.onCategoryChange);
+
     return (
       <div className='search-form'>
-        <div className='search-form__row'>
-          <div className='search-form__label'>
-            Город
-          </div>
-          <div className='custom-select'>
-            <select
-              className='search-form__control search-form__control--select'
-              onChange={ this.onCityChange }
-            >
-              { citiesOpts }
-            </select>
-            <i className='fa fa-caret-down' />
-          </div>
-        </div>
-        <div className='search-form__row'>
-          <div className='search-form__label'>
-            Тип транспорта
-          </div>
-          <div className='custom-select'>
-            <select
-              className='search-form__control search-form__control--select'
-              onChange={ this.onCategoryChange }
-            >
-              { categoriesOpts }
-            </select>
-            <i className='fa fa-caret-down' />
-          </div>
-        </div>
-        { renderedBrands }
-        { renderedModels }
-        { this.renderedYear(yearFrom, yearTo, yearCurrentFrom, yearCurrentTo) }
+        { renderedCities }
+        { renderedCategories }
+        { this.renderCategoryWidgets(category) }
 
-        { renderedGenerations }
-        { this.renderedMileage(0, 1000000) }
-
-        <div className='search-form__row search-form__row--slider'>
-          <div className='search-form__label'>
-            Цена
-            <div className='price-slider'>
-              <div className='price-slider__from'>от {priceFrom} сом</div>
-              <div className='price-slider__top'>&nbsp;до {priceTo} сом</div>
-            </div>
-          </div>
-          <Range min={ 0 } max={ 10000000 } tipFormatter={ value => `${value}%` } onChange={ this.onPriceFromChange } step={ 10000 } defaultValue={ [priceFrom, priceTo] } />
-        </div>
-        <div className='search-form__row'>
-          <div className='search-form__label'>
-            Инпут
-          </div>
-          <input
-            type='text'
-            className='search-form__control search-form__control--input' placeholder='Введите'
-          />
-        </div>
-        <div className='search-form__row search-form__row--checkbox'>
-          <div className='search-form__label'>
-            Только с фото
-          </div>
-          <div className='custom-checkbox'>
-            <input
-              id='photo-checkbox'
-              type='checkbox'
-              onChange={ this.onHasImagesClick }
-              checked={ hasImages } className='search-form__control custom-checkbox__input'
-            />
-            <label className='custom-checkbox__label' htmlFor='photo-checkbox' />
-          </div>
-        </div>
-        <div className='search-form__row search-form__row--checkbox'>
-          <div className='search-form__label'>
-            Только обмен
-          </div>
-          <div className='custom-checkbox'>
-            <input
-              type='checkbox'
-              id='exchange-checkbox'
-              onChange={ this.onIsExchangeableClick } checked={ isExchangeable }
-              className='search-form__control custom-checkbox__input'
-            />
-            <label className='custom-checkbox__label' htmlFor='exchange-checkbox' />
-          </div>
-        </div>
         <div className='search-form__row'>
           <button className='search-form__submit' onClick={ this.onSearch } >
             Поиск { total > 0 && <span>({ total })</span> }
