@@ -774,7 +774,15 @@ class CarSearch extends React.Component {
   }
 
   renderMotor() {
-    const { motorcycles, yearCurrentFrom, yearCurrentTo, priceFrom, priceTo } = this.state;
+    const {
+      motorcycles,
+      yearCurrentFrom,
+      yearCurrentTo,
+      priceFrom,
+      priceTo,
+      hasImages,
+      isExchangeable,
+    } = this.state;
     return (
       <div>
         { this.renderSelectInput('Категория', this.getSortedItems(motorcycles.subcategories || {}), this.onMotorSubCategoryChange)}
@@ -782,6 +790,8 @@ class CarSearch extends React.Component {
         { this.renderSelectInput('Состояние', this.getSortedItems(motorcycles.conditions || {}), this.onConditionChange)}
         { this.renderRangeSlider('Год', yearCurrentFrom || 1900, yearCurrentTo || 2017, 1900, 2017, 1, this.onYear2Change) }
         { this.renderRangeSlider('Цена', priceFrom || 0, priceTo || 10000000, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
+        { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
+        { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
       </div>
     );
   }
