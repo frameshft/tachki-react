@@ -30,6 +30,7 @@ class CarSearch extends React.Component {
     this.onVolumeChange = this.onVolumeChange.bind(this);
     this.onMotorBrandChange = this.onMotorBrandChange.bind(this);
     this.onMotorSubCategoryChange = this.onMotorSubCategoryChange.bind(this);
+    this.onWaterSubCategoryChange = this.onWaterSubCategoryChange.bind(this);
 
     this.state = {
       total: 0,
@@ -49,6 +50,7 @@ class CarSearch extends React.Component {
       hasImages: false,
       automobiles: {},
       motorcycles: {},
+      water: {},
       yearFrom: null,
       yearTo: null,
       yearCurrentFrom: null,
@@ -65,8 +67,8 @@ class CarSearch extends React.Component {
   componentDidMount() {
     API.fetch('/automobiles/search_init/')
       .then((res) => {
-        const { cities, automobiles, motorcycles } = res;
-        this.setState({ cities: listToMap(cities, 'key'), automobiles, motorcycles });
+        const { cities, automobiles, motorcycles, water } = res;
+        this.setState({ cities: listToMap(cities, 'key'), automobiles, motorcycles, water });
       })
     ;
 
@@ -112,6 +114,13 @@ class CarSearch extends React.Component {
     const { motorcycles } = this.state;
     motorcycles.category = category;
     this.updateSate({ motorcycles });
+  }
+
+  onWaterSubCategoryChange(e) {
+    const category = e.target.value;
+    const { water } = this.state;
+    water.category = category;
+    this.updateSate({ water });
   }
 
   onCategoryChange(e) {
@@ -397,6 +406,7 @@ class CarSearch extends React.Component {
       hasImages,
       motorcycles,
       automobiles,
+      water,
       yearCurrentFrom,
       yearCurrentTo,
       mileageFrom,
@@ -494,6 +504,10 @@ class CarSearch extends React.Component {
 
     if (motorcycles.category) {
       query += `&motor-category=${motorcycles.category}`;
+    }
+
+    if (water.category) {
+      query += `&water-category=${water.category}`;
     }
 
     return query;
@@ -796,6 +810,24 @@ class CarSearch extends React.Component {
     );
   }
 
+  renderWater() {
+    const {
+      water,
+      priceFrom,
+      priceTo,
+      hasImages,
+      isExchangeable,
+    } = this.state;
+    return (
+      <div>
+        { this.renderSelectInput('Категория', this.getSortedItems(water.subcategories || {}), this.onWaterSubCategoryChange)}
+        { this.renderRangeSlider('Цена', priceFrom || 0, priceTo || 10000000, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
+        { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
+        { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
+      </div>
+    );
+  }
+
   renderCategoryWidgets(category) {
     switch (category) {
       case 'light-new':
@@ -804,6 +836,8 @@ class CarSearch extends React.Component {
         return this.renderLightOld();
       case 'motor':
         return this.renderMotor();
+      case 'water':
+        return this.renderWater();
       default:
         return null;
     }
