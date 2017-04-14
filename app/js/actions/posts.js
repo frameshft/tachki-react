@@ -103,3 +103,9 @@ export function fetchCarsCount(query) {
     API.fetch(`/automobiles/count/${query}`)
       .then(data => dispatch({ type: FETCH_CARS_COUNT, data }));
 }
+
+export function fetchPostCount(endpointTpe, query) {
+  return dispatch =>
+    API.fetch(`/${endpointTpe}/count/${query}`)
+      .then(data => dispatch({ type: FETCH_CARS_COUNT, data }));
+}
