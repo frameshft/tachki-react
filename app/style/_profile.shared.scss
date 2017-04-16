@@ -49,3 +49,73 @@
     }
   }
 }
+
+.uni-button {
+  /* Style for "Прямоуголь" */
+  max-width: 774px;
+  margin: 30px auto;
+  padding: 20px 0 30px;
+  border-radius: 5px;
+  border: 1px solid #d7d7d7;
+  background-color: #ffffff;
+  text-align: center;
+
+  &__item {
+    display: inline-block;
+    margin: 0 15px;
+    a {
+      color: #000;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  }
+
+  &__btn {
+    display: block;
+    border: none;
+    background: none;
+    position: relative;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 32px;
+      margin: 0 auto 10px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &--offer-price {
+      &:before {
+        background: url('../img/ic_attach_money_black_24px.svg') no-repeat 50% 0;
+        background-size: cover;
+      }
+    }
+
+    &--share {
+      &:before {
+        background: url('../img/ic_share_black_24px.svg') no-repeat 50% 0;
+        background-size: cover;
+      }
+    }
+
+    &--report {
+      &:before {
+        background: url('../img/ic_report_black_24px.svg') no-repeat 50% 0;
+        background-size: cover;
+      }
+    }
+
+    &--up {
+      &:before {
+        background: url('../img/ic_arrow_upward_black_24px.svg') no-repeat 50% 0;
+        background-size: cover;
+      }
+    }
+  }
+}

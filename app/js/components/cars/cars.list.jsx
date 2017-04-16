@@ -138,7 +138,7 @@ class CarList extends React.Component {
   }
 
   render() {
-    const { listView, cars, currentPage, entities } = this.props;
+    const { listView, cars, currentPage, entities, isFrontPage } = this.props;
     const { showSortModal, showSearchModal } = this.state;
     const carsRender = [];
 
@@ -177,6 +177,7 @@ class CarList extends React.Component {
           </h3>
           { this.renderFrontpage() }
         </div>
+        { !isFrontPage && <button className='mobile-search' onClick={ this.onSearchClickModal } />}
         <div className={ `list${listsCls}` }>
           { carsRender }
         </div>

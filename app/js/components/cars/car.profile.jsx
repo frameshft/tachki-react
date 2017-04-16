@@ -7,6 +7,7 @@ import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
 import VipPost from '../shared/vip.post.btn';
 import Controls from '../shared/controls.post';
+import ControlsDesktop from '../shared/controls.post.desktop';
 
 import profileNames from '../../constants/car.profile.names';
 import ContactInfo from '../shared/profile.contact.info';
@@ -250,6 +251,7 @@ class CarProfile extends React.Component {
             </div>
             <ContactInfo post={ car } parentCls='' />
           </div>
+          <ControlsDesktop post={ car } user={ user } />
           <SimilarPosts post={ car } />
         </MediaQuery>
       </div>
