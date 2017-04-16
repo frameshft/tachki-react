@@ -109,6 +109,28 @@ class ServicesList extends React.Component {
     });
   }
 
+  renderControls() {
+    return (
+      <ul className='head-tools'>
+        <li className='head-tools__item head-tools__item--search'>
+          <button className='button__transparent' onClick={ this.onSearchClickModal }>
+            Поиск
+          </button>
+        </li>
+        <li className='head-tools__item head-tools__item--sort'>
+          <button className='button__transparent' onClick={ this.toggleSortModal }>
+            Сортировка
+          </button>
+        </li>
+        <li className='head-tools__item head-tools__item--marker'>
+          <button className='button__transparent'>
+            Показать на карте
+          </button>
+        </li>
+      </ul>
+    );
+  }
+
   render() {
     const { listView, services, currentPage, entities } = this.props;
     const { showSortModal, showSearchModal } = this.state;
@@ -143,6 +165,12 @@ class ServicesList extends React.Component {
 
     return (
       <div className='body companies'>
+        <div className='frontpage__block__head desktop'>
+          <h3 className='frontpage__block__title'>
+            Услуги
+          </h3>
+          { this.renderControls() }
+        </div>
         <div className={ `list${listsCls}` }>
           { carsRender }
         </div>
@@ -201,6 +229,7 @@ function mapToProps(state) {
     entities: state.entities.posts,
     services: state.views.services,
     listView: state.views.listView,
+    url: state.routing.locationBeforeTransitions,
     currentPage,
   };
 }
