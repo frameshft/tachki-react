@@ -15,6 +15,8 @@ class SpareSearch extends React.Component {
     this.onConditionClick = this.onConditionClick.bind(this);
     this.onAutomobileBrandClick = this.onAutomobileBrandClick.bind(this);
     this.onAutomobileModelClick = this.onAutomobileModelClick.bind(this);
+    this.onWheelTypeClick = this.onWheelTypeClick.bind(this);
+    this.onDiameterClick = this.onDiameterClick.bind(this);
 
     this.state = {
       total: 0,
@@ -39,6 +41,7 @@ class SpareSearch extends React.Component {
         { key: 'new', value: 'Новые' },
         { key: 'used', value: 'Б/У' },
       ],
+      wheels: {},
     };
   }
 
@@ -56,7 +59,7 @@ class SpareSearch extends React.Component {
   onCategoryChange(e) {
     const category = e.target.value;
     this.updateSate({ category });
-    this.fetchAutoBrands(category);
+    this.fetchAPIData(category);
   }
 
   onAutomobileBrandClick(e) {
@@ -83,6 +86,20 @@ class SpareSearch extends React.Component {
           });
         break;
     }
+  }
+
+  onWheelTypeClick(e) {
+    const type = e.target.value;
+    const { wheels } = this.state;
+    wheels.type = type;
+    this.updateSate({ wheels });
+  }
+
+  onDiameterClick(e) {
+    const diameter = e.target.value;
+    const { wheels } = this.state;
+    wheels.diameter = diameter;
+    this.updateSate({ wheels });
   }
 
   onAutomobileModelClick(e) {
@@ -163,7 +180,7 @@ class SpareSearch extends React.Component {
     API.fetch(url).then(total => this.setState({ total }));
   }
 
-  fetchAutoBrands(category) {
+  fetchAPIData(category) {
     switch (category) {
       case 'sale_spare':
       case 'auto_spare':
@@ -184,8 +201,19 @@ class SpareSearch extends React.Component {
             return true;
           })
           ;
+      case 'wheels':
+        return API.fetch('/spare-parts/wheels_config/')
+          .then((res) => {
+            const { wheels } = this.state;
+
+            wheels.types = res.types;
+            wheels.diameters = res.diameters;
+
+            this.setState({ wheels });
+            return true;
+          })
+          ;
       default:
-        this.setState({ automobiles: {} });
         return null;
     }
   }
@@ -242,8 +270,9 @@ class SpareSearch extends React.Component {
     switch (category) {
       case 'sale_spare':
         return this.renderSaleSpareControls();
-      case 'tire':
       case 'wheels':
+        return this.renderWheelsControls();
+      case 'tire':
       case 'consumables':
       case 'multimedia':
       case 'auto_spare':
@@ -262,6 +291,20 @@ class SpareSearch extends React.Component {
         { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
         { this.renderSelectInput('Марка', this.getSortedItemsByIdName(automobiles.brands || {}), this.onAutomobileBrandClick) }
         { this.renderSelectInput('Модель', this.getSortedItemsByIdName(automobiles.models || {}), this.onAutomobileModelClick) }
+      </div>
+    );
+  }
+
+  renderWheelsControls() {
+    const {
+      conditions,
+      wheels,
+    } = this.state;
+    return (
+      <div>
+        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
+        { this.renderSelectInput('Тип дисков', this.getSortedItems(wheels.types || {}), this.onWheelTypeClick) }
+        { this.renderSelectInput('Диаметр', this.getSortedItems(wheels.diameters || {}), this.onDiameterClick) }
       </div>
     );
   }
