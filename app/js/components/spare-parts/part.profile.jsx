@@ -18,6 +18,8 @@ import '../../../style/car-profile.scss';
 import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
+import PostMap from '../shared/map.post';
+import ControlsDesktop from '../shared/controls.post.desktop';
 
 moment.locale('ru');
 
@@ -26,8 +28,11 @@ class SparePartProfile extends React.Component {
     super(props);
 
     this.thumbClick = this.thumbClick.bind(this);
+    this.onModalClose = this.onModalClose.bind(this);
+    this.onModalShow = this.onModalShow.bind(this);
 
     this.state = {
+      showModal: false,
       mainImgIndex: 0,
     };
   }
@@ -40,6 +45,18 @@ class SparePartProfile extends React.Component {
     if (nextProps.user.token !== this.props.user.token) {
       store.dispatch(getPost('spare-parts', this.props.params.id));
     }
+  }
+
+  onModalClose() {
+    this.setState({
+      showModal: false,
+    });
+  }
+
+  onModalShow() {
+    this.setState({
+      showModal: true,
+    });
   }
 
   thumbClick(index) {
@@ -92,7 +109,7 @@ class SparePartProfile extends React.Component {
 
   render() {
     const { post, user } = this.props;
-    const { mainImgIndex } = this.state;
+    const { mainImgIndex, showModal } = this.state;
     const postUser = post.user;
     if (!post || !post.profile) {
       return null;
@@ -151,7 +168,7 @@ class SparePartProfile extends React.Component {
               </div>
               }
             </div>
-            <ContactInfo post={ post } parentCls='' />
+            <ContactInfo post={ post } parentCls='' onAddressClick={ this.onModalShow } />
             <SimilarPosts post={ post } />
           </div>
           { post.isMy && !post.isVip && <VipPost postId={ post.id } /> }
@@ -175,7 +192,7 @@ class SparePartProfile extends React.Component {
                 { user.token && <FavoriteToggle post={ post } isDesktop /> }
                 {/* TODO: add crud */}
                 {/* { car.isMy && <button className='button__transparent btn--edit' /> } */}
-                <button className='button__transparent btn--marker'>
+                <button className='button__transparent btn--marker' onClick={ this.onModalShow }>
                   Показать на карте
                 </button>
                 <div className='car-profile__top__info'>
@@ -231,10 +248,19 @@ class SparePartProfile extends React.Component {
               </div>
               }
             </div>
-            <ContactInfo post={ post } parentCls='' />
+            <ContactInfo post={ post } parentCls='' onAddressClick={ this.onModalShow } />
           </div>
+          <ControlsDesktop post={ post } user={ user } />
           <SimilarPosts post={ post } />
         </MediaQuery>
+        {showModal &&
+        <PostMap
+          center={ [post.latitude, post.longitude] }
+          lat={ post.latitude }
+          lng={ post.longitude }
+          onClose={ this.onModalClose }
+        />
+        }
       </div>
     );
   }

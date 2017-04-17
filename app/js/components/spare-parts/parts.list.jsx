@@ -15,7 +15,6 @@ class PartsList extends React.Component {
   constructor(props) {
     super(props);
     this.toggleSortModal = this.toggleSortModal.bind(this);
-    this.onSearchClick = this.onSearchClick.bind(this);
     this.onSearchClickModal = this.onSearchClickModal.bind(this);
     this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
@@ -48,10 +47,6 @@ class PartsList extends React.Component {
       store.dispatch(this.fetchData(nextProps.url.search));
       store.dispatch(fetchPostCount('spare-parts', nextProps.url.search));
     }
-  }
-
-  onSearchClick() {
-    browserHistory.push('/spare-parts/search');
   }
 
   onSearchClickModal() {

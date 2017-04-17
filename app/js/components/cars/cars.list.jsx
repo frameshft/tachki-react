@@ -15,7 +15,6 @@ class CarList extends React.Component {
   constructor(props) {
     super(props);
     this.toggleSortModal = this.toggleSortModal.bind(this);
-    this.onSearchClick = this.onSearchClick.bind(this);
     this.onSearchClickModal = this.onSearchClickModal.bind(this);
     this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
@@ -48,10 +47,6 @@ class CarList extends React.Component {
       store.dispatch(this.fetchData(nextProps.url.search));
       store.dispatch(fetchCarsCount(nextProps.url.search));
     }
-  }
-
-  onSearchClick() {
-    browserHistory.push('/automobiles/search');
   }
 
   onSearchClickModal() {
