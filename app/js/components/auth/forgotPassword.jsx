@@ -69,14 +69,14 @@ class ForgotPassword extends React.Component {
         <div className='auth-form__row auth-form__row--phone'>
           <input
             type='number'
-            placeholder='login'
+            placeholder='Телефон'
             className='auth-form__input'
             onChange={ this.onPhoneHandle }
           />
         </div>
         <div className='auth-form__row auth-form__row--submit text-center'>
           <button onClick={ this.onSubmitForgot } className='btn btn--primary'>
-            Send
+            Отправить
           </button>
         </div>
       </div>
@@ -89,7 +89,7 @@ class ForgotPassword extends React.Component {
         <div className='auth-form__row'>
           <input
             type='text'
-            placeholder='code'
+            placeholder='Код'
             className='auth-form__input'
             onChange={ this.onCodeHandle }
           />
@@ -97,14 +97,14 @@ class ForgotPassword extends React.Component {
         <div className='auth-form__row'>
           <input
             type='password'
-            placeholder='password'
+            placeholder='Пароль'
             className='auth-form__input'
             onChange={ this.onPasswordHandle }
           />
         </div>
         <div className='auth-form__row auth-form__row--submit text-center'>
           <button onClick={ this.onSubmitChange } className='btn btn--primary'>
-            Change
+            Изменить
           </button>
         </div>
       </div>

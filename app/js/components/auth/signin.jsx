@@ -62,7 +62,7 @@ class SignIn extends React.Component {
         <div className='auth-form__row auth-form__row--phone'>
           <input
             type='text'
-            placeholder='Login'
+            placeholder='Телефон'
             maxLength='9'
             onChange={ this.loginHandle }
             className='auth-form__input'
@@ -71,19 +71,19 @@ class SignIn extends React.Component {
         <div className='auth-form__row'>
           <input
             type='password'
-            placeholder='Password'
+            placeholder='Пароль'
             onChange={ this.passwordHandle }
             className='auth-form__input'
           />
         </div>
         <div className='auth-form__row auth-form__row--submit text-center'>
           <button type='submit' className='btn btn--primary'>
-            Login
+            Войти
           </button>
         </div>
         <div className='text-center'>
           <Link to='/forgot-password' className='auth-form__forgot-password'>
-            Forgot Password?
+            Забыли пароль?
           </Link>
         </div>
       </form>
