@@ -11,6 +11,7 @@ import { getCompany } from '../../actions/companies';
 import ContactInfo from '../shared/profile.contact.info';
 
 import '../../../style/profile.scss';
+import PostMap from '../shared/map.post';
 
 class CompanyProfile extends React.Component {
   constructor(props) {
@@ -19,8 +20,12 @@ class CompanyProfile extends React.Component {
     this.onModalClose = this.onModalClose.bind(this);
     this.onModalShow = this.onModalShow.bind(this);
 
+    this.onMapModalClose = this.onMapModalClose.bind(this);
+    this.onMapModalShow = this.onMapModalShow.bind(this);
+
     this.state = {
       showModal: false,
+      showMapModal: false,
       postsPage: 1,
     };
 
@@ -43,9 +48,21 @@ class CompanyProfile extends React.Component {
     });
   }
 
+  onMapModalClose() {
+    this.setState({
+      showMapModal: false,
+    });
+  }
+
+  onMapModalShow() {
+    this.setState({
+      showMapModal: true,
+    });
+  }
+
   render() {
     const { company } = this.props;
-    const { showModal } = this.state;
+    const { showModal, showMapModal } = this.state;
 
     if (company.id === undefined) {
       return null;
@@ -90,7 +107,10 @@ class CompanyProfile extends React.Component {
                 { services }
               </div>
             </div>
-            <ContactInfo post={ company } parentCls='company-profile__main__row' />
+            <ContactInfo
+              post={ company } parentCls='company-profile__main__row'
+              onAddressClick={ this.onModalClose }
+            />
           </div>
           <CompanyPosts company={ company } />
           {showModal &&
@@ -129,7 +149,7 @@ class CompanyProfile extends React.Component {
               <div className='company-profile__top__controls'>
                 {/* TODO: add crud */}
                 {/* <button className='button__transparent btn--edit' /> */}
-                <button className='button__transparent btn--marker'>
+                <button className='button__transparent btn--marker' onClick={ this.onMapModalShow }>
                   Показать на карте
                 </button>
               </div>
@@ -151,10 +171,19 @@ class CompanyProfile extends React.Component {
             <ContactInfo
               post={ company }
               parentCls='company-profile__main__row company-profile__main__row--contacts'
+              onAddressClick={ this.onMapModalShow }
             />
           </div>
           <CompanyPosts company={ company } />
         </MediaQuery>
+        {showMapModal &&
+        <PostMap
+          center={ [company.latitude, company.longitude] }
+          lat={ company.latitude }
+          lng={ company.longitude }
+          onClose={ this.onMapModalClose }
+        />
+        }
       </div>
     );
   }

@@ -851,3 +851,15 @@ $icon-size: 50px;
     font-weight: bold;
   }
 }
+
+.marker {
+  width:30px;
+  height:30px;
+  &.map {
+    background: transparent url('../img/ic_place_red_24px.svg') no-repeat 0;
+  }
+}
+
+.profile__contact--address.button__transparent {
+  text-align: left;
+}

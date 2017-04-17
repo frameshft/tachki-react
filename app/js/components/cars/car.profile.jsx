@@ -19,6 +19,7 @@ import '../../../style/car-profile.scss';
 import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
+import PostMap from '../shared/map.post';
 
 moment.locale('ru');
 
@@ -27,8 +28,11 @@ class CarProfile extends React.Component {
     super(props);
 
     this.thumbClick = this.thumbClick.bind(this);
+    this.onModalClose = this.onModalClose.bind(this);
+    this.onModalShow = this.onModalShow.bind(this);
 
     this.state = {
+      showModal: false,
       mainImgIndex: 0,
     };
   }
@@ -41,6 +45,18 @@ class CarProfile extends React.Component {
     if (nextProps.user.token !== this.props.user.token) {
       store.dispatch(getPost('automobiles', this.props.params.id));
     }
+  }
+
+  onModalClose() {
+    this.setState({
+      showModal: false,
+    });
+  }
+
+  onModalShow() {
+    this.setState({
+      showModal: true,
+    });
   }
 
   thumbClick(index) {
@@ -109,7 +125,7 @@ class CarProfile extends React.Component {
 
   render() {
     const { car, user } = this.props;
-    const { mainImgIndex } = this.state;
+    const { mainImgIndex, showModal } = this.state;
     const postUser = car.user;
     if (car.profile === undefined) {
       return null;
@@ -168,7 +184,7 @@ class CarProfile extends React.Component {
               </div>
               }
             </div>
-            <ContactInfo post={ car } parentCls='' />
+            <ContactInfo post={ car } parentCls='' onAddressClick={ this.onModalShow } />
             <SimilarPosts post={ car } />
           </div>
           { car.isMy && !car.isVip && <VipPost postId={ car.id } /> }
@@ -192,7 +208,7 @@ class CarProfile extends React.Component {
                 { user.token && <FavoriteToggle post={ car } isDesktop /> }
                 {/* TODO: add crud */}
                 {/* { car.isMy && <button className='button__transparent btn--edit' /> } */}
-                <button className='button__transparent btn--marker'>
+                <button className='button__transparent btn--marker' onClick={ this.onModalShow }>
                   Показать на карте
                 </button>
                 <div className='car-profile__top__info'>
@@ -249,11 +265,19 @@ class CarProfile extends React.Component {
               </div>
               }
             </div>
-            <ContactInfo post={ car } parentCls='' />
+            <ContactInfo post={ car } parentCls='' onAddressClick={ this.onModalShow } />
           </div>
           <ControlsDesktop post={ car } user={ user } />
           <SimilarPosts post={ car } />
         </MediaQuery>
+        {showModal &&
+        <PostMap
+          center={ [car.latitude, car.longitude] }
+          lat={ car.latitude }
+          lng={ car.longitude }
+          onClose={ this.onModalClose }
+        />
+        }
       </div>
     );
   }

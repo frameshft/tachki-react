@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class ProfileContactInfo extends React.Component {
   render() {
-    const { post, parentCls } = this.props;
+    const { post, parentCls, onAddressClick } = this.props;
     const showPhones = post.contactPhone !== '' || post.phone;
 
     return (
@@ -25,17 +25,27 @@ export default class ProfileContactInfo extends React.Component {
             </div>
           </div>}
         </div>}
-        {post.address && <div className='profile__contact profile__contact--address'>
-          <div className='profile__contact__row'>
-            <div className='profile__contact__label'>
-              Адрес
+        {post.address &&
+          <button
+            className='profile__contact profile__contact--address button__transparent'
+            onClick={ onAddressClick }
+          >
+            <div className='profile__contact__row'>
+              <div className='profile__contact__label'>
+                Адрес
+              </div>
+              <div className='profile__contact__value'>
+                { post.address }
+              </div>
             </div>
-            <div className='profile__contact__value'>
-              { post.address }
-            </div>
-          </div>
-        </div>}
+          </button>
+        }
       </div>
     );
   }
 }
+
+ProfileContactInfo.PropTypes = {
+  onAddressClick: React.PropTypes.func.isRequired,
+};
+
