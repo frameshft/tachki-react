@@ -26,7 +26,7 @@ class PostMap extends React.Component {
                   center={ center }
                   zoom={ zoom }
                 >
-                  <AnyReactComponent lat={ lat } lng={ lng } text={ 'jjjj' } />
+                  <AnyReactComponent lat={ lat } lng={ lng } />
                 </GoogleMapReact>
               </div>
             </div>
