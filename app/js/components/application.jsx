@@ -41,7 +41,7 @@ export default class Application extends React.Component {
                 Пользовательское соглашение
               </a>
             </div>
-            Разработано Mirsfot LLC.
+            Разработано Mirsoft LLC.
           </div>
         </div>
       </div>
