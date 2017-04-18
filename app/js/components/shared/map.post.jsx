@@ -46,7 +46,7 @@ PostMap.PropTypes = {
 };
 
 PostMap.defaultProps = {
-  zoom: 11,
+  zoom: 17,
 };
 
 export default PostMap;
