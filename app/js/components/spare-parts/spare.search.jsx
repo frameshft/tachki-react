@@ -16,6 +16,7 @@ class SpareSearch extends React.Component {
     this.onAutomobileBrandClick = this.onAutomobileBrandClick.bind(this);
     this.onAutomobileModelClick = this.onAutomobileModelClick.bind(this);
     this.onWheelTypeClick = this.onWheelTypeClick.bind(this);
+    this.onTireTypeClick = this.onTireTypeClick.bind(this);
     this.onDiameterClick = this.onDiameterClick.bind(this);
 
     this.state = {
@@ -42,6 +43,7 @@ class SpareSearch extends React.Component {
         { key: 'used', value: 'Б/У' },
       ],
       wheels: {},
+      tires: {},
     };
   }
 
@@ -93,6 +95,13 @@ class SpareSearch extends React.Component {
     const { wheels } = this.state;
     wheels.type = type;
     this.updateSate({ wheels });
+  }
+
+  onTireTypeClick(e) {
+    const type = e.target.value;
+    const { tires } = this.state;
+    tires.type = type;
+    this.updateSate({ tires });
   }
 
   onDiameterClick(e) {
@@ -213,6 +222,20 @@ class SpareSearch extends React.Component {
             return true;
           })
           ;
+      case 'tires':
+        return API.fetch('/spare-parts/tires_config/')
+          .then((res) => {
+            const { tires } = this.state;
+
+            tires.types = res.types;
+            tires.diameters = res.diameters;
+            tires.profiles = res.profiles;
+            tires.profileWidths = res.profileWidths;
+
+            this.setState({ tires });
+            return true;
+          })
+          ;
       default:
         return null;
     }
@@ -273,6 +296,7 @@ class SpareSearch extends React.Component {
       case 'wheels':
         return this.renderWheelsControls();
       case 'tire':
+        return this.renderTiresControls();
       case 'consumables':
       case 'multimedia':
       case 'auto_spare':
@@ -305,6 +329,22 @@ class SpareSearch extends React.Component {
         { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
         { this.renderSelectInput('Тип дисков', this.getSortedItems(wheels.types || {}), this.onWheelTypeClick) }
         { this.renderSelectInput('Диаметр', this.getSortedItems(wheels.diameters || {}), this.onDiameterClick) }
+      </div>
+    );
+  }
+
+  renderTiresControls() {
+    const {
+      conditions,
+      tires,
+    } = this.state;
+    return (
+      <div>
+        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
+        { this.renderSelectInput('Тип шин', this.getSortedItems(tires.types || {}), this.onTireTypeClick) }
+        { this.renderSelectInput('Профиль', this.getSortedItems(tires.profiles || {}), this.onWheelTypeClick) }
+        { this.renderSelectInput('Ширина', this.getSortedItems(tires.profileWidths || {}), this.onWheelTypeClick) }
+        { this.renderSelectInput('Диаметр', this.getSortedItems(tires.diameters || {}), this.onDiameterClick) }
       </div>
     );
   }
