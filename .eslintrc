@@ -7,6 +7,10 @@
     "class-methods-use-this": [
       0
     ],
+    "max-len": [
+      "error",
+      160
+    ],
     "jsx-quotes": [
       2,
       "prefer-single"
@@ -30,6 +34,9 @@
       0
     ],
     "react/prop-types": [
+      0
+    ],
+    "react/no-string-refs": [
       0
     ]
   }

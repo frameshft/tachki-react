@@ -31,6 +31,8 @@ export const FETCH_MY_FAVORITE_POSTS = 'FETCH_MY_FAVORITE_POSTS';
 export const SUCCESS_FETCH_MY_FAVORITE_POSTS = 'SUCCESS_FETCH_MY_FAVORITE_POSTS';
 export const FAILURE_FETCH_MY_FAVORITE_POSTS = 'FAILURE_FETCH_MY_FAVORITE_POSTS';
 
+export const SUCCESS_FETCH_FAQ = 'SUCCESS_FETCH_FAQ';
+
 export const CLEAR_HISTORY_POST = 'CLEAR_HISTORY_POST';
 
 function requestPaginatedResponse() {
@@ -81,4 +83,9 @@ export function fetchPaginatedResponse(actions, endpoint, page = 1) {
         ]);
       });
   };
+}
+
+
+export function fetchFAQ() {
+  return dispatch => API.fetch('/faq/').then(data => dispatch({ type: SUCCESS_FETCH_FAQ, data }));
 }

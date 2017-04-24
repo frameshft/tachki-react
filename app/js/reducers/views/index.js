@@ -10,6 +10,7 @@ import history from './history';
 import services from './services';
 import isShownMobileSidebar from './isShownMobileSidebar';
 import companyPosts from './companyPosts';
+import faq from './faq';
 
 
 const combinedReducer = combineReducers({
@@ -24,6 +25,7 @@ const combinedReducer = combineReducers({
   favorites,
   services,
   isShownMobileSidebar,
+  faq,
 });
 
 export default function views(state, action) {

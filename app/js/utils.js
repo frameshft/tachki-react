@@ -14,9 +14,16 @@ export function listToMap(list, key = 'id') {
 }
 
 
-export function importImage(path, defaultImg = 'no-image') {
+export function importImage(path, img, defaultImg = 'no-image') {
+  let width = '';
+  let height = '';
+  if (img !== undefined) {
+    width = img.offsetWidth;
+    height = img.offsetHeight;
+  }
+
   if (path) {
-    return path;
+    return `${path}?w=${width}&h=${height}`;
   }
 
   switch (defaultImg) {
@@ -36,4 +43,8 @@ export function updateQueryStringParameter(uri, key, value) {
   }
 
   return `${uri}${separator}${key}=${value}`;
+}
+
+export function mapToArray(map) {
+  return Object.entries(map).map(([k, v]) => v); // eslint-disable-line
 }

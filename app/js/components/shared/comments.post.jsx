@@ -124,8 +124,8 @@ class CommentsPost extends React.Component {
   renderSubComments(comment) {
     return (
       <div key={ comment.id } className='comment comment--child'>
-        <div className='comment__media'>
-          <img src={ importImage(comment.image) } alt='' className='comment__media__img' />
+        <div className='comment__media' ref='subCommentImage'>
+          <img src={ importImage(comment.image, this.refs.subCommentImage) } alt='' className='comment__media__img' />
         </div>
         <div className='comment__body'>
           <div className='comment__author'>
@@ -149,8 +149,8 @@ class CommentsPost extends React.Component {
         className='comment button__transparent'
         onClick={ this.commentClick.bind(this, comment.id) } //eslint-disable-line
       >
-        <div className='comment__media'>
-          <img src={ importImage(comment.image) } alt='' className='comment__media__img' />
+        <div className='comment__media' ref='image'>
+          <img src={ importImage(comment.image, this.refs.image) } alt='' className='comment__media__img' />
         </div>
         <div className='comment__body'>
           <div className='comment__author'>

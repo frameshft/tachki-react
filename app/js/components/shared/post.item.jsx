@@ -10,7 +10,6 @@ class PostItem extends React.Component {
     if (!post) return null;
 
     const isVip = post.isVip;
-    const image = importImage(post.image);
 
     const vipCls = isVip ? 'vip-item' : '';
 
@@ -20,9 +19,9 @@ class PostItem extends React.Component {
           <h3 className='list__item__name small-view'>
             { post.title }
           </h3>
-          <div className='list__item__left'>
-            <div className='list__item__media'>
-              <img className='list__item__media__img' src={ image } alt={ post.title } />
+          <div className='list__item__left aaa'>
+            <div className='list__item__media' ref='postItem'>
+              <img className='list__item__media__img' src={ importImage(post.image, this.refs.postItem) } alt={ post.title } />
               <div className='list__item__media__img-count mobile'>{ post.num_images }</div>
               <div className='list__item__city desktop'>
                 { post.city }

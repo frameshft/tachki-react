@@ -86,8 +86,9 @@ class CargoProfile extends React.Component {
         className='car-profile__gallery__thumb'
         onClick={ this.thumbClick.bind(this, index) } // eslint-disable-line
         key={ index }
+        ref='thumbImage'
       >
-        <img src={ importImage(image) } alt={ index } />
+        <img src={ importImage(image, this.refs.thumbImage) } alt={ index } />
       </button>))
       ;
   }
@@ -100,17 +101,15 @@ class CargoProfile extends React.Component {
       return null;
     }
 
-    const image = importImage(post.images[0]);
-
     return (
       <div className='car-profile'>
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ post } /> }
           {post && <Controls post={ post } user={ user } /> }
-          <div className='car-profile__media'>
+          <div className='car-profile__media' ref='image'>
             <button className='button__transparent' onClick={ this.onModalShow }>
               <img
-                src={ image }
+                src={ importImage(post.images[0].image, this.refs.image) }
                 alt={ post.title }
                 className='car-profile__media__img'
               />
@@ -162,7 +161,7 @@ class CargoProfile extends React.Component {
           {post && <Controls post={ post } user={ user } /> }
           <div className='car-profile__top'>
             <div className='car-profile__top__media'>
-              <img src={ importImage(postUser.image) } alt='' />
+              <img src={ importImage(postUser.image, this.refs.postUserImg) } alt='' ref='postUserImg' />
               <div className='car-profile__top__username'>
                 { postUser.name }
               </div>
@@ -199,8 +198,8 @@ class CargoProfile extends React.Component {
                 {this.renderProfile()}
               </div>
               <div className='car-profile__gallery'>
-                <div className='car-profile__gallery__main'>
-                  <img src={ importImage(post.images[mainImgIndex]) } alt='' />
+                <div className='car-profile__gallery__main' ref='galleryMain'>
+                  <img src={ importImage(post.images[mainImgIndex], this.refs.galleryMain) } alt='' />
                 </div>
                 <div className='car-profile__gallery_thumbs'>
                   {this.renderThumbs(post.images)}

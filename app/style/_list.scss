@@ -71,6 +71,11 @@
       position: relative;
       overflow: hidden;
 
+      @media all and (max-width: 767px) {
+        max-height: 125px;
+        overflow: hidden;
+      }
+
       &--cars {
         height: 120px;
       }
@@ -585,11 +590,14 @@
     border: none;
     color: #fff;
     font-size: 38px;
-    border-radius: 50%;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
     box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
     z-index: 11;
     cursor: pointer;
     transition: transform ease-in-out 0.2s;
+    padding: 0;
 
     &:before {
       content: '';
@@ -597,7 +605,7 @@
       width: 24px;
       height: 24px;
       position: relative;
-      left: 7px;
+      left: 14px;
       display: block;
     }
 

@@ -21,6 +21,8 @@ import CarSearch from './components/cars/car.search';
 import UpPost from './components/shared/up.post';
 import CommentsPost from './components/shared/comments.post';
 import HeaderControls from './constants/header.controls';
+import Agreement from './components/static-pages/agreement';
+import FAQ from './components/static-pages/faq';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -107,6 +109,8 @@ export default (store) => {
         />
         <Route path='up/:id' component={ UpPost } title='Поднять объявление' />
         <Route path='comments/:id' component={ CommentsPost } title='Комментарии' />
+        <Route path='agreement' component={ Agreement } title='Пользовательское соглашение' />
+        <Route path='faq' component={ FAQ } title='Правила/Помощь' />
       </Route>
     </Router>
   );

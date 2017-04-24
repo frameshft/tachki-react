@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
+import { Link } from 'react-router';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
@@ -37,9 +38,9 @@ export default class Application extends React.Component {
               <a href='/' className='footer__links'>
                 Правила/Помощь
               </a>
-              <a href='/' className='footer__links'>
+              <Link to='/agreement' className='footer__links'>
                 Пользовательское соглашение
-              </a>
+              </Link>
             </div>
             Разработано Mirsoft LLC.
           </div>

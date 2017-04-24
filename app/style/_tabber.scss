@@ -62,12 +62,14 @@
       margin: 0 15px;
 
       &--logo {
+        margin-left: 0;
         .tab__link {
           display: block;
           width: 117px;
           height: 45px;
           margin-right: 100px;
-          background: url('../img/logo.png') no-repeat 0 0;
+          background: url('../img/logo-red.svg') no-repeat 0 0;
+          background-size: 100% 45px;
 
         }
       }
