@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MediaQuery from 'react-responsive';
 import { Link, browserHistory } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
@@ -98,9 +97,9 @@ class CompanyList extends React.Component {
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
-            <button className='button__transparent' onClick={ this.onSearchClickModal }>
-              Поиск
-            </button>
+          <button className='button__transparent' onClick={ this.onSearchClickModal }>
+            Поиск
+          </button>
         </li>
         <li className='head-tools__item head-tools__item--marker'>
           <button className='button__transparent'>

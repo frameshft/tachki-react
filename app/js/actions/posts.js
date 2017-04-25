@@ -98,7 +98,7 @@ export function postComments(post, description, comment = null) {
   ;
 }
 
-export function fetchCarsCount(query) {
+export function fetchPostsCount(query) {
   return dispatch =>
     API.fetch(`/automobiles/count/${query}`)
       .then(data => dispatch({ type: FETCH_CARS_COUNT, data }));

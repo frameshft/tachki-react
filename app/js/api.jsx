@@ -5,7 +5,7 @@ const axios = require('axios');
 
 // const baseUrl = 'http://92.245.109.160:1248/';
 const isProduction = process.env.NODE_ENV === 'production';
-const baseUrl = isProduction ? 'http://tachki.kg/' : 'http://92.245.109.160:1248/';
+const baseUrl = isProduction ? 'http://tachki.kg/' : 'http://staging.mirsoft.kg:1248/';
 const baseAPI = 'react';
 const locale = 'ru';
 const apiToken = isProduction ? 'tachki.kg:U-M_6a6B_JA6zbWXfxvQEXXAWzM' : 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';

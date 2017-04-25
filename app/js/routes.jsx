@@ -7,11 +7,7 @@ import Frontpage from './components/frontpage';
 import AuthComponents from './components/auth';
 import CompanyList from './components/companies/companies.list';
 import CompanySearch from './components/companies/companies.search';
-import CarList from './components/cars/cars.list';
-import CargoList from './components/cargo/cargos';
 import CargoProfile from './components/cargo/cargo.profile';
-import PartsList from './components/spare-parts/parts.list';
-import ServicesList from './components/services/services.list';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
 import PartProfile from './components/spare-parts/part.profile';
@@ -23,6 +19,7 @@ import CommentsPost from './components/shared/comments.post';
 import HeaderControls from './constants/header.controls';
 import Agreement from './components/static-pages/agreement';
 import FAQ from './components/static-pages/faq';
+import PostsList from './components/shared/posts.list';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -58,7 +55,13 @@ export default (store) => {
         />
         <Route
           path='automobiles'
-          component={ CarList } title='Автомобили' controls={ HeaderControls.POSTS }
+          component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
+          postType='automobiles'
+        />
+        <Route
+          path='posts'
+          component={ PostsList } title='Посты' controls={ HeaderControls.POSTS }
+          postType='cargos'
         />
         <Route
           path='automobiles/:id'
@@ -66,7 +69,8 @@ export default (store) => {
         />
         <Route
           path='spare-parts'
-          component={ PartsList } title='Запчасти' controls={ HeaderControls.POSTS }
+          component={ PostsList } title='Запчасти' controls={ HeaderControls.POSTS }
+          postType='spareParts'
         />
         <Route
           path='spare-parts/:id'
@@ -74,7 +78,8 @@ export default (store) => {
         />
         <Route
           path='services'
-          component={ ServicesList } title='Услуги' controls={ HeaderControls.POSTS }
+          component={ PostsList } title='Услуги' controls={ HeaderControls.POSTS }
+          postType='services'
         />
         <Route
           path='services/search'
@@ -86,7 +91,8 @@ export default (store) => {
         />
         <Route
           path='cargo'
-          component={ CargoList } title='Грузовые' controls={ HeaderControls.POSTS }
+          component={ PostsList } title='Грузовые' controls={ HeaderControls.POSTS }
+          postType='cargos'
         />
         <Route
           path='cargo/:id'

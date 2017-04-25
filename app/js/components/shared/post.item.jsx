@@ -15,7 +15,7 @@ class PostItem extends React.Component {
 
     return (
       <div className={ `list__item list__item--car ${vipCls}` }>
-        <Link to={ `${endpoint}/${post.id}` } activeStyle={ { textDecoration: 'none' } }>
+        <Link to={ `${endpoint}${post.id}` } activeStyle={ { textDecoration: 'none' } }>
           <h3 className='list__item__name small-view'>
             { post.title }
           </h3>
