@@ -36,7 +36,7 @@ export default class Application extends React.Component {
           <div className='copyright'>
             <div className='footer__nav desktop'>
               <a href='/' className='footer__links'>
-                Правила/Помощь
+                Помощь/Правила
               </a>
               <Link to='/agreement' className='footer__links'>
                 Пользовательское соглашение
