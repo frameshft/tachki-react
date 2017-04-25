@@ -110,7 +110,6 @@
     border: 1px solid #000;
     border-radius: 50%;
     background: transparent;
-
     animation: animation 1000ms linear infinite both;
   }
 }
@@ -143,4 +142,3 @@
   90.69% { transform: matrix3d(1.999, 0, 0, 0, 0, 1.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
   100% { transform: matrix3d(2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 }
-
