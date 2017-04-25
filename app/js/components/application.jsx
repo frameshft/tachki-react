@@ -26,21 +26,13 @@ export default class Application extends React.Component {
 
         <div className='footer'>
           <div className='download'>
-            <a href='/' className='download__item download__item--android'>
-              <img src={ require('../../img/playmarket.png') } className='download__item__img' alt='' />
-            </a>
-            <a href='/' className='download__item download__item--ios'>
-              <img src={ require('../../img/appstore.png') } className='download__item__img' alt='' />
-            </a>
+            <a href='/' className='download__item download__item--playmarket'>&nbsp;</a>
+            <a href='/' className='download__item download__item--appstore'>&nbsp;</a>
           </div>
           <div className='copyright'>
             <div className='footer__nav desktop'>
-              <a href='/' className='footer__links'>
-                Помощь/Правила
-              </a>
-              <Link to='/agreement' className='footer__links'>
-                Пользовательское соглашение
-              </Link>
+              <Link to='/faq' className='footer__links'>Помощь/Правила</Link>
+              <Link to='/agreement' className='footer__links'>Пользовательское соглашение</Link>
             </div>
             Разработано Mirsoft LLC.
           </div>

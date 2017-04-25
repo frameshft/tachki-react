@@ -3,34 +3,24 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import '../../../style/static.scss';
 import { fetchFAQ } from '../../actions/list';
+import FaqItem from './faq.item';
 
 class FAQ extends React.Component {
   componentDidMount() {
     store.dispatch(fetchFAQ());
   }
 
-  renderItem(item) {
-    return (
-      <li className='faq__item' key={ item.id }>
-        <div className='faq__item__question'>
-          { item.question }
-        </div>
-        <div className='faq__item__answer'>
-          { item.answer }
-        </div>
-      </li>
-    );
-  }
-
   render() {
     const { faqs } = this.props;
-    const item = faqs.map(x => this.renderItem(x));
+    const item = faqs.map(x => <FaqItem faqItem={ x } key={ x.id } />);
     return (
       <div className='static-pages'>
+        <h1 className='static-pages__title'>
+          Часто задаваемые вопросы
+        </h1>
         <ul>
           {item}
         </ul>
-        FAQ
       </div>
     );
   }

@@ -44,12 +44,12 @@ class Sidebar extends React.Component {
               Просмотренные
             </Link>
           </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--settings'>
-            <a href='/' className='sidebar__navigation__link'>Настройки</a>
-          </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
+          {/* <li className='sidebar__navigation__item sidebar__navigation__item--settings'> */}
+          {/* <a href='/' className='sidebar__navigation__link'>Настройки</a> */}
+          {/* </li> */}
+          {/* <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
-          </li>
+          </li> */}
           <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
             <Link to='/registration' className='sidebar__navigation__link'>
               Регистрация
@@ -107,12 +107,12 @@ class Sidebar extends React.Component {
               Просмотренные
             </Link>
           </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--settings'>
-            <a href='/' className='sidebar__navigation__link'>Настройки</a>
-          </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
+          { /* <li className='sidebar__navigation__item sidebar__navigation__item--settings'> */ }
+          {/* <a href='/' className='sidebar__navigation__link'>Настройки</a> */}
+          { /* </li> */ }
+          { /* <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
-          </li>
+          </li> */ }
           <li className='sidebar__navigation__item sidebar__navigation__item--signout'>
             <button
               className='sidebar__navigation__link button__transparent'
