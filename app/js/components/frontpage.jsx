@@ -34,7 +34,7 @@ class Frontpage extends React.Component {
           </div>
           <div className='frontpage__block desktop'>
             <Cars isFrontPage />
-            <Link to='/automboiles' className='frontpage__block__more'>
+            <Link to='/automobiles' className='frontpage__block__more'>
               Больше объявлений
             </Link>
           </div>
