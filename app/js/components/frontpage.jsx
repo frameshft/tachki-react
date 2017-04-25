@@ -14,7 +14,7 @@ class Frontpage extends React.Component {
           <div className='frontpage__block'>
             <Companies isFrontPage />
             <Link to='/companies' className='frontpage__block__more'>
-              Больше объявлений
+              Больше компаний
             </Link>
           </div>
           <div className='middle-banner desktop'>
@@ -34,8 +34,8 @@ class Frontpage extends React.Component {
           </div>
           <div className='frontpage__block desktop'>
             <Cars isFrontPage />
-            <Link to='/automboiles' className='frontpage__block__more'>
-              Больше компаний
+            <Link to='/automobiles' className='frontpage__block__more'>
+              Больше объявлений
             </Link>
           </div>
           <div className='desktop bottom-banner'>

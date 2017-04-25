@@ -28,14 +28,14 @@ class PostItem extends React.Component {
               </div>
               { isVip && <div className='vip desktop' /> }
               <div className='list__item__price mobile'>
-                { post.price }
+                { post.price } сом
               </div>
             </div>
             <h3 className='list__item__name desktop'>
               { post.title }
             </h3>
             <div className='list__item__price small-view'>
-              { post.price }
+              { post.price } сом
             </div>
           </div>
 
@@ -51,7 +51,7 @@ class PostItem extends React.Component {
               </div>
             </div>
             <div className='list__item__price desktop'>
-              { post.price }
+              { post.price } сом
             </div>
             <div className='list__item__bottom' />
           </div>
