@@ -1,5 +1,7 @@
 /* eslint-disable global-require */
 
+import API from './api';
+
 export function listToMap(list, key = 'id') {
   let objects = {};
 
@@ -28,7 +30,7 @@ export function importImage(path, img, defaultImg = 'no-image') {
 
   switch (defaultImg) {
     case 'no-image':
-      return require('../img/no-photo.jpg');
+      return API.getStaticUrl(`no-photo.jpg?w=${width}&h=${height}`);
     default:
       return null;
   }

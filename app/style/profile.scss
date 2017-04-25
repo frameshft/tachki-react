@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'variables';
 
 $company-profile-main-bg: #fafafa;
 
@@ -74,19 +75,19 @@ $company-profile-main-bg: #fafafa;
 
       &--phone {
         &:before {
-          background: url('../img/icon-contact-phone.png') no-repeat 0 0;
+          background: url($static-url + 'img/icon-contact-phone.png') no-repeat 0 0;
         }
       }
 
       &--address {
         &:before {
-          background: url('../img/icon-contact-marker.png') no-repeat 0 0;
+          background: url($static-url + 'img/icon-contact-marker.png') no-repeat 0 0;
         }
       }
 
       &--message {
         &:before {
-          background: url('../img/icon-contact-msg.png') no-repeat 0 0;
+          background: url($static-url + 'img/icon-contact-msg.png') no-repeat 0 0;
         }
       }
 
@@ -290,19 +291,19 @@ $company-profile-main-bg: #fafafa;
 
     &--phone {
       &:before {
-        background: url('../img/call.jpg') no-repeat 0 0;
+        background: url($static-url + 'img/call.jpg') no-repeat 0 0;
       }
     }
 
     &--address {
       &:before {
-        background: url('../img/marker.jpg') no-repeat 0 0;
+        background: url($static-url + 'img/marker.jpg') no-repeat 0 0;
       }
     }
 
     &--message {
       &:before {
-        background: url('../img/mail.jpg') no-repeat 0 0;
+        background: url($static-url + 'img/mail.jpg') no-repeat 0 0;
       }
     }
   }

@@ -36,7 +36,7 @@ $header-padding-top: 8.335%;
       border: none;
 
       &--map {
-        background: url('../img/icon-marker.png') no-repeat 0 0;
+        background: url($static-url + 'img/icon-marker.png') no-repeat 0 0;
         width: 20px;
         height: 26px;
         background-size: auto 100%;
@@ -175,7 +175,7 @@ $header-padding-top: 8.335%;
           display: inline-block;
           width: 30px;
           height: 30px;
-          background: url('../img/sidebar-user-icons.png') no-repeat;
+          background: url($static-url + 'img/sidebar-user-icons.png') no-repeat;
         }
 
         &--my {
@@ -329,13 +329,13 @@ $header-padding-top: 8.335%;
 }
 
 .main-banner {
-  background: url('../img/header.jpg') no-repeat 0 0;
+  background: url($static-url + 'img/header.jpg') no-repeat 0 0;
   background-size: cover;
   height: calc(100vh - 57px);
 }
 
 .bottom-banner {
-  background: url('../img/banner-bottom.jpg') no-repeat 0 0;
+  background: url($static-url + 'img/banner-bottom.jpg') no-repeat 0 0;
   background-size: cover;
   height: 307px;
 

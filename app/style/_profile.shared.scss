@@ -1,3 +1,5 @@
+@import "variables";
+
 .profile {
   &__contact {
     padding-left: 51px;
@@ -15,19 +17,19 @@
 
     &--phone {
       &:before {
-        background: url('../img/icon-contact-phone.png') no-repeat 0 0;
+        background: url($static-url + 'img/icon-contact-phone.png') no-repeat 0 0;
       }
     }
 
     &--address {
       &:before {
-        background: url('../img/icon-contact-marker.png') no-repeat 0 0;
+        background: url($static-url + 'img/icon-contact-marker.png') no-repeat 0 0;
       }
     }
 
     &--message {
       &:before {
-        background: url('../img/icon-contact-msg.png') no-repeat 0 0;
+        background: url($static-url + 'img/icon-contact-msg.png') no-repeat 0 0;
       }
     }
 

@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'variables';
 
 .frontpage {
   margin-bottom: 25px;
@@ -58,7 +59,7 @@
 
 .middle-banner {
   @media all and (min-width: 767px) {
-    background: #333 url('../img/middle-banner.png') no-repeat 100% 50%;
+    background: #333 url($static-url + 'img/middle-banner.png') no-repeat 100% 50%;
     height: 320px;
     display: flex;
     flex-direction: column;

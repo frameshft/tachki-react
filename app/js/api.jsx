@@ -79,4 +79,8 @@ export default {
     const options = buildOptions(opts);
     return apiRequest.delete(endpoint, options);
   },
+
+  getStaticUrl: function getStaticUrl(relPath) {
+    return `${baseUrl}static/react/${relPath}`;
+  },
 };

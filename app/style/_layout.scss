@@ -1,3 +1,5 @@
+@import "variables";
+
 html, body {
   line-height: 1;
   height: 100%;
@@ -183,7 +185,7 @@ body {
   bottom: 20px;
   width: 78px;
   height: 78px;
-  background: url('../img/search-icon.png');
+  background: url($static-url + '/img/search-icon.png');
 }
 
 .modal-filter {
