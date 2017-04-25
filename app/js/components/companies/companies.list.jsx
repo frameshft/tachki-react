@@ -14,8 +14,8 @@ import { STORE_A_COMPANY, fetchCompaniesCount } from '../../actions/companies';
 class CompanyList extends React.Component {
   constructor(props) {
     super(props);
+
     this.alertClose = this.alertClose.bind(this);
-    this.onSearchClick = this.onSearchClick.bind(this);
     this.onSearchClickModal = this.onSearchClickModal.bind(this);
     this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
@@ -37,11 +37,6 @@ class CompanyList extends React.Component {
     if (url.search !== nextProps.url.search) {
       this.getPosts(nextProps.url.search);
     }
-  }
-
-  onSearchClick() {
-    // TODO: make modal
-    browserHistory.push('/companies/search');
   }
 
   onSearchClickModal() {
@@ -103,16 +98,9 @@ class CompanyList extends React.Component {
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
-          <MediaQuery maxWidth={ 767 }>
-            <button className='button__transparent' onClick={ this.onSearchClick }>
-              Поиск
-            </button>
-          </MediaQuery>
-          <MediaQuery minWidth={ 767 }>
             <button className='button__transparent' onClick={ this.onSearchClickModal }>
               Поиск
             </button>
-          </MediaQuery>
         </li>
         <li className='head-tools__item head-tools__item--marker'>
           <button className='button__transparent'>
