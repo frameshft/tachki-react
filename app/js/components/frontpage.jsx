@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import Companies from '../components/companies/companies.list';
 import PostsList from '../components/shared/posts.list';
 
 import '../../style/frontpage.scss';
@@ -12,7 +11,7 @@ class Frontpage extends React.Component {
       <div>
         <div className='frontpage'>
           <div className='frontpage__block'>
-            <Companies isFrontPage />
+            <PostsList isFrontPage postType='companies' />
             <Link to='/companies' className='frontpage__block__more'>
               Больше компаний
             </Link>

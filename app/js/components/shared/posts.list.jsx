@@ -192,11 +192,11 @@ class PostList extends React.Component {
   renderFrontpage() {
     const { isFrontPage, postType } = this.props;
     const { componentData } = this.state;
+    const title = postType === 'companies' ? 'Все компании' : 'Все объявления';
 
     return isFrontPage ?
       <Link to={ componentData.allPostsLinks } className='frontpage__block__all-links'>
-        Все объявления
-        <i className='fa fa-arrow-right' />
+        { title } <i className='fa fa-arrow-right' />
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
@@ -259,7 +259,7 @@ class PostList extends React.Component {
 
         <div className='body-bottom'>
           <h3 className='total-item-num'>
-            Показано объявлений { itemsCount } из { totalItemsCount }
+            Показано { postType === 'companies' ? 'компаний' : 'объявлений' } { itemsCount } из { totalItemsCount }
           </h3>
           <Pagination { ...paginationProps } />
         </div>
