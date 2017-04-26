@@ -1,8 +1,7 @@
 const path = require('path');
-// const precss = require('precss');
-// const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: path.resolve(__dirname, 'app'),
@@ -28,7 +27,10 @@ module.exports = {
       },
     }),
     new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
     new HtmlWebpackPlugin({ template: 'index.html' }),
+    //extractSass,
+    new ExtractTextPlugin('styles.css'),
     new webpack.NamedModulesPlugin(),
   ],
 
@@ -48,7 +50,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style-loader!css-loader?sourceMap&!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+        }),
+        //loader: 'style-loader!css-loader!sass-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]',
+
       },
       {
         test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.jpg$|\.png$/,

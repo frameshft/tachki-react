@@ -31,6 +31,7 @@ class Header extends React.Component {
     this.state = {
       showSidebar: this.props.isShownMobileSidebar,
       listType: listViewType.LIST_VIEW_NORMAL,
+      isLoaded: false,
     };
   }
 
@@ -71,8 +72,13 @@ class Header extends React.Component {
 
   render() {
     const { controls, post, user } = this.props;
-    const { showSidebar } = this.state;
+    const { showSidebar, isLoaded } = this.state;
     const isAuthenticated = !!user.token;
+
+    if (!isLoaded) {
+      this.setState({ isLoaded: true });
+      return null;
+    }
 
     return (
       <div className='header'>
