@@ -9,7 +9,10 @@ import {
   fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST,
   SUCCESS_FETCH_CARGO_LIST,
 } from '../../actions/list';
-import { fetchPostsCount, STORE_A_POST } from '../../actions/posts';
+import {
+  FETCH_CARGO_COUNT, FETCH_CARS_COUNT, FETCH_SERVICES_COUNT, FETCH_SPAREPTS_COUNT, fetchPostCount,
+  STORE_A_POST,
+} from '../../actions/posts';
 import SortModal from '../shared/sort.modal';
 import CarSearch from '../cars/car.search';
 import ServicesSearch from '../services/services.search';
@@ -104,6 +107,7 @@ class PostList extends React.Component {
         componentData.allPostsLinks = '/cars';
         componentData.SearchModal = <CarSearch onModalSubmit={ this.onModalSubmit } />;
         componentData.isFetched = true;
+        componentData.COUNT_ACTION = FETCH_CARS_COUNT;
         break;
       case 'spareParts':
         componentData.endPoint = '/spare-parts/';
@@ -116,6 +120,7 @@ class PostList extends React.Component {
         componentData.allPostsLinks = '/spare-parts';
         componentData.SearchModal = <SpareSearch onModalSubmit={ this.onModalSubmit } />;
         componentData.isFetched = true;
+        componentData.COUNT_ACTION = FETCH_SPAREPTS_COUNT;
         break;
       case 'services':
         componentData.endPoint = '/services/';
@@ -128,6 +133,7 @@ class PostList extends React.Component {
         componentData.allPostsLinks = '/services';
         componentData.SearchModal = <ServicesSearch onModalSubmit={ this.onModalSubmit } />;
         componentData.isFetched = true;
+        componentData.COUNT_ACTION = FETCH_SERVICES_COUNT;
         break;
       case 'cargos':
         componentData.endPoint = '/cargo/';
@@ -139,6 +145,7 @@ class PostList extends React.Component {
         };
         componentData.allPostsLinks = '/cargo';
         componentData.isFetched = true;
+        componentData.COUNT_ACTION = FETCH_CARGO_COUNT;
         break;
       default:
         break;
@@ -148,8 +155,9 @@ class PostList extends React.Component {
   }
 
   fetchData(urlSearch, nextUrlSearch = null) {
+    const { componentData } = this.state;
     store.dispatch(this.fetchPosts(urlSearch));
-    store.dispatch(fetchPostsCount(nextUrlSearch || urlSearch));
+    store.dispatch(fetchPostCount(componentData.endPoint, nextUrlSearch || urlSearch, componentData.COUNT_ACTION));
   }
 
   fetchPosts(urlSearch, query = null) {

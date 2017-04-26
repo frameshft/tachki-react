@@ -101,14 +101,8 @@ export function postComments(post, description, comment = null) {
   ;
 }
 
-export function fetchPostsCount(query) {
+export function fetchPostCount(endpoint, query, type) {
   return dispatch =>
-    API.fetch(`/automobiles/count/${query}`)
-      .then(data => dispatch({ type: FETCH_CARS_COUNT, data }));
-}
-
-export function fetchPostCount(endpointTpe, query) {
-  return dispatch =>
-    API.fetch(`/${endpointTpe}/count/${query}`)
-      .then(data => dispatch({ type: FETCH_CARS_COUNT, data }));
+    API.fetch(`${endpoint}count/${query}`)
+      .then(data => dispatch({ type, data }));
 }
