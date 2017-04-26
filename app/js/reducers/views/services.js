@@ -1,4 +1,5 @@
 import { SUCCESS_FETCH_SERVICES_LIST } from '../../actions/list';
+import { FETCH_SERVICES_COUNT } from '../../actions/posts';
 
 const initialState = {
   list: [],
@@ -12,6 +13,11 @@ export default function services(state = initialState, action) {
       return {
         ...state,
         ...action.data,
+      };
+    case FETCH_SERVICES_COUNT:
+      return {
+        ...state,
+        total: action.data,
       };
     default:
       return state;

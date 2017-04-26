@@ -12,6 +12,9 @@ export const MAKE_POST_VIP = 'MAKE_POST_VIP';
 export const STORE_COMMENTS_LIST = 'STORE_COMMENTS_LIST';
 export const ADD_NEW_COMMENTS = 'ADD_NEW_COMMENTS';
 export const FETCH_CARS_COUNT = 'FETCH_CARS_COUNT';
+export const FETCH_SERVICES_COUNT = 'FETCH_SERVICES_COUNT';
+export const FETCH_SPAREPTS_COUNT = 'FETCH_SPAREPTS_COUNT';
+export const FETCH_CARGO_COUNT = 'FETCH_CARGO_COUNT';
 
 
 export function markPostAsFavorite(postId) {
