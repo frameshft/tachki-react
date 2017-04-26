@@ -5,15 +5,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import Application from './components/application';
 import Frontpage from './components/frontpage';
 import AuthComponents from './components/auth';
-import CompanyList from './components/companies/companies.list';
-import CompanySearch from './components/companies/companies.search';
 import CargoProfile from './components/cargo/cargo.profile';
 import CompanyProfile from './components/companies/company.profile';
 import CarProfile from './components/cars/car.profile';
 import PartProfile from './components/spare-parts/part.profile';
 import ServiceProfile from './components/services/services.profile';
-import ServicesSearch from './components/services/services.search';
-import CarSearch from './components/cars/car.search';
 import UpPost from './components/shared/up.post';
 import CommentsPost from './components/shared/comments.post';
 import HeaderControls from './constants/header.controls';
@@ -39,19 +35,12 @@ export default (store) => {
         />
         <Route
           path='companies'
-          component={ CompanyList } title='Компании' controls={ HeaderControls.COMPANIES }
-        />
-        <Route
-          path='companies/search'
-          component={ CompanySearch } title='Поиск'
+          component={ PostsList } title='Компании' controls={ HeaderControls.COMPANIES }
+          postType='companies'
         />
         <Route
           path='companies/:id'
           components={ CompanyProfile } title='О компании'
-        />
-        <Route
-          path='automobiles/search'
-          components={ CarSearch } title='Поиск'
         />
         <Route
           path='automobiles'
@@ -80,10 +69,6 @@ export default (store) => {
           path='services'
           component={ PostsList } title='Услуги' controls={ HeaderControls.POSTS }
           postType='services'
-        />
-        <Route
-          path='services/search'
-          components={ ServicesSearch } title='Поиск'
         />
         <Route
           path='services/:id'

@@ -7,7 +7,7 @@ import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
 import {
   fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST,
-  SUCCESS_FETCH_CARGO_LIST,
+  SUCCESS_FETCH_CARGO_LIST, SUCCESS_FETCH_COMPANIES_LIST,
 } from '../../actions/list';
 import {
   FETCH_CARGO_COUNT, FETCH_CARS_COUNT, FETCH_SERVICES_COUNT, FETCH_SPAREPTS_COUNT, fetchPostCount,
@@ -17,23 +17,25 @@ import SortModal from '../shared/sort.modal';
 import CarSearch from '../cars/car.search';
 import ServicesSearch from '../services/services.search';
 import SpareSearch from '../spare-parts/spare.search';
+import CompanySearch from '../companies/companies.search';
+import { FETCH_COUNT_COMPANY } from '../../actions/companies';
+import Company from '../companies/company';
 
 
 class PostList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleSortModal = this.toggleSortModal.bind(this);
-    this.onSearchClickModal = this.onSearchClickModal.bind(this);
-    this.onCloseSearchModal = this.onCloseSearchModal.bind(this);
+    this.onModalSet = this.onModalSet.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
+    this.onAlertHelpClose = this.onAlertHelpClose.bind(this);
     const currentLocation = browserHistory.getCurrentLocation();
 
     this.state = {
-      showSortModal: false,
       currentSearch: currentLocation.search,
-      showSearchModal: false,
       componentData: { isFetched: false },
+      showHelpAlert: true && props.postType === 'companies',
+      modalWindow: null,
       posts: [],
     };
 
@@ -56,23 +58,21 @@ class PostList extends React.Component {
     }
   }
 
-  onSearchClickModal() {
+  onAlertHelpClose() {
     this.setState({
-      showSearchModal: true,
+      showHelpAlert: false,
     });
   }
 
-  onCloseSearchModal() {
+  onModalSet(name) {
     this.setState({
-      showSearchModal: false,
+      modalWindow: name,
     });
   }
 
   onModalSubmit(query) {
     const { componentData } = this.state;
-    this.setState({
-      showSearchModal: false,
-    }, () => {
+    this.setState({ modalWindow: null }, () => {
       browserHistory.push(`${componentData.endPoint}${query}`);
     });
   }
@@ -96,6 +96,19 @@ class PostList extends React.Component {
     const componentData = {};
 
     switch (postType) {
+      case 'companies':
+        componentData.endPoint = '/companies/';
+        componentData.viewClassName = 'companies';
+        componentData.viewTitle = 'Комапнии';
+        componentData.actionTypes = {
+          entities: STORE_A_POST,
+          component: SUCCESS_FETCH_COMPANIES_LIST,
+        };
+        componentData.allPostsLinks = '/companies';
+        componentData.SearchModal = <CompanySearch onModalSubmit={ this.onModalSubmit } />;
+        componentData.isFetched = true;
+        componentData.COUNT_ACTION = FETCH_COUNT_COMPANY;
+        break;
       case 'automobiles':
         componentData.endPoint = '/automobiles/';
         componentData.viewClassName = 'cars';
@@ -176,14 +189,8 @@ class PostList extends React.Component {
     return endPoint;
   }
 
-  toggleSortModal() {
-    this.setState({
-      showSortModal: !this.state.showSortModal,
-    });
-  }
-
   renderFrontpage() {
-    const { isFrontPage } = this.props;
+    const { isFrontPage, postType } = this.props;
     const { componentData } = this.state;
 
     return isFrontPage ?
@@ -193,11 +200,13 @@ class PostList extends React.Component {
       </Link> :
       <ul className='head-tools'>
         <li className='head-tools__item head-tools__item--search'>
-          <button className='button__transparent' onClick={ this.onSearchClickModal }>Поиск</button>
+          <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'search') }>Поиск</button>
         </li>
-        <li className='head-tools__item head-tools__item--sort'>
-          <button className='button__transparent' onClick={ this.toggleSortModal }>Сортировка</button>
-        </li>
+        { postType !== 'companies' &&
+          <li className='head-tools__item head-tools__item--sort'>
+            <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'sort') }>Сортировка</button>
+          </li>
+        }
         <li className='head-tools__item head-tools__item--marker'>
           <button className='button__transparent'>Показать на карте</button>
         </li>
@@ -206,7 +215,7 @@ class PostList extends React.Component {
 
   render() {
     const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType } = this.props;
-    const { showSortModal, showSearchModal, componentData } = this.state;
+    const { componentData, modalWindow, showHelpAlert } = this.state;
 
     if (!componentData.isFetched) return null;
 
@@ -226,38 +235,50 @@ class PostList extends React.Component {
       totalPages,
     );
 
+    const renderedItems = postType === 'companies' ?
+      posts.map(x => <Company key={ x.id } company={ x } />) :
+      posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ componentData.endPoint } />)
+    ;
+
     return (
       <div className={ `body ${componentData.viewClassName}` }>
         <div className='frontpage__block__head desktop'>
           <h3 className='frontpage__block__title'>{ componentData.viewTitle }</h3>
           { this.renderFrontpage() }
         </div>
-        { !isFrontPage && <button className='mobile-search' onClick={ this.onSearchClickModal } />}
 
-        <div className={ `list${listsCls}` }>
-          { posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ componentData.endPoint } />) }
-        </div>
+        {showHelpAlert && <div className='alert alert--red mobile'>
+          Хотите стать компанией?
+          <button className='alert__close button__transparent' onClick={ this.onAlertHelpClose }>
+            <i className='fa fa-times' />
+          </button>
+        </div>}
+
+        { !isFrontPage && <button className='mobile-search' onClick={ this.onModalSet.bind(this, 'search') } />}
+        <div className={ `list${listsCls}` }>{ renderedItems }</div>
 
         <div className='body-bottom'>
-          <h3 className='total-item-num'>Показано объявлений { itemsCount } из { totalItemsCount }</h3>
+          <h3 className='total-item-num'>
+            Показано объявлений { itemsCount } из { totalItemsCount }
+          </h3>
           <Pagination { ...paginationProps } />
         </div>
 
-        {showSortModal &&
+        {modalWindow === 'sort' &&
         <SortModal
-          onClose={ this.toggleSortModal }
+          onClose={ this.onModalSet.bind(this, null) }
           endpoint={ endpoint }
           actionTypes={ componentData.actionTypes }
         />
         }
-        {showSearchModal && <div>
+        {modalWindow === 'search' && <div>
           <div className='modal fade in'>
             <div className='modal-dialog modal-dialog--search'>
               <div className='modal-content'>
                 <div className='modal-header'>
                   <button
                     className='button__transparent modal-close'
-                    onClick={ this.onCloseSearchModal }
+                    onClick={ this.onModalSet.bind(this, null) }
                     title='Закрыть окно'
                   >
                     <i className='fa fa-times' />
