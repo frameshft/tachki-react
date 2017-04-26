@@ -5,16 +5,19 @@ import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
-import { fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST } from '../../actions/list';
+import {
+  fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST,
+  SUCCESS_FETCH_CARGO_LIST,
+} from '../../actions/list';
 import { fetchPostsCount, STORE_A_POST } from '../../actions/posts';
 import SortModal from '../shared/sort.modal';
-import Search from '../cars/car.search';
+import CarSearch from '../cars/car.search';
+import ServicesSearch from '../services/services.search';
+import SpareSearch from '../spare-parts/spare.search';
 
 
 class PostList extends React.Component {
   constructor(props) {
-    const { postType } = props;
-
     super(props);
 
     this.toggleSortModal = this.toggleSortModal.bind(this);
@@ -27,55 +30,25 @@ class PostList extends React.Component {
       showSortModal: false,
       currentSearch: currentLocation.search,
       showSearchModal: false,
+      componentData: { isFetched: false },
+      posts: [],
     };
 
     this.actionTypes = { entities: STORE_A_POST };
-
-    switch (postType) {
-      case 'automobiles':
-        this.endPoint = '/automobiles/';
-        this.viewClassName = 'cars';
-        this.viewTitle = 'Автомобили';
-        this.actionTypes.component = SUCCESS_FETCH_CARS_LIST;
-        this.allPostsLinks = '/cars';
-        break;
-      case 'spareParts':
-        this.endPoint = '/spare-parts/';
-        this.viewClassName = 'companies';
-        this.viewTitle = 'Запчасти';
-        this.actionTypes.component = SUCCESS_SPARE_PARTS_LIST;
-        this.allPostsLinks = '/spare-parts';
-        break;
-      case 'services':
-        this.endPoint = '/services/';
-        this.viewClassName = 'companies';
-        this.viewTitle = 'Услуги';
-        this.actionTypes.component = SUCCESS_FETCH_SERVICES_LIST;
-        this.allPostsLinks = '/services';
-        break;
-      case 'cargos':
-        this.endPoint = '/cargo/';
-        this.viewClassName = 'companies';
-        this.viewTitle = 'Грузовые';
-        this.actionTypes.component = SUCCESS_FETCH_SERVICES_LIST;
-        this.allPostsLinks = '/cargo';
-        break;
-      default:
-        break;
-
-    }
-
-    this.buildEndPoint();
   }
 
   componentDidMount() {
-    this.fetchData(browserHistory.getCurrentLocation().search);
+    this.changeStateComponent(this.props.postType);
   }
 
   componentWillReceiveProps(nextProps) {
     const urlSearch = browserHistory.getCurrentLocation().search;
-    if (urlSearch !== nextProps.url.search) {
+    if (this.props.currentPage !== nextProps.currentPage) {
       this.fetchData(urlSearch, nextProps.url.search);
+    }
+
+    if (nextProps.postType !== this.props.postType) {
+      this.changeStateComponent(nextProps.postType);
     }
   }
 
@@ -114,24 +87,83 @@ class PostList extends React.Component {
     };
   }
 
+  changeStateComponent(postType) {
+    const componentData = {};
+
+    switch (postType) {
+      case 'automobiles':
+        componentData.endPoint = '/automobiles/';
+        componentData.viewClassName = 'cars';
+        componentData.viewTitle = 'Автомобили';
+        componentData.actionTypes = {
+          entities: STORE_A_POST,
+          component: SUCCESS_FETCH_CARS_LIST,
+        };
+        componentData.allPostsLinks = '/cars';
+        componentData.SearchModal = <CarSearch onModalSubmit={ this.onModalSubmit } />;
+        componentData.isFetched = true;
+        break;
+      case 'spareParts':
+        componentData.endPoint = '/spare-parts/';
+        componentData.viewClassName = 'companies';
+        componentData.viewTitle = 'Запчасти';
+        componentData.actionTypes = {
+          entities: STORE_A_POST,
+          component: SUCCESS_SPARE_PARTS_LIST,
+        };
+        componentData.allPostsLinks = '/spare-parts';
+        componentData.SearchModal = <SpareSearch onModalSubmit={ this.onModalSubmit } />;
+        componentData.isFetched = true;
+        break;
+      case 'services':
+        componentData.endPoint = '/services/';
+        componentData.viewClassName = 'companies';
+        componentData.viewTitle = 'Услуги';
+        componentData.actionTypes = {
+          entities: STORE_A_POST,
+          component: SUCCESS_FETCH_SERVICES_LIST,
+        };
+        componentData.allPostsLinks = '/services';
+        componentData.SearchModal = <ServicesSearch onModalSubmit={ this.onModalSubmit } />;
+        componentData.isFetched = true;
+        break;
+      case 'cargos':
+        componentData.endPoint = '/cargo/';
+        componentData.viewClassName = 'companies';
+        componentData.viewTitle = 'Грузовые';
+        componentData.actionTypes = {
+          entities: STORE_A_POST,
+          component: SUCCESS_FETCH_CARGO_LIST,
+        };
+        componentData.allPostsLinks = '/cargo';
+        componentData.isFetched = true;
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ componentData }, () => this.fetchData(browserHistory.getCurrentLocation().search));
+  }
+
   fetchData(urlSearch, nextUrlSearch = null) {
     store.dispatch(this.fetchPosts(urlSearch));
     store.dispatch(fetchPostsCount(nextUrlSearch || urlSearch));
   }
 
   fetchPosts(urlSearch, query = null) {
-    const endpoint = `${this.endPoint}${query !== null ? query : urlSearch}`;
-    return fetchPaginatedResponse(this.actionTypes, endpoint, this.props.currentPage);
+    const { componentData } = this.state;
+    const endpoint = `${componentData.endPoint}${query !== null ? query : urlSearch}`;
+    return fetchPaginatedResponse(componentData.actionTypes, endpoint, this.props.currentPage);
   }
 
-  buildEndPoint() {
+  buildEndPoint(endPoint) {
     const loc = browserHistory.getCurrentLocation();
 
     if (loc.search.length > 0) {
-      return `${this.endPoint}?${loc.search}`;
+      return `${endPoint}?${loc.search}`;
     }
 
-    return this.endPoint;
+    return endPoint;
   }
 
   toggleSortModal() {
@@ -141,10 +173,10 @@ class PostList extends React.Component {
   }
 
   renderFrontpage() {
-    const { isFrontPage } = this.props;
+    const { isFrontPage, componentData } = this.props;
 
     return isFrontPage ?
-      <Link to={ this.allPostsLinks } className='frontpage__block__all-links'>
+      <Link to={ componentData.allPostsLinks } className='frontpage__block__all-links'>
         Все объявления
         <i className='fa fa-arrow-right' />
       </Link> :
@@ -163,9 +195,12 @@ class PostList extends React.Component {
 
   render() {
     const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType } = this.props;
-    const { showSortModal, showSearchModal } = this.state;
+    const { showSortModal, showSearchModal, componentData } = this.state;
+
+    if (!componentData.isFetched) return null;
+
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
-    const endpoint = this.buildEndPoint();
+    const endpoint = this.buildEndPoint(componentData.endPoint);
 
     const paginationProps = {
       currentPage,
@@ -181,15 +216,15 @@ class PostList extends React.Component {
     );
 
     return (
-      <div className={ `body ${this.viewClassName}` }>
+      <div className={ `body ${componentData.viewClassName}` }>
         <div className='frontpage__block__head desktop'>
-          <h3 className='frontpage__block__title'>{ this.viewTitle }</h3>
+          <h3 className='frontpage__block__title'>{ componentData.viewTitle }</h3>
           { this.renderFrontpage() }
         </div>
         { !isFrontPage && <button className='mobile-search' onClick={ this.onSearchClickModal } />}
 
         <div className={ `list${listsCls}` }>
-          { posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ this.endPoint } />) }
+          { posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ componentData.endPoint } />) }
         </div>
 
         <div className='body-bottom'>
@@ -201,7 +236,7 @@ class PostList extends React.Component {
         <SortModal
           onClose={ this.toggleSortModal }
           endpoint={ endpoint }
-          actionTypes={ this.actionTypes }
+          actionTypes={ componentData.actionTypes }
         />
         }
         {showSearchModal && <div>
@@ -217,9 +252,7 @@ class PostList extends React.Component {
                     <i className='fa fa-times' />
                   </button>
                 </div>
-                <div className='modal-body'>
-                  <Search onModalSubmit={ this.onModalSubmit } />
-                </div>
+                <div className='modal-body'>{ componentData.SearchModal }</div>
               </div>
             </div>
           </div>
