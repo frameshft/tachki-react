@@ -43,7 +43,8 @@ class PostList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const urlSearch = browserHistory.getCurrentLocation().search;
-    if (this.props.currentPage !== nextProps.currentPage) {
+    const isUpdateData = (this.props.currentPage !== nextProps.currentPage) || (this.props.url.search !== nextProps.url.search);
+    if (isUpdateData) {
       this.fetchData(urlSearch, nextProps.url.search);
     }
 
@@ -65,10 +66,11 @@ class PostList extends React.Component {
   }
 
   onModalSubmit(query) {
+    const { componentData } = this.state;
     this.setState({
       showSearchModal: false,
     }, () => {
-      browserHistory.push(`${this.endPoint}${query}`);
+      browserHistory.push(`${componentData.endPoint}${query}`);
     });
   }
 
