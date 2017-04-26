@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Companies from '../components/companies/companies.list';
-import Cars from '../components/cars/cars.list';
+import PostsList from '../components/shared/posts.list';
 
 import '../../style/frontpage.scss';
 
@@ -33,7 +33,7 @@ class Frontpage extends React.Component {
             </div>
           </div>
           <div className='frontpage__block desktop'>
-            <Cars isFrontPage />
+            <PostsList isFrontPage postType='automobiles' />
             <Link to='/automobiles' className='frontpage__block__more'>
               Больше объявлений
             </Link>

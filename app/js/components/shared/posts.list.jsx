@@ -175,7 +175,8 @@ class PostList extends React.Component {
   }
 
   renderFrontpage() {
-    const { isFrontPage, componentData } = this.props;
+    const { isFrontPage } = this.props;
+    const { componentData } = this.state;
 
     return isFrontPage ?
       <Link to={ componentData.allPostsLinks } className='frontpage__block__all-links'>
@@ -278,7 +279,7 @@ PostList.defaultProps = {
 
 
 function mapToProps(state, props) {
-  const postType = props.route.postType;
+  const postType = props.postType || props.route.postType;
   const entities = state.entities.posts;
   const viewData = state.views[postType];
 
