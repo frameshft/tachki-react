@@ -99,7 +99,7 @@ class PostList extends React.Component {
       case 'companies':
         componentData.endPoint = '/companies/';
         componentData.viewClassName = 'companies';
-        componentData.viewTitle = 'Комапнии';
+        componentData.viewTitle = 'Компании';
         componentData.actionTypes = {
           entities: STORE_A_POST,
           component: SUCCESS_FETCH_COMPANIES_LIST,
