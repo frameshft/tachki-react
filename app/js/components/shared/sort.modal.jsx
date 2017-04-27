@@ -82,7 +82,7 @@ export default class SortModal extends React.Component {
                 </ul>
                 <div className=''>
                   <button onClick={ this.onSubmit } className='btn btn--primary'>
-                    Остортировать
+                    Отсортировать
                   </button>
                 </div>
               </div>
