@@ -24,7 +24,10 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({ template: 'index.html' }),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      ga: '',
+    }),
     new webpack.NamedModulesPlugin(),
   ],
 

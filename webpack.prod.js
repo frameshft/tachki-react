@@ -3,6 +3,17 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+
+const gaString = `<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-98000733-1', 'auto');
+ga('send', 'pageview');
+</script>`;
+
 module.exports = {
   context: path.resolve(__dirname, 'app'),
 
@@ -21,6 +32,7 @@ module.exports = {
   },
 
   plugins: [
+    new HtmlWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
@@ -28,10 +40,16 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new HtmlWebpackPlugin({ template: 'index.html' }),
-    //extractSass,
     new ExtractTextPlugin('styles.css'),
     new webpack.NamedModulesPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      ga: gaString,
+      minify: {
+        removeComments: true,
+        minifyJS: true,
+      },
+    }),
   ],
 
   resolve: {
