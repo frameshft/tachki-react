@@ -20,7 +20,6 @@ export default class Application extends React.Component {
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
         <div className='main cf'>
-          <Sidebar />
           { this.props.children }
         </div>
 

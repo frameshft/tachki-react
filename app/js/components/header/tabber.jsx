@@ -1,13 +1,34 @@
 import React from 'react';
 import { Link, IndexLink } from 'react-router';
+import Sidebar from './sidebar';
 
 export default class Tabber extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggleSidebar = this.toggleSidebar.bind(this);
+
+    this.state = {
+      showSidebar: false,
+    }
+  }
+
+  toggleSidebar() {
+    this.setState({
+        showSidebar: !this.state.showSidebar,
+    })
+  }
+
   render() {
+    const { showSidebar } = this.state;
     const showBanner = window.location.pathname === '/';
 
     return (
       <div className='tab-wrapper'>
         <ul className='tab'>
+          <li className='tab__item tab__item--sandwich'>
+            <button className='tab__item--sandwich__btn' onClick={ this.toggleSidebar } />
+          </li>
           <li className='tab__item tab__item--logo desktop'>
             <IndexLink to='/' className='tab__link' />
           </li>
@@ -37,6 +58,7 @@ export default class Tabber extends React.Component {
             </Link>
           </li>
         </ul>
+        {showSidebar && <Sidebar />}
         {showBanner && <div className='desktop main-banner'>
           <div className='main-banner__text main-banner__text--main'>
             Скачайте наше официальное приложение

@@ -40,7 +40,7 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Главная</a>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
-            <Link to='/my/history' className='sidebar__navigation__link'>
+            <Link to='/my/history' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Просмотренные
             </Link>
           </li>
@@ -51,12 +51,12 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
           </li> */}
           <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
-            <Link to='/registration' className='sidebar__navigation__link'>
+            <Link to='/registration' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Регистрация
             </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
-            <Link to='/sign-in' className='sidebar__navigation__link'>
+            <Link to='/sign-in' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Войти
             </Link>
           </li>
@@ -83,14 +83,14 @@ class Sidebar extends React.Component {
         </div>
         <ul className='sidebar__navigation'>
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
-            <a href='/' className='sidebar__navigation__link'>Главная</a>
+            <Link to='/' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>Главная</Link>
           </li>
           {/* TODO: uncomment after component is ready */}
           {/* <li className='sidebar__navigation__item sidebar__navigation__item--create'> */}
           {/* <a href='/' className='sidebar__navigation__link'>Оформить объявление</a> */}
           {/* </li> */}
           <li className='sidebar__navigation__item sidebar__navigation__item--my'>
-            <Link to='/my/posts' className='sidebar__navigation__link'>
+            <Link to='/my/posts' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Мои объявления
             </Link>
           </li>
@@ -98,12 +98,12 @@ class Sidebar extends React.Component {
             <a href='/' className='sidebar__navigation__link'>Сообщения</a>
           </li> */}
           <li className='sidebar__navigation__item sidebar__navigation__item--saved'>
-            <Link to='/my/favorites' className='sidebar__navigation__link'>
+            <Link to='/my/favorites' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Сохраненные
             </Link>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
-            <Link to='/my/history' className='sidebar__navigation__link'>
+            <Link to='/my/history' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Просмотренные
             </Link>
           </li>

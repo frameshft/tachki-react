@@ -12,6 +12,9 @@
     padding: 0 15px;
     width: 100%;
 
+    .tab__item--sandwich {
+      display: none;
+    }
 
     &__link {
       padding: 0 15px 17px;
@@ -73,6 +76,29 @@
           background: url('../img/logo.svg') no-repeat 0 0;
           background-size: 100% 45px;
 
+        }
+      }
+
+      &--sandwich {
+        border-right: 1px solid #ccc;
+        padding-right: 15px;
+        height: 33px;
+        display: inline-block;
+        &__btn {
+          border: none;
+          cursor: pointer;
+          background: url('../img/icon-sandwich-red.svg') no-repeat 0 5px;
+          width: 24px;
+          height: 27px;
+          background-size: 100%;
+          margin: 0;
+          position: relative;
+          top: 4px;
+          display: block;
+
+          &:focus {
+            outline: none;
+          }
         }
       }
     }

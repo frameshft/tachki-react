@@ -66,6 +66,11 @@ body {
     width: 100%;
     min-height: calc(100vh - 181px);
   }
+
+  > div {
+    width: 100%;
+  }
+
   .sidebar {
     @media all and (max-width: 767px) {
       display: none;
