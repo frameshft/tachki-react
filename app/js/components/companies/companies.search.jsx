@@ -155,7 +155,7 @@ class CompanySearch extends React.Component {
         </div>
         <div className='search-form__row'>
           <button onClick={ this.onSearch } className='search-form__submit'>
-            Посмотреть объявления { total > 0 && <span>({ total })</span>}
+            Посмотреть компании { total > 0 && <span>({ total })</span>}
           </button>
         </div>
       </div>
