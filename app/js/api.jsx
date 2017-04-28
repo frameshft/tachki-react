@@ -3,12 +3,17 @@ import { SUCESS_FETCH_SIGNOUT } from './actions/auth/index';
 
 const axios = require('axios');
 
-// const baseUrl = 'http://92.245.109.160:1248/';
+const proto = location.protocol;
 const isProduction = process.env.NODE_ENV === 'production';
-const baseUrl = isProduction ? 'http://tachki.kg/' : 'http://staging.mirsoft.kg:1248/';
 const baseAPI = 'react';
 const locale = 'ru';
+
+// const baseUrl = `${proto}//staging.mirsoft.kg/`;
+
+const baseUrl = isProduction ? `${proto}//tachki.kg/` : `${proto}://staging.mirsoft.kg/`;
 const apiToken = isProduction ? 'tachki.kg:U-M_6a6B_JA6zbWXfxvQEXXAWzM' : 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
+
+// const apiToken = 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
 
 const baseAbsoluteUrl = `${baseUrl}${locale}/${baseAPI}`;
 
