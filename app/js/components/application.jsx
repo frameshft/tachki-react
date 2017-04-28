@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
-import Sidebar from './header/sidebar';
 
 import '../../style/style.scss';
 
@@ -25,8 +24,8 @@ export default class Application extends React.Component {
 
         <div className='footer'>
           <div className='download'>
-            <a href='/' className='download__item download__item--playmarket'>&nbsp;</a>
-            <a href='/' className='download__item download__item--appstore'>&nbsp;</a>
+            <a href='https://play.google.com/store/apps/details?id=kg.mirsoft.tachki&hl=ru' className='download__item download__item--playmarket'>&nbsp;</a>
+            <a href='https://itunes.apple.com/ru/app/tachki-kg/id1188571920?mt=8' className='download__item download__item--appstore'>&nbsp;</a>
           </div>
           <div className='copyright'>
             <div className='footer__nav desktop'>
