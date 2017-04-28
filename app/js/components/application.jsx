@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
-import Sidebar from './header/sidebar';
 
 import '../../style/style.scss';
 

@@ -10,13 +10,13 @@ export default class Tabber extends React.Component {
 
     this.state = {
       showSidebar: false,
-    }
+    };
   }
 
   toggleSidebar() {
     this.setState({
-        showSidebar: !this.state.showSidebar,
-    })
+      showSidebar: !this.state.showSidebar,
+    });
   }
 
   render() {
