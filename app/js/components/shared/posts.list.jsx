@@ -20,6 +20,7 @@ import SpareSearch from '../spare-parts/spare.search';
 import CompanySearch from '../companies/companies.search';
 import { FETCH_COUNT_COMPANY } from '../../actions/companies';
 import Company from '../companies/company';
+import PostMap from './map.post';
 
 
 class PostList extends React.Component {
@@ -208,7 +209,7 @@ class PostList extends React.Component {
           </li>
         }
         <li className='head-tools__item head-tools__item--marker'>
-          <button className='button__transparent'>Показать на карте</button>
+          <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'map') }>Показать на карте</button>
         </li>
       </ul>;
   }
@@ -247,12 +248,12 @@ class PostList extends React.Component {
           { this.renderFrontpage() }
         </div>
 
-        {showHelpAlert && <div className='alert alert--red mobile'>
+        {showHelpAlert && <Link to='/faq' className='alert alert--red mobile'>
           Хотите стать компанией?
           <button className='alert__close button__transparent' onClick={ this.onAlertHelpClose }>
             <i className='fa fa-times' />
           </button>
-        </div>}
+        </Link>}
 
         { !isFrontPage && <button className='mobile-search' onClick={ this.onModalSet.bind(this, 'search') } />}
         <div className={ `list${listsCls}` }>{ renderedItems }</div>
@@ -290,6 +291,8 @@ class PostList extends React.Component {
           </div>
           <div className='modal-backdrop fade in' />
         </div>}
+
+        {modalWindow === 'map' && <PostMap items={ [] } />}
       </div>
     );
   }

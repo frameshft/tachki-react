@@ -504,6 +504,11 @@
 
     .list__item {
       height: 150px;
+      overflow: hidden;
+
+      &.list__item--company {
+        height: 170px;
+      }
 
       &.list__item--car {
         max-height: 260px;
@@ -617,4 +622,8 @@
       outline: none;
     }
   }
+}
+
+.list--history {
+  margin-top: 30px;
 }

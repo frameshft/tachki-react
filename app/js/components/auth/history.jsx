@@ -19,10 +19,10 @@ class HistoryPosts extends React.Component {
 
     return (
       <div className='body companies'>
-        <div>
+        { /* <div>
           <button onClick={ this.clearPage }>Очистить</button>
-        </div>
-        <div className={ `list${listsCls}` }>
+        </div> */ }
+        <div className={ `list list--history${listsCls}` }>
           { postsRender }
         </div>
       </div>

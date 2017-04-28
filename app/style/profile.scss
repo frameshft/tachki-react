@@ -338,6 +338,10 @@ $company-profile-main-bg: #fafafa;
     background: #fafafa;
     padding: 20px 10px;
 
+    .pagination {
+      margin-right: 0;
+    }
+
     .list__item--car {
       padding: 10px;
       border-radius: 0;
@@ -571,6 +575,10 @@ $company-profile-main-bg: #fafafa;
   z-index: 11;
   cursor: pointer;
   transition: transform ease-in-out 0.2s;
+
+  @media all and (min-width: 767px) {
+    display: none;
+  }
 
   &--toggled {
     transform: rotate(-45deg);

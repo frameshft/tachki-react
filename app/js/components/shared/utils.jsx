@@ -4,14 +4,14 @@ import PostItem from './post.item';
 function getEndponit(category) {
   switch (category) {
     case 'automobile':
-      return '/automobiles';
+      return '/automobiles/';
     case 'spare':
-      return '/spare-parts';
+      return '/spare-parts/';
     case 'service':
-      return '/services';
+      return '/services/';
     case 'cargo':
     default:
-      return '/cargo';
+      return '/cargo/';
   }
 }
 

@@ -10,6 +10,7 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.onSignoutClick = this.onSignoutClick.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.swiping = this.swiping.bind(this);
   }
 
@@ -28,6 +29,12 @@ class Sidebar extends React.Component {
     store.dispatch(AuthActions.signOut());
   }
 
+  onClick() {
+    if (this.props.isDesktop) {
+      this.props.close();
+    }
+  }
+
   swiping() {
     this.props.onclose();
   }
@@ -35,7 +42,7 @@ class Sidebar extends React.Component {
   renderAnonymous() {
     return (
       <Swipeable className='sidebar' onSwipingLeft={ this.swiping }>
-        <ul className='sidebar__navigation'>
+        <ul className='sidebar__navigation' onClick={ this.onClick }>
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
             <a href='/' className='sidebar__navigation__link'>Главная</a>
           </li>
@@ -68,7 +75,7 @@ class Sidebar extends React.Component {
   renderAuthorized(user) {
     return (
       <Swipeable className='sidebar' onSwipingLeft={ this.swiping }>
-        <div className='sidebar__profile'>
+        <div className='sidebar__profile' onClick={ this.onClick }>
           <div className='sidebar__profile__media'>
             <img
               className='sidebar__profile__media__img' src={ user.image } alt={ user.username }
@@ -81,7 +88,7 @@ class Sidebar extends React.Component {
             Баланс: { user.balance }
           </div>
         </div>
-        <ul className='sidebar__navigation'>
+        <ul className='sidebar__navigation' onClick={ this.onClick }>
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
             <Link to='/' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>Главная</Link>
           </li>
@@ -133,6 +140,13 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   auth: React.PropTypes.object.isRequired,
+  close: React.PropTypes.func,
+  isDesktop: React.PropTypes.bool,
+};
+
+Sidebar.defaultProps = {
+  close: null,
+  isDesktop: false,
 };
 
 function mapToProps(state) {

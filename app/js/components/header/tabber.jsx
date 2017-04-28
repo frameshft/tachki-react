@@ -7,6 +7,7 @@ export default class Tabber extends React.Component {
     super(props);
 
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.closeSidebar = this.closeSidebar.bind(this);
 
     this.state = {
       showSidebar: false,
@@ -19,9 +20,14 @@ export default class Tabber extends React.Component {
     });
   }
 
+  closeSidebar() {
+    this.setState({
+      showSidebar: false,
+    });
+  }
+
   render() {
     const { showSidebar } = this.state;
-    const showBanner = window.location.pathname === '/';
 
     return (
       <div className='tab-wrapper'>
@@ -58,8 +64,8 @@ export default class Tabber extends React.Component {
             </Link>
           </li>
         </ul>
-        {showSidebar && <Sidebar />}
-        {showBanner && <div className='desktop main-banner'>
+        { showSidebar && <Sidebar close={ this.closeSidebar } isDesktop /> }
+        {/* {showBanner && <div className='desktop main-banner'>
           <div className='main-banner__text main-banner__text--main'>
             Скачайте наше официальное приложение
           </div>
@@ -73,7 +79,7 @@ export default class Tabber extends React.Component {
           <button className='button-to button-to--down button__transparent'>
             <i className='fa fa-chevron-down' />
           </button>
-        </div>}
+        </div>}*/ }
       </div>
     );
   }

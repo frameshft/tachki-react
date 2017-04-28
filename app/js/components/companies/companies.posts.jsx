@@ -72,8 +72,8 @@ class CompanyPosts extends React.Component {
     return (
       <div className='company-posts'>
         <h3 className='company-posts__title'>Объявления компании</h3>
-        <Pagination { ...paginationProps } />
         <div className='company-posts__list'>{ posts.map(x => getPostComponent(x)) }</div>
+        <Pagination { ...paginationProps } />
       </div>
     );
   }

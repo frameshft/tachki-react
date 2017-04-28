@@ -171,12 +171,12 @@
       position: relative;
       outline: none;
       background: none;
-      padding: 3px;
+      border: 2px solid transparent;
       width: 20%;
       float: left;
       height: 83px;
       overflow: hidden;
-      border: none;
+      //border: none;
       cursor: pointer;
 
       @media all and (max-width: 992px) {

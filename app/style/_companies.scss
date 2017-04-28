@@ -10,6 +10,8 @@
   text-align: center;
   padding: 0 15px;
   position: relative;
+  display: block;
+  text-decoration: none;
 
   &--red {
     border: 2px solid #d93c3c;
@@ -25,6 +27,8 @@
 
     .fa {
       color: #de2b00;
+      position: relative;
+      top: -2px;
     }
   }
 }

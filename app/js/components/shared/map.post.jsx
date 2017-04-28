@@ -5,7 +5,7 @@ const AnyReactComponent = () => <div className='marker map' />;
 
 class PostMap extends React.Component {
   render() {
-    const { center, lat, lng, zoom, onClose } = this.props;
+    const { center, items, zoom, onClose } = this.props;
     return (
       <div>
         <div className='modal fade in'>
@@ -26,7 +26,7 @@ class PostMap extends React.Component {
                   center={ center }
                   zoom={ zoom }
                 >
-                  <AnyReactComponent lat={ lat } lng={ lng } />
+                  { items.forEach((x, i) => <AnyReactComponent lat={ x.lat } lng={ x.lng } key={ i } />) }
                 </GoogleMapReact>
               </div>
             </div>
@@ -39,14 +39,14 @@ class PostMap extends React.Component {
 }
 
 PostMap.PropTypes = {
-  center: React.PropTypes.array.isRequired,
+  center: React.PropTypes.array,
   zoom: React.PropTypes.number,
-  lat: React.PropTypes.number.isRequired,
-  lng: React.PropTypes.number.isRequired,
+  items: React.PropTypes.array.isRequired,
 };
 
 PostMap.defaultProps = {
   zoom: 17,
+  center: [77, 77],
 };
 
 export default PostMap;

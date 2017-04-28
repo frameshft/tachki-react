@@ -17,20 +17,15 @@ export function listToMap(list, key = 'id') {
 
 
 export function importImage(path, img, defaultImg = 'no-image') {
-  let width = '';
-  let height = '';
-  if (img !== undefined) {
-    width = img.offsetWidth;
-    height = img.offsetHeight;
-  }
+  const queryParams = img ? `?w=${img.offsetWidth}&h=${img.offsetHeight}` : '';
 
   if (path) {
-    return `${path}?w=${width}&h=${height}`;
+    return `${path}${queryParams}`;
   }
 
   switch (defaultImg) {
     case 'no-image':
-      return API.getStaticUrl(`no-photo.jpg?w=${width}&h=${height}`);
+      return API.getStaticUrl(`no-photo.jpg${queryParams}`);
     default:
       return null;
   }

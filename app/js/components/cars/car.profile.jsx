@@ -140,7 +140,7 @@ class CarProfile extends React.Component {
           <div className='car-profile__media' ref='image'>
             <button className='button__transparent' onClick={ this.onModalShow }>
               <img
-                src={ importImage(car.images[0].image, this.refs.image) }
+                src={ importImage(car.images[0], this.refs.image) }
                 alt={ car.title }
                 className='car-profile__media__img'
               />
@@ -275,8 +275,7 @@ class CarProfile extends React.Component {
         {showModal &&
         <PostMap
           center={ [car.latitude, car.longitude] }
-          lat={ car.latitude }
-          lng={ car.longitude }
+          items={ [{ lat: car.latitude, lng: car.longitude }] }
           onClose={ this.onModalClose }
         />
         }

@@ -255,8 +255,7 @@ class SparePartProfile extends React.Component {
         {showModal &&
         <PostMap
           center={ [post.latitude, post.longitude] }
-          lat={ post.latitude }
-          lng={ post.longitude }
+          items={ [{ lat: post.latitude, lng: post.longitude }] }
           onClose={ this.onModalClose }
         />
         }
