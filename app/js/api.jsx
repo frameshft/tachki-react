@@ -10,7 +10,7 @@ const locale = 'ru';
 
 // const baseUrl = `${proto}//staging.mirsoft.kg/`;
 
-const baseUrl = isProduction ? `${proto}//tachki.kg/` : `${proto}://staging.mirsoft.kg/`;
+const baseUrl = isProduction ? `${proto}//tachki.kg/` : `${proto}//staging.mirsoft.kg/`;
 const apiToken = isProduction ? 'tachki.kg:U-M_6a6B_JA6zbWXfxvQEXXAWzM' : 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
 
 // const apiToken = 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
