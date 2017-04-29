@@ -33,6 +33,7 @@
         transform: scale(0);
       }
 
+      &.active-cls,
       &--active {
         &:before {
           content: '';
@@ -73,8 +74,8 @@
           width: 117px;
           height: 45px;
           margin-right: 100px;
-          background: url('../img/logo.svg') no-repeat 0 0;
-          background-size: 100% 45px;
+          background: url('../img/logo.svg') no-repeat 0 10px;
+          background-size: 100% 28px;
 
         }
       }

@@ -1,5 +1,6 @@
 import store from './store';
 import { SUCESS_FETCH_SIGNOUT } from './actions/auth/index';
+import { getCookie } from './utils';
 
 const axios = require('axios');
 
@@ -9,10 +10,8 @@ const baseAPI = 'react';
 const locale = 'ru';
 
 // const baseUrl = `${proto}//staging.mirsoft.kg/`;
-
-const baseUrl = isProduction ? `${proto}//tachki.kg/` : `${proto}//staging.mirsoft.kg/`;
+const baseUrl = isProduction ? `${proto}//${location.hostname}/` : `${proto}//staging.mirsoft.kg/`;
 const apiToken = isProduction ? 'tachki.kg:U-M_6a6B_JA6zbWXfxvQEXXAWzM' : 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
-
 // const apiToken = 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
 
 const baseAbsoluteUrl = `${baseUrl}${locale}/${baseAPI}`;
@@ -55,6 +54,10 @@ function addToken(hdrs) {
 
 function buildOptions(inputOpts, additionalOpts) {
   const headers = addToken(inputOpts.headers);
+  const csrftoken = getCookie('csrftoken');
+  if (csrftoken) {
+    headers.X_CSRFTOKEN = csrftoken;
+  }
   return {
     ...inputOpts,
     ...additionalOpts || {},

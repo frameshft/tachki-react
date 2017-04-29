@@ -28,16 +28,18 @@
       float: right;
     }
 
-    .download__item  {
+    .download__item {
       margin: 0 5px;
-      width: auto;
+      width: 105px;
+      background-size: 100%;
     }
   }
 
   @media all and (max-width: 480px) {
     .download__item {
       margin: 0 5px;
-      width: auto;
+      width: 105px;
+      background-size: 100%;
     }
   }
 

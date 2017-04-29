@@ -392,10 +392,16 @@ $company-profile-main-bg: #fafafa;
         overflow: hidden;
         text-align: center;
 
-        img {
+        .car-profile__img__wrapper {
           width: 74px;
           height: 74px;
           border-radius: 50%;
+          overflow: hidden;
+          margin: 0 auto;
+        }
+
+        img {
+          height: 100%;
         }
       }
 
@@ -560,21 +566,26 @@ $company-profile-main-bg: #fafafa;
 }
 
 .settings-button {
+  display: block;
   position: fixed;
   bottom: 15px;
   right: 35px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   line-height: 50px;
   background-color: #f61e1e;
   border: none;
   color: #fff;
   font-size: 38px;
-  border-radius: 50%;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
   box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 11;
   cursor: pointer;
   transition: transform ease-in-out 0.2s;
+  padding: 0;
+
 
   @media all and (min-width: 767px) {
     display: none;
@@ -597,8 +608,8 @@ $icon-size: 50px;
     padding: 0;
     margin: 0;
     position: fixed;
-    bottom: 105px;
-    right: 35px;
+    bottom: 90px;
+    right: 25px;
     text-align: right;
     z-index: 100;
   }

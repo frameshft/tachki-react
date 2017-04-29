@@ -39,6 +39,7 @@ export default class SortModal extends React.Component {
 
   render() {
     const { onClose } = this.props;
+    const sort = browserHistory.getCurrentLocation().query.sort;
     return (
       <div>
         <div className='modal fade in modal--sort'>
@@ -57,27 +58,27 @@ export default class SortModal extends React.Component {
                 <ul>
                   <li>
                     <input
-                      type='radio' name='sort' value='price' onChange={ this.setSortCriteria }
+                      type='radio' name='sort' defaultChecked={ sort === 'price' } value='price' id='sort-price' onChange={ this.setSortCriteria }
                     />
-                    Сначала дешевые
+                    <label htmlFor='sort-price'>Сначала дешевые</label>
                   </li>
                   <li>
                     <input
-                      type='radio' name='sort' value='-price' onChange={ this.setSortCriteria }
+                      type='radio' name='sort' defaultChecked={ sort === '-price' } value='-price' id='sort-price-2' onChange={ this.setSortCriteria }
                     />
-                    Сначала дорогие
+                    <label htmlFor='sort-price-2'>Сначала дорогие</label>
                   </li>
                   <li>
                     <input
-                      type='radio' name='sort' value='created_at' onChange={ this.setSortCriteria }
+                      type='radio' name='sort' defaultChecked={ sort === 'created_at' } value='created_at' id='sort-date' onChange={ this.setSortCriteria }
                     />
-                    Сначала старые
+                    <label htmlFor='sort-date'>Сначала старые</label>
                   </li>
                   <li>
                     <input
-                      type='radio' name='sort' value='-created_at' onChange={ this.setSortCriteria }
+                      type='radio' name='sort' defaultChecked={ sort === '-created_at' } value='-created_at' id='sort-date-2' onChange={ this.setSortCriteria }
                     />
-                    Сначала новые
+                    <label htmlFor='sort-date-2'>Сначала свежие</label>
                   </li>
                 </ul>
                 <div className=''>

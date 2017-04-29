@@ -57,6 +57,10 @@ class PostList extends React.Component {
     if (nextProps.postType !== this.props.postType) {
       this.changeStateComponent(nextProps.postType);
     }
+
+    if (nextProps.postType !== this.props.postType) {
+      this.setState({ showHelpAlert: nextProps.postType === 'companies' });
+    }
   }
 
   onAlertHelpClose() {
@@ -200,16 +204,16 @@ class PostList extends React.Component {
         { title } <i className='fa fa-arrow-right' />
       </Link> :
       <ul className='head-tools'>
-        <li className='head-tools__item head-tools__item--search'>
+        {postType !== 'cargos' && <li className='head-tools__item head-tools__item--search'>
           <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'search') }>Поиск</button>
-        </li>
+        </li>}
         { postType !== 'companies' &&
           <li className='head-tools__item head-tools__item--sort'>
             <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'sort') }>Сортировка</button>
           </li>
         }
         <li className='head-tools__item head-tools__item--marker'>
-          <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'map') }>Показать на карте</button>
+          <button className='button__transparent'>Показать на карте</button>
         </li>
       </ul>;
   }
@@ -248,12 +252,21 @@ class PostList extends React.Component {
           { this.renderFrontpage() }
         </div>
 
-        {showHelpAlert && <Link to='/faq' className='alert alert--red mobile'>
-          Хотите стать компанией?
+        {showHelpAlert && <div className='alert alert--red mobile'>
+          <Link to='/faq'>
+            Хотите стать компанией?
+          </Link>
           <button className='alert__close button__transparent' onClick={ this.onAlertHelpClose }>
             <i className='fa fa-times' />
           </button>
-        </Link>}
+        </div>}
+
+        {/* <div className='body-top'>
+          <h3 className='total-item-num'>
+            Показано { postType === 'companies' ? 'компаний' : 'объявлений' } { itemsCount } из { totalItemsCount }
+          </h3>
+          <Pagination { ...paginationProps } />
+        </div>*/}
 
         { !isFrontPage && <button className='mobile-search' onClick={ this.onModalSet.bind(this, 'search') } />}
         <div className={ `list${listsCls}` }>{ renderedItems }</div>
@@ -289,7 +302,7 @@ class PostList extends React.Component {
               </div>
             </div>
           </div>
-          <div className='modal-backdrop fade in' />
+          <div className='modal-backdrop fade in' onClick={ this.onModalSet.bind(this, null) } />
         </div>}
 
         {modalWindow === 'map' && <PostMap items={ [] } />}

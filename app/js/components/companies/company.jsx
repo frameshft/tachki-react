@@ -16,7 +16,7 @@ class Company extends React.Component {
         <Link to={ `/companies/${company.id}` } activeStyle={ { textDecoration: 'none' } }>
           <div className='list__item__left'>
             <div className='list__item__media' ref='image'>
-              <img src={ importImage(company.image, this.refs.image) } className='list__item__media__img' alt={ company.name } />
+              <img src={ importImage(company.image, this.refs.image, 'no-user') } className='list__item__media__img' alt={ company.name } />
               <div className='list__item__about desktop'>
                 <h3 className='list__item__title desktop'>
                   { company.name }

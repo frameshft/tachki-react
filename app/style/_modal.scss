@@ -98,10 +98,18 @@
   &--search {
     max-width: 500px;
 
+
     .modal-body {
-      max-height: calc(100vh - 140px);
+      max-height: calc(100vh - 210px);
+      margin-top: 25px;
+    }
+
+    .search-form__wrapper {
+      padding-right: 25px;
+      max-height: calc(100vh - 210px);
       margin-top: 25px;
       overflow-y: auto;
+      margin-bottom: 65px;
     }
   }
 

@@ -41,9 +41,9 @@ class CarProfile extends React.Component {
     store.dispatch(getPost('automobiles', this.props.params.id));
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.user.token !== this.props.user.token) {
-      store.dispatch(getPost('automobiles', this.props.params.id));
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
+      store.dispatch(getPost('automobiles', nextProps.params.id));
     }
   }
 
@@ -167,7 +167,7 @@ class CarProfile extends React.Component {
                 </div>
               </div>}
             </div>
-            <LastCommentsPost post={ car } />
+            <LastCommentsPost post={ car } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>
@@ -192,10 +192,12 @@ class CarProfile extends React.Component {
           {car && <Controls post={ car } user={ user } /> }
           <div className='car-profile__top'>
             <div className='car-profile__top__media'>
-              <img
-                src={ importImage(postUser.image, this.refs.postUserImg) }
-                alt='' ref='postUserImg'
-              />
+              <div className='car-profile__img__wrapper'>
+                <img
+                  src={ importImage(postUser.image, this.refs.postUserImg, 'no-user') }
+                  alt='' ref='postUserImg'
+                />
+              </div>
               <div className='car-profile__top__username'>
                 { postUser.name }
               </div>
@@ -214,7 +216,7 @@ class CarProfile extends React.Component {
                   Показать на карте
                 </button>
                 <div className='car-profile__top__info'>
-                  <span> { moment(car.created_at).format('DD MMMM') }</span>
+                  <span> { moment(car.created_at).format('DD.MM.YYYY') }</span>
                 </div>
               </div>
             </div>
@@ -223,7 +225,6 @@ class CarProfile extends React.Component {
                 { car.price } сом
               </div>
               { car.is_exchangeable && <div className='is-exchangeable'>Возможен обмен</div>}
-              <div className='is-exchangeable'>Возможен обмен</div>
             </div>
           </div>
           <div className='car-profile__body'>
@@ -251,7 +252,7 @@ class CarProfile extends React.Component {
               </div>}
               { this.renderEquiments(car.profile.equipments) }
             </div>
-            <LastCommentsPost post={ car } />
+            <LastCommentsPost post={ car } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ car.num_views } раз(а)</div>

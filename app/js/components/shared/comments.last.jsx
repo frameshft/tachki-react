@@ -26,15 +26,15 @@ class LastCommentsPost extends React.Component {
   }
 
   render() {
-    const { post } = this.props;
-    if (!post) return null;
+    const { post, isAuthenticated } = this.props;
+    if (!post || !post.lastComment) return null;
 
     return (
       <div className='car-profile__comments'>
         { this.renderLastComment(post.lastComment) }
-        <Link to={ `/comments/${post.id}` } className='car-profile__comments__all'>
+        {isAuthenticated && <Link to={ `/comments/${post.id}` } className='car-profile__comments__all'>
           Комментарии: { post.commentsCount }
-        </Link>
+        </Link>}
       </div>
     );
   }
@@ -42,6 +42,7 @@ class LastCommentsPost extends React.Component {
 
 LastCommentsPost.PropTypes = {
   post: React.PropTypes.object.isRequired,
+  isAuthenticated: React.PropTypes.bool.isRequired,
 };
 
 export default LastCommentsPost;

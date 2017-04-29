@@ -157,6 +157,14 @@
 @media all and (max-width: 767px) {
   .list__item--car {
     padding: 0;
+
+    &.vip {
+      .list__item__media {
+        .list__item__price {
+          color: #fecf05;
+        }
+      }
+    }
     .list__item__media {
       height: 240px;
       position: relative;
@@ -186,7 +194,7 @@
         bottom: 0;
         background-color:  rgba(0, 0, 0, 0.5);
         height: 29px;
-        color:  #fecf05;
+        color:  #fff;
         font-size: 18px;/* Approximation due to font substitution */
         font-weight: 700;
         text-align: center;
@@ -470,6 +478,18 @@
 
 @media all and (max-width: 767px) {
   .list--small {
+    .vip.mobile {
+      display: none;
+    }
+
+    .vip-item {
+      .vip.mobile {
+        bottom: initial;
+        top: 0;
+        display: block;
+      }
+    }
+    
     .list__item__left {
       float: left;
       width: 30.59%;
@@ -500,6 +520,10 @@
       @media all and (max-width: 420px) {
         width: 60%;
       }
+    }
+
+    .list__item__name {
+      min-height: 25px;
     }
 
     .list__item {

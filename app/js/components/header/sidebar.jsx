@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
 import Swipeable from 'react-swipeable';
-import { Link, browserHistory } from 'react-router';
+import { Link, browserHistory, IndexLink } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
 import * as AuthActions from '../../actions/auth';
@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
       <Swipeable className='sidebar' onSwipingLeft={ this.swiping }>
         <ul className='sidebar__navigation' onClick={ this.onClick }>
           <li className='sidebar__navigation__item sidebar__navigation__item--main desktop'>
-            <a href='/' className='sidebar__navigation__link'>Главная</a>
+            <IndexLink to='/' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>Главная</IndexLink>
           </li>
           <li className='sidebar__navigation__item sidebar__navigation__item--viewed'>
             <Link to='/my/history' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>

@@ -145,7 +145,7 @@ class ServicesSearch extends React.Component {
     } = this.state;
 
     const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange);
-    const renderedCategories = this.renderSelectInput('Тип транспорта', this.getSortedItems(categories), this.onCategoryChange);
+    const renderedCategories = this.renderSelectInput('Тип услуг', this.getSortedItems(categories), this.onCategoryChange);
     const renderPrices = this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом');
 
     return (

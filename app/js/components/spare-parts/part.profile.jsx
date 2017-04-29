@@ -41,9 +41,9 @@ class SparePartProfile extends React.Component {
     store.dispatch(getPost('spare-parts', this.props.params.id));
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.user.token !== this.props.user.token) {
-      store.dispatch(getPost('spare-parts', this.props.params.id));
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
+      store.dispatch(getPost('spare-parts', nextProps.params.id));
     }
   }
 
@@ -69,7 +69,6 @@ class SparePartProfile extends React.Component {
     if (!post.profile) return null;
     const services = [];
     const keys = Object.keys(post.profile);
-
     keys.forEach((profile, i) => {
       let profileValue;
       if (profile === 'is_custom_cleared' || profile === 'is_document_issued' || profile === 'is_exchangeable') {
@@ -151,7 +150,7 @@ class SparePartProfile extends React.Component {
                 </div>
               </div>}
             </div>
-            <LastCommentsPost post={ post } />
+            <LastCommentsPost post={ post } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ post.num_views } раз(а)</div>
@@ -176,7 +175,9 @@ class SparePartProfile extends React.Component {
           {post && <Controls post={ post } user={ user } /> }
           <div className='car-profile__top'>
             <div className='car-profile__top__media'>
-              <img src={ importImage(postUser.image, this.refs.postUserImg) } alt='' ref='postUserImg' />
+              <div className='car-profile__img__wrapper'>
+                <img src={ importImage(postUser.image, this.refs.postUserImg, 'no-user') } alt='' ref='postUserImg' />
+              </div>
               <div className='car-profile__top__username'>
                 { postUser.name }
               </div>
@@ -195,7 +196,7 @@ class SparePartProfile extends React.Component {
                   Показать на карте
                 </button>
                 <div className='car-profile__top__info'>
-                  <span> { moment(post.created_at).format('DD MMMM') }</span>
+                  <span> { moment(post.created_at).format('DD.MM.YYYY') }</span>
                 </div>
               </div>
             </div>
@@ -203,8 +204,6 @@ class SparePartProfile extends React.Component {
               <div className='car-profile__top__price__value'>
                 { post.price } сом
               </div>
-              { post.is_exchangeable && <div className='is-exchangeable'>Возможен обмен</div>}
-              <div className='is-exchangeable'>Возможен обмен</div>
             </div>
           </div>
           <div className='car-profile__body'>
@@ -231,7 +230,7 @@ class SparePartProfile extends React.Component {
                 </div>
               </div>}
             </div>
-            <LastCommentsPost post={ post } />
+            <LastCommentsPost post={ post } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ post.num_views } раз(а)</div>

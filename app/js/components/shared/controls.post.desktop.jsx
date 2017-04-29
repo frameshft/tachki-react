@@ -20,7 +20,26 @@ export default class ControlsDesktop extends React.Component {
       offerprice: false,
       renderreport: false,
       otherReport: false,
+      isMy: props.post.isMy,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let stateChanged = false;
+    const state = {};
+
+    if (nextProps.user.token !== this.props.user.token) {
+      state.isAuthenticated = !!nextProps.user.token;
+      stateChanged = true;
+    }
+
+    if (nextProps.post.isMy !== this.props.post.isMy) {
+      state.isMy = !!nextProps.user.token;
+      stateChanged = true;
+    }
+    if (stateChanged) {
+      this.setState({ ...state });
+    }
   }
 
   onCancelClick() {
@@ -191,36 +210,36 @@ export default class ControlsDesktop extends React.Component {
 
   render() {
     const { post } = this.props;
-    const { offerprice, renderreport } = this.state;
+    const { offerprice, renderreport, isAuthenticated, isMy } = this.state;
 
     return (
       <div>
         <ul className='uni-button'>
-          <li className='uni-button__item'>
+          {isMy && <li className='uni-button__item'>
             <Link to={ `/up/${post.id}` } className='uni-button__btn uni-button__btn--up'>
               Поднять объявление
             </Link>
-          </li>
-          <li className='uni-button__item'>
+          </li>}
+          {isAuthenticated && !isMy && <li className='uni-button__item'>
             <button
               onClick={ this.showOfferPrice }
               className='uni-button__btn uni-button__btn--offer-price'
             >
               Предложить цену
             </button>
-          </li>
-          <li className='uni-button__item'>
-            <button href='#' className='uni-button__btn uni-button__btn--share'>
-              Поделиться
-            </button>
-          </li>
-          <li className='uni-button__item'>
+          </li>}
+          {/* <li className='uni-button__item'>*/}
+          { /* <button href='#' className='uni-button__btn uni-button__btn--share'>*/}
+          {/* Поделиться*/}
+          {/* </button>*/}
+          {/* </li>*/}
+          {!isMy && <li className='uni-button__item'>
             <button
               className='uni-button__btn uni-button__btn--report' onClick={ this.showReport }
             >
               Пожаловаться
             </button>
-          </li>
+          </li>}
         </ul>
         { offerprice && this.renderOfferPrice() }
         { renderreport && this.renderReport() }

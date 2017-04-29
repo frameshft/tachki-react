@@ -26,6 +26,8 @@ export function importImage(path, img, defaultImg = 'no-image') {
   switch (defaultImg) {
     case 'no-image':
       return API.getStaticUrl(`no-photo.jpg${queryParams}`);
+    case 'no-user':
+      return API.getStaticUrl('no-photo-user.jpg');
     default:
       return null;
   }
@@ -44,4 +46,22 @@ export function updateQueryStringParameter(uri, key, value) {
 
 export function mapToArray(map) {
   return Object.entries(map).map(([k, v]) => v); // eslint-disable-line
+}
+
+export function getCookie(cname) {
+  const name = `${cname}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+
+  for (let i = 0; i < ca.length; i++) { // eslint-disable-line
+    let c = ca[i];
+
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
 }

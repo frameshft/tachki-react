@@ -7,6 +7,7 @@ import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
 import VipPost from '../shared/vip.post.btn';
 import Controls from '../shared/controls.post';
+import ControlsDesktop from '../shared/controls.post.desktop';
 
 import profileNames from '../../constants/car.profile.names';
 import ContactInfo from '../shared/profile.contact.info';
@@ -36,9 +37,9 @@ class SparePartProfile extends React.Component {
     store.dispatch(getPost('services', this.props.params.id));
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.user.token !== this.props.user.token) {
-      store.dispatch(getPost('services', this.props.params.id));
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
+      store.dispatch(getPost('services', nextProps.params.id));
     }
   }
 
@@ -134,7 +135,7 @@ class SparePartProfile extends React.Component {
                 </div>
               </div>}
             </div>
-            <LastCommentsPost post={ post } />
+            <LastCommentsPost post={ post } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ post.num_views } раз(а)</div>
@@ -159,7 +160,9 @@ class SparePartProfile extends React.Component {
           {post && <Controls post={ post } user={ user } /> }
           <div className='car-profile__top'>
             <div className='car-profile__top__media' ref='postUserImg' >
-              <img src={ importImage(postUser.image, this.refs.postUserImg) } alt='' ref='postUserImg' />
+              <div className='car-profile__img__wrapper'>
+                <img src={ importImage(postUser.image, this.refs.postUserImg, 'no-user') } alt='' ref='postUserImg' />
+              </div>
               <div className='car-profile__top__username'>
                 { postUser.name }
               </div>
@@ -178,7 +181,7 @@ class SparePartProfile extends React.Component {
                   Показать на карте
                 </button>
                 <div className='car-profile__top__info'>
-                  <span> { moment(post.created_at).format('DD MMMM') }</span>
+                  <span> { moment(post.created_at).format('DD.MM.YYYY') }</span>
                 </div>
               </div>
             </div>
@@ -212,7 +215,7 @@ class SparePartProfile extends React.Component {
                 </div>
               </div>}
             </div>
-            <LastCommentsPost post={ post } />
+            <LastCommentsPost post={ post } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
               Это объявление посмотрели
               <div className='car-profile__views__num'>{ post.num_views } раз(а)</div>
@@ -230,6 +233,7 @@ class SparePartProfile extends React.Component {
             </div>
             <ContactInfo post={ post } parentCls='' />
           </div>
+          <ControlsDesktop post={ post } user={ user } />
           <SimilarPosts post={ post } />
         </MediaQuery>
       </div>

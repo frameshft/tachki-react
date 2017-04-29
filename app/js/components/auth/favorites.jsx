@@ -22,7 +22,7 @@ class FavoritePosts extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.token === undefined) {
-      browserHistory.push('/sign-in');
+      browserHistory.push('/');
     } else if (!nextProps.posts.isFetched || nextProps.currentPage !== this.props.currentPage) {
       store.dispatch(fetchPaginatedResponse({
         entities: STORE_A_POST,

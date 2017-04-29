@@ -12,16 +12,20 @@ class PostItem extends React.Component {
     const isVip = post.isVip;
 
     const vipCls = isVip ? 'vip-item' : '';
+    const images = post.images || [];
+    images.reverse();
+    const image = post.image || (images.length > 0 && images[0]);
 
     return (
       <div className={ `list__item list__item--car ${vipCls}` }>
         <Link to={ `${endpoint}${post.id}` } activeStyle={ { textDecoration: 'none' } }>
           <h3 className='list__item__name small-view'>
             { post.title }
+            <div className='vip mobile' />
           </h3>
-          <div className='list__item__left aaa'>
+          <div className='list__item__left'>
             <div className='list__item__media' ref='postItem'>
-              <img className='list__item__media__img' src={ importImage(post.image, this.refs.postItem) } alt={ post.title } />
+              <img className='list__item__media__img' src={ importImage(image, this.refs.postItem) } alt={ post.title } />
               <div className='list__item__media__img-count mobile'>{ post.num_images }</div>
               <div className='list__item__city desktop'>
                 { post.city }

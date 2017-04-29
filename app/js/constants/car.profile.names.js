@@ -15,6 +15,16 @@ const profileNames = {
   fuel_type: 'Двигатель',
   drive_unit: 'Привод',
   body_type: 'Кузов',
+  category: 'Категория',
+  type_bus: 'Тип',
+  type_cargo: 'Тип',
+  type_special: 'Тип',
+  brand_cargo: 'Марка',
+  model_cargo: 'Модель',
+  brand: 'Марка',
+  model: 'Модель',
+  volume_cargo: 'Объем',
+  year_cargo: 'Год',
 };
 
 export default profileNames;

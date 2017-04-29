@@ -18,6 +18,10 @@ $header-padding-top: 8.335%;
 
     @media all and (max-width: 360px) {
       font-size: 20px;
+      max-width: 116px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -278,14 +282,14 @@ $header-padding-top: 8.335%;
 
     &__navigation {
       padding: 0 15px 0 40px;
-      &__item {
+      /*&__item {
         &--main {
           .sidebar__navigation__link {
             color: #000;
             font-weight: 500;
           }
         }
-      }
+      }*/
 
       &__link {
         display: block;

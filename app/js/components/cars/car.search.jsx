@@ -856,9 +856,12 @@ class CarSearch extends React.Component {
 
     return (
       <div className='search-form'>
-        { renderedCities }
-        { renderedCategories }
-        { this.renderCategoryWidgets(category) }
+        <div className='search-form__wrapper'>
+          { renderedCities }
+          { renderedCategories }
+          { this.renderCategoryWidgets(category) }
+
+        </div>
 
         <div className='search-form__row'>
           <button className='search-form__submit' onClick={ this.onSearch } >

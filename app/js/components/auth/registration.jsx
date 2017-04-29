@@ -95,7 +95,7 @@ class Registration extends React.Component {
         <div className='auth-form__row'>
           <input
             type='text'
-            placeholder='code'
+            placeholder='Код'
             className='auth-form__input'
             onChange={ this.activationCodeHandle }
           />

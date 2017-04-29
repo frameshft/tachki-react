@@ -28,6 +28,8 @@ export default class Tabber extends React.Component {
 
   render() {
     const { showSidebar } = this.state;
+    // FIXME: Adilet, fixme, please; Сделай изящнее, нам пришлось хардкодить;
+    const cls = window.location.pathname === '/' || window.location.pathname === '/companies' ? ' active-cls' : '';
 
     return (
       <div className='tab-wrapper'>
@@ -39,7 +41,7 @@ export default class Tabber extends React.Component {
             <IndexLink to='/' className='tab__link' />
           </li>
           <li className='tab__item'>
-            <IndexLink to='/companies' className='tab__link' activeClassName='tab__link--active'>
+            <IndexLink to='/companies' className={ `tab__link${cls}` } activeClassName='tab__link--active'>
               Компании
             </IndexLink>
           </li>
