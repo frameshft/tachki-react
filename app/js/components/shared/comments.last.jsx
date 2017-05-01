@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import moment from 'moment';
 
 class LastCommentsPost extends React.Component {
   renderLastComment(comment) {
@@ -14,7 +15,7 @@ class LastCommentsPost extends React.Component {
           <div className='car-profile__comments__user'>
             { comment.name }
             <div className='car-profile__comments__date'>
-              { comment.created }
+              { moment(comment.created).format('YYYY.MM.DD hh:mm') }
             </div>
           </div>
         </div>

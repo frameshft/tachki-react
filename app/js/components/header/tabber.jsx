@@ -31,8 +31,14 @@ export default class Tabber extends React.Component {
     // FIXME: Adilet, fixme, please; Сделай изящнее, нам пришлось хардкодить;
     const cls = window.location.pathname === '/' || window.location.pathname === '/companies' ? ' active-cls' : '';
 
+    // FIXME: Adilet, fixme, please; Сделай изящнее, нам пришлось хардкодить;
+    let wrapperCls = '';
+    if (window.location.pathname === '/sign-in') {
+      wrapperCls = ' hidden';
+    }
+
     return (
-      <div className='tab-wrapper'>
+      <div className={ `tab-wrapper${wrapperCls}` }>
         <ul className='tab'>
           <li className='tab__item tab__item--sandwich'>
             <button className='tab__item--sandwich__btn' onClick={ this.toggleSidebar } />

@@ -719,6 +719,11 @@ $icon-size: 50px;
       text-transform: none;
       padding: 10px 0;
 
+      &--report {
+        float: none;
+        position: static;
+      }
+
       &:first-child {
         margin-right: 10%;
         border: 1px solid #c6c6c6;

@@ -137,7 +137,7 @@ export default class ControlsDesktop extends React.Component {
                       />
                     </div>
                     <div className='offer-price__row offer-price__row--controls'>
-                      <button type='submit' className='offer-price__submit'>
+                      <button type='submit' className='offer-price__submit offer-price__submit--report'>
                         Оправить
                       </button>
                     </div>

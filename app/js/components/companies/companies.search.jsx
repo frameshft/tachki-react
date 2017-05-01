@@ -121,36 +121,38 @@ class CompanySearch extends React.Component {
 
     return (
       <div className='search-form'>
-        <div className='search-form__row'>
-          <div className='search-form__label'>
-            Категория
+        <div className='search-form__wrapper'>
+          <div className='search-form__row'>
+            <div className='search-form__label'>
+              Категория
+            </div>
+            <div className='custom-select'>
+              <select
+                onChange={ this.onCategoryChange }
+                className='search-form__control search-form__control--select'
+              >
+                { categoriesOpts }
+              </select>
+              <i className='fa fa-caret-down' />
+            </div>
           </div>
-          <div className='custom-select'>
-            <select
-              onChange={ this.onCategoryChange }
-              className='search-form__control search-form__control--select'
-            >
-              { categoriesOpts }
-            </select>
-            <i className='fa fa-caret-down' />
-          </div>
-        </div>
-        {servicesOpts && <div className='search-form__row'>
-          <div className='search-form__label'>
-            Тип
-          </div>
-          <ul className='search-form__control search-form__control--list'>{ servicesOpts }</ul>
-        </div>}
-        <div className='search-form__row'>
-          <div className='search-form__label'>Город</div>
-          <div className='custom-select'>
-            <select
-              onChange={ this.onCityChange }
-              className='search-form__control search-form__control--select'
-            >
-              { citiesOpts }
-            </select>
-            <i className='fa fa-caret-down' />
+          {servicesOpts && <div className='search-form__row'>
+            <div className='search-form__label'>
+              Тип
+            </div>
+            <ul className='search-form__control search-form__control--list'>{ servicesOpts }</ul>
+          </div>}
+          <div className='search-form__row'>
+            <div className='search-form__label'>Город</div>
+            <div className='custom-select'>
+              <select
+                onChange={ this.onCityChange }
+                className='search-form__control search-form__control--select'
+              >
+                { citiesOpts }
+              </select>
+              <i className='fa fa-caret-down' />
+            </div>
           </div>
         </div>
         <div className='search-form__row'>

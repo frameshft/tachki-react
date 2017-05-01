@@ -57,12 +57,7 @@ class Sidebar extends React.Component {
           {/* <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
             <a href='/' className='sidebar__navigation__link'>Рекомендовать</a>
           </li> */}
-          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
-            <Link to='/registration' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
-              Регистрация
-            </Link>
-          </li>
-          <li className='sidebar__navigation__item sidebar__navigation__item--recommend'>
+          <li className='sidebar__navigation__item sidebar__navigation__item--signout'>
             <Link to='/sign-in' className='sidebar__navigation__link' activeClassName='sidebar__navigation__link--active'>
               Войти
             </Link>

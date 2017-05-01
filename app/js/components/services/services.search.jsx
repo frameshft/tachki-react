@@ -150,9 +150,11 @@ class ServicesSearch extends React.Component {
 
     return (
       <div className='search-form'>
-        { renderedCities }
-        { renderedCategories }
-        { renderPrices }
+        <div className='search-form__wrapper'>
+          { renderedCities }
+          { renderedCategories }
+          { renderPrices }
+        </div>
 
         <div className='search-form__row'>
           <button className='search-form__submit' onClick={ this.onSearch } >

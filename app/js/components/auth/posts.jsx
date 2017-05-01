@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import { fetchPaginatedResponse, SUCCESS_FETCH_MY_POSTS_LIST, FETCH_MY_POSTS_LIST } from '../../actions/list';
@@ -60,10 +60,10 @@ class MyPostsList extends React.Component {
       postsRender :
       (<div className='no-posts'>
         <div className='no-posts__title'>У вас нет объявлений</div>
-        <div className='no-posts__body'>Может быть вы хотите создать объявление?</div>
+        {/* <div className='no-posts__body'>Может быть вы хотите создать объявление?</div>
         <Link to='/automobiles' className='btn btn--primary'>
           Создать объявление
-        </Link>
+        </Link> */}
       </div>);
 
     return (
@@ -71,7 +71,8 @@ class MyPostsList extends React.Component {
         <div className={ `list${listsCls}` }>
           { renderer }
         </div>
-        <Pagination { ...paginationProps } />
+        {/* FIXME: Adilet, сделай красивее, слишком много if else */}
+        { postsRender.length > 0 && <Pagination { ...paginationProps } /> }
       </div>
     );
   }
