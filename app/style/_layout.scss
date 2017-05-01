@@ -76,7 +76,7 @@ body {
 
 .main {
   @media all and (max-width: 767px) {
-    min-height: calc(100vh - 269px);
+    min-height: calc(100vh - 209px);
   }
   @media all and (min-width: 767px) {
     display: flex;
