@@ -21,7 +21,7 @@ export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
 
   return (
-    <Router history={ history }>
+    <Router onUpdate={ () => window.scrollTo(0, 0) } history={ history }>
       <Route path='/' component={ Application }>
         <IndexRoute
           component={ Frontpage }
