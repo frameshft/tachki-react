@@ -254,7 +254,7 @@ class PostList extends React.Component {
 
         {showHelpAlert && <div className='alert alert--red mobile'>
           <Link to='/faq'>
-            Хотите стать компанией?
+            Хотите добавить свою компанию?
           </Link>
           <button className='alert__close button__transparent' onClick={ this.onAlertHelpClose }>
             <i className='fa fa-times' />
