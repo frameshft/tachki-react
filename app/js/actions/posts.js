@@ -15,6 +15,7 @@ export const FETCH_CARS_COUNT = 'FETCH_CARS_COUNT';
 export const FETCH_SERVICES_COUNT = 'FETCH_SERVICES_COUNT';
 export const FETCH_SPAREPTS_COUNT = 'FETCH_SPAREPTS_COUNT';
 export const FETCH_CARGO_COUNT = 'FETCH_CARGO_COUNT';
+export const MARK_POST_AS_ABUSE = 'MARK_POST_AS_ABUSE';
 
 
 export function markPostAsFavorite(postId) {
@@ -105,4 +106,10 @@ export function fetchPostCount(endpoint, query, type) {
   return dispatch =>
     API.fetch(`${endpoint}count/${query}`)
       .then(data => dispatch({ type, data }));
+}
+
+export function abusePost(postId, reason) {
+  return dispatch => API.create(`/posts/${postId}/abuse/`, { reason })
+    .then(() => dispatch({ type: MARK_POST_AS_ABUSE, data: postId }))
+    ;
 }

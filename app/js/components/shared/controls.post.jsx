@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import PromptDelete from './prompt.delete';
+import AbusePost from './abuse.post';
 
 export default class Controls extends React.Component {
   constructor(props) {
@@ -11,9 +12,12 @@ export default class Controls extends React.Component {
     this.onShowLinks = this.onShowLinks.bind(this);
     this.showOfferPrice = this.showOfferPrice.bind(this);
     this.closeOfferPrice = this.closeOfferPrice.bind(this);
+    this.onAbuseClick = this.onAbuseClick.bind(this);
+    this.closeAbuse = this.closeAbuse.bind(this);
 
     this.state = {
       showPrompt: false,
+      showAbuse: false,
       showLinks: false,
       isAuthenticated: !!props.user.token,
       offerprice: false,
@@ -32,6 +36,10 @@ export default class Controls extends React.Component {
     });
   }
 
+  onAbuseClick() {
+    this.setState({ showAbuse: true });
+  }
+
   onShowLinks() {
     this.setState({
       showLinks: !this.state.showLinks,
@@ -42,6 +50,10 @@ export default class Controls extends React.Component {
     this.setState({
       offerprice: true,
     });
+  }
+
+  closeAbuse() {
+    this.setState({ showAbuse: false });
   }
 
   closeOfferPrice() {
@@ -72,32 +84,43 @@ export default class Controls extends React.Component {
       { mods: [1, 2], key: 'comment', text: 'Написать комментарий', link: `/comments/${post.id}` },
       { mods: [2], key: 'price', text: 'Предложить цену', link: '/' },
       { mods: [0, 1, 2], key: 'share', text: 'Поделиться', link: '/' },
-      // { mods: [2], key: 'report', text: 'Пожаловаться', link: '/' },
+      { mods: [2], key: 'report', text: 'Пожаловаться', link: '/' },
     ];
 
     return buttons.map((x) => {
-      if (x.key === 'delete' && x.mods.includes(mod)) {
-        return (
-          <li key={ x.key } className='controls-links__item'><button
-            onClick={ this.onDeleteClick }
-            className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
-          >{ x.text }</button></li>
-        );
-      } else if (x.key === 'price' && x.mods.includes(mod)) {
-        return (
-          <li key={ x.key } className='controls-links__item'><button
-            onClick={ this.showOfferPrice }
-            className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
-          >{ x.text }</button></li>
-        );
-      } else if (x.mods.includes(mod)) {
-        return (
-          <li key={ x.key } className='controls-links__item'>
-            <Link to={ x.link } className={ `controls-links__link controls-links__link--${x.key}` }>{ x.text }</Link>
-          </li>
-        );
+      if (!x.mods.includes((mod))) {
+        return null;
       }
-      return null;
+
+      switch (x.key) {
+        case 'delete':
+          return (
+            <li key={ x.key } className='controls-links__item'><button
+              onClick={ this.onDeleteClick }
+              className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
+            >{ x.text }</button></li>
+          );
+        case 'report':
+          return (
+            <li key={ x.key } className='controls-links__item'><button
+              onClick={ this.onAbuseClick }
+              className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
+            >{ x.text }</button></li>
+          );
+        case 'price':
+          return (
+            <li key={ x.key } className='controls-links__item'><button
+              onClick={ this.showOfferPrice }
+              className={ `button__transparent controls-links__link controls-links__link--${x.key}` }
+            >{ x.text }</button></li>
+          );
+        default:
+          return (
+            <li key={ x.key } className='controls-links__item'>
+              <Link to={ x.link } className={ `controls-links__link controls-links__link--${x.key}` }>{ x.text }</Link>
+            </li>
+          );
+      }
     }).filter(x => x !== null);
   }
 
@@ -158,12 +181,12 @@ export default class Controls extends React.Component {
   }
 
   render() {
-    const { post } = this.props;
-    const { showPrompt, showLinks, offerprice } = this.state;
+    const { post, user } = this.props;
+    const { showPrompt, showLinks, offerprice, showAbuse } = this.state;
     const renderLink = this.buildButtons(post);
 
     const btnCls = !showLinks ? 'settings-button' : 'settings-button settings-button--toggled';
-
+    const isAuthenticated = !!user.token;
     return (
       <div>
         <button className={ btnCls } onClick={ this.onShowLinks }>+</button>
@@ -180,6 +203,7 @@ export default class Controls extends React.Component {
           <PromptDelete postId={ post.id } cancel={ this.onCancelClick } /> }
 
         { offerprice && this.renderOfferPrice() }
+        { showAbuse && isAuthenticated && <AbusePost post={ post } cb={ this.closeAbuse } /> }
       </div>
     );
   }
