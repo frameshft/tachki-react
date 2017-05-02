@@ -10,10 +10,10 @@ class Frontpage extends React.Component {
     return (
       <div>
         <div className='frontpage'>
-          <div className='frontpage__block'>
-            <PostsList isFrontPage postType='companies' />
-            <Link to='/companies' className='frontpage__block__more'>
-              Больше компаний
+          <div className='frontpage__block desktop'>
+            <PostsList isFrontPage postType='automobiles' />
+            <Link to='/automobiles' className='frontpage__block__more'>
+              Больше объявлений
             </Link>
           </div>
           <div className='middle-banner desktop'>
@@ -31,10 +31,10 @@ class Frontpage extends React.Component {
               </a>
             </div>
           </div>
-          <div className='frontpage__block desktop'>
-            <PostsList isFrontPage postType='automobiles' />
-            <Link to='/automobiles' className='frontpage__block__more'>
-              Больше объявлений
+          <div className='frontpage__block'>
+            <PostsList isFrontPage postType='companies' />
+            <Link to='/companies' className='frontpage__block__more'>
+              Больше компаний
             </Link>
           </div>
           <div className='desktop bottom-banner'>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Swipeable from 'react-swipeable';
 import { browserHistory, Link } from 'react-router';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
@@ -30,6 +31,8 @@ class PostList extends React.Component {
     this.onModalSet = this.onModalSet.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
     this.onAlertHelpClose = this.onAlertHelpClose.bind(this);
+    this.onSwipeLeft = this.onSwipeLeft.bind(this);
+    this.onSwipeRight = this.onSwipeRight.bind(this);
     const currentLocation = browserHistory.getCurrentLocation();
 
     this.state = {
@@ -67,6 +70,62 @@ class PostList extends React.Component {
     this.setState({
       showHelpAlert: false,
     });
+  }
+
+  onSwipeLeft() {
+    const { postType } = this.props;
+
+    switch (postType) {
+      case 'companies':
+        browserHistory.push('/automobiles');
+        break;
+      case 'automobiles':
+        browserHistory.push('/spare-parts');
+        break;
+
+      case 'spareParts':
+        browserHistory.push('/services');
+        break;
+
+      case 'services':
+        browserHistory.push('/cargo');
+        break;
+
+      case 'cargos':
+        browserHistory.push('/companies');
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  onSwipeRight() {
+    const { postType } = this.props;
+
+    switch (postType) {
+      case 'companies':
+        browserHistory.push('/cargo');
+        break;
+      case 'automobiles':
+        browserHistory.push('/companies');
+        break;
+
+      case 'spareParts':
+        browserHistory.push('/automobiles');
+        break;
+
+      case 'services':
+        browserHistory.push('/spare-parts');
+        break;
+
+      case 'cargos':
+        browserHistory.push('/services');
+        break;
+
+      default:
+        break;
+    }
   }
 
   onModalSet(name) {
@@ -246,7 +305,7 @@ class PostList extends React.Component {
     ;
 
     return (
-      <div className={ `body ${componentData.viewClassName}` }>
+      <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
         <div className='frontpage__block__head desktop'>
           <h3 className='frontpage__block__title'>{ componentData.viewTitle }</h3>
           { this.renderFrontpage() }
@@ -306,7 +365,7 @@ class PostList extends React.Component {
         </div>}
 
         {modalWindow === 'map' && <PostMap items={ [] } />}
-      </div>
+      </Swipeable>
     );
   }
 }

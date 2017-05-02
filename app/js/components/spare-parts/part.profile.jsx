@@ -169,7 +169,7 @@ class SparePartProfile extends React.Component {
             <ContactInfo post={ post } parentCls='' onAddressClick={ this.onModalShow } />
             <SimilarPosts post={ post } />
           </div>
-          { post.isMy && !post.isVip && <VipPost postId={ post.id } /> }
+          { post.isMy && !post.isVip && <VipPost post={ post } /> }
         </MediaQuery>
         <MediaQuery minWidth={ 767 }>
           {post && <Controls post={ post } user={ user } /> }

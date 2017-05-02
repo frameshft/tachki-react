@@ -166,6 +166,10 @@ class CarProfile extends React.Component {
                   { car.description }
                 </div>
               </div>}
+              { this.renderEquiments(car.profile.equipments) }
+            </div>
+            <div className='desktop-created'>
+              { moment(car.created_at).format('DD.MM.YYYY') }
             </div>
             <LastCommentsPost post={ car } isAuthenticated={ !!user.token } />
             <div className='car-profile__box car-profile__views'>
@@ -186,7 +190,7 @@ class CarProfile extends React.Component {
             <ContactInfo post={ car } parentCls='' onAddressClick={ this.onModalShow } />
             <SimilarPosts post={ car } />
           </div>
-          { car.isMy && !car.isVip && <VipPost postId={ car.id } /> }
+          { car.isMy && !car.isVip && <VipPost post={ car } /> }
         </MediaQuery>
         <MediaQuery minWidth={ 767 }>
           {car && <Controls post={ car } user={ user } /> }

@@ -110,7 +110,7 @@ class CargoProfile extends React.Component {
           <div className='car-profile__media' ref='image'>
             <button className='button__transparent' onClick={ this.onModalShow }>
               <img
-                src={ importImage(post.images[0].image, this.refs.image) }
+                src={ importImage(post.images[0], this.refs.image) }
                 alt={ post.title }
                 className='car-profile__media__img'
               />
@@ -156,7 +156,7 @@ class CargoProfile extends React.Component {
             <ContactInfo post={ post } parentCls='' />
             <SimilarPosts post={ post } />
           </div>
-          { post.isMy && !post.isVip && <VipPost postId={ post.id } /> }
+          { post.isMy && !post.isVip && <VipPost post={ post } /> }
         </MediaQuery>
         <MediaQuery minWidth={ 767 }>
           {post && <Controls post={ post } user={ user } /> }
