@@ -1,3 +1,5 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 @import "reset";
 @import "variables";
 @import "mixins";
@@ -186,4 +188,8 @@
     padding-top: 4px;
     vertical-align: top;
   }
+}
+
+.slick-slide-image {
+  max-width: 100%;
 }

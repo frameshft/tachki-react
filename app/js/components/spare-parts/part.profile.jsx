@@ -20,6 +20,7 @@ import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
 import ControlsDesktop from '../shared/controls.post.desktop';
+import ImageSlider from '../shared/image.slider';
 
 moment.locale('ru');
 
@@ -121,13 +122,7 @@ class SparePartProfile extends React.Component {
           { user.token && <FavoriteToggle post={ post } /> }
           <Controls post={ post } user={ user } />
           <div className='car-profile__media' ref='image'>
-            <button className='button__transparent' onClick={ this.onModalShow }>
-              <img
-                src={ importImage(post.images[0], this.refs.image) }
-                alt={ post.title }
-                className='car-profile__media__img'
-              />
-            </button>
+            <ImageSlider images={ post.images } title={ post.title } refImage={ this.refs.image } />
             <div className='car-profile__price'>
               { post.price } сом
             </div>

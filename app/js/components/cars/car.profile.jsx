@@ -20,6 +20,7 @@ import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
+import ImageSlider from '../shared/image.slider';
 
 moment.locale('ru');
 
@@ -138,13 +139,7 @@ class CarProfile extends React.Component {
           { user.token && <FavoriteToggle post={ car } /> }
           {car && <Controls post={ car } user={ user } /> }
           <div className='car-profile__media' ref='image'>
-            <button className='button__transparent' onClick={ this.onModalShow }>
-              <img
-                src={ importImage(car.images[0], this.refs.image) }
-                alt={ car.title }
-                className='car-profile__media__img'
-              />
-            </button>
+            <ImageSlider images={ car.images } title={ car.title } refImage={ this.refs.image } />
             <div className='car-profile__price'>
               { car.price } сом
             </div>
