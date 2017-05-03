@@ -7,6 +7,7 @@ import Header from './header/header';
 import Tabber from './header/tabber';
 
 import '../../style/style.scss';
+import { getCookie, setCookie } from '../utils';
 
 export default class Application extends React.Component {
   constructor(props) {
@@ -14,8 +15,11 @@ export default class Application extends React.Component {
     this.onSkip = this.onSkip.bind(this);
     this.onInstallBtn = this.onInstallBtn.bind(this);
     this.onHideBanner = this.onHideBanner.bind(this);
+
+    const skip = !!getCookie('mobile-ad');
+
     this.state = {
-      skip: false,
+      skip,
       hideSmallBanner: false,
       platform: this.getPlatform(),
     };
@@ -36,6 +40,7 @@ export default class Application extends React.Component {
   }
 
   onSkip() {
+    setCookie('mobile-ad', 1, 1);
     this.setState({ skip: true });
   }
 

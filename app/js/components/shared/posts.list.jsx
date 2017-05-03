@@ -181,7 +181,7 @@ class PostList extends React.Component {
           entities: STORE_A_POST,
           component: SUCCESS_FETCH_CARS_LIST,
         };
-        componentData.allPostsLinks = '/cars';
+        componentData.allPostsLinks = '/automobiles';
         componentData.SearchModal = <CarSearch onModalSubmit={ this.onModalSubmit } />;
         componentData.isFetched = true;
         componentData.COUNT_ACTION = FETCH_CARS_COUNT;
