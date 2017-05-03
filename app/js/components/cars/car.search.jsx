@@ -34,13 +34,13 @@ class CarSearch extends React.Component {
 
     this.state = {
       total: 0,
-      category: 'all',
+      category: 'light-old',
       city: 'all',
       cities: {},
       categories: [
+        { key: 'light-old', value: 'Легковые с пробегом' },
         { key: 'all', value: 'Все' },
         { key: 'light-new', value: 'Легковые новые' },
-        { key: 'light-old', value: 'Легковые с пробегом' },
         { key: 'motor', value: 'Мото техника' },
         { key: 'water', value: 'Водный транспорт' },
       ],
@@ -65,12 +65,14 @@ class CarSearch extends React.Component {
   }
 
   componentDidMount() {
+    const { category } = this.state;
     API.fetch('/automobiles/search_init/')
       .then((res) => {
         const { cities, automobiles, motorcycles, water } = res;
         this.setState({ cities: listToMap(cities, 'key'), automobiles, motorcycles, water });
       })
     ;
+    this.fetchCategoryAPI(category);
 
     this.fetchCount();
   }
@@ -733,6 +735,9 @@ class CarSearch extends React.Component {
       volumeFrom,
       volumeTo,
     } = this.state;
+    automobiles.brand = null;
+    automobiles.model = null;
+    automobiles.generation = null;
 
     return (
       <div>
@@ -857,9 +862,9 @@ class CarSearch extends React.Component {
     return (
       <div className='search-form'>
         <div className='search-form__wrapper'>
-          { renderedCities }
           { renderedCategories }
           { this.renderCategoryWidgets(category) }
+          { renderedCities }
 
         </div>
 
