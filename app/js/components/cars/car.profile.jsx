@@ -21,6 +21,8 @@ import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
 
+import Head from '../shared/head';
+
 moment.locale('ru');
 
 class CarProfile extends React.Component {
@@ -132,8 +134,12 @@ class CarProfile extends React.Component {
       return null;
     }
 
+    console.log(car);
+    const title = `Купить ${car.title} за ${car.price} сом в Кыргызстане`;
+    const metaDescription = `${car.title} за ${car.price} сом в Кыргызстане. Находите лучшие автомобили!`;
     return (
       <div className='car-profile'>
+        <Head title={ title } metaDescription={ metaDescription } />
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ car } /> }
           {car && <Controls post={ car } user={ user } /> }

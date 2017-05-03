@@ -22,7 +22,7 @@ import CompanySearch from '../companies/companies.search';
 import { FETCH_COUNT_COMPANY } from '../../actions/companies';
 import Company from '../companies/company';
 import PostMap from './map.post';
-
+import Head from '../shared/head';
 
 class PostList extends React.Component {
   constructor(props) {
@@ -155,6 +155,94 @@ class PostList extends React.Component {
       totalItemsCount,
     };
   }
+  getHeadElements() {
+    const categories = {
+      carwash: 'Автомойка',
+      dealer: 'Дилер',
+      fuelling: 'АЗС',
+      market: 'Магазин',
+      repair: 'СТО',
+    };
+    const endPoint = this.state.componentData.endPoint;
+    const query = browserHistory.getCurrentLocation().query;
+    const elems = {
+      title: 'STORE_A_POST',
+      metaDescription: 'SUCCESS_FETCH_SERVICES_LIST',
+    };
+    console.log(query.city);
+    switch (true) {
+      case (endPoint === '/companies/' && Object.keys(query).length === 0) ||
+        (endPoint === '/companies/' && query.city === 'all' && query.category === 'all'):
+        elems.title = 'Каталог АЗС, СТО, автомоек, автомагазинов в Бишкеке и Кыргызстане';
+        elems.metaDescription = 'СТО, АЗС, автомойки и многое другое на сайте или в приложениях. ' +
+          'Находите нужные вам компании — удобный поиск и отображение на карте!';
+        break;
+      case (endPoint === '/companies/' && query.city === 'all' && query.category !== 'all' && ('services' in query)):
+        elems.title = `Каталог компаний ${query.category} и дополнительных услуг на Tachki.KG`;
+        elems.metaDescription = `Список компаний ${query.category}, где есть ` +
+          `${query.services}` +
+          ', в Кыргызстане.';
+        break;
+      case (endPoint === '/companies/' && query.city !== 'all' && query.category !== 'all' && ('services' in query)):
+        elems.title = `Каталог компаний ${query.category} и дополнительных услуг в городе ${query.city} на Tachki.KG`;
+        elems.metaDescription = `Список компаний ${query.category}, где есть ` +
+          `${query.services}` +
+          `, в ${query.city}.`;
+        break;
+      case (endPoint === '/companies/' && query.city === 'all' && query.category !== 'all'):
+        elems.title = `Каталог компаний ${categories[query.category]} на Tachki.KG`;
+        elems.metaDescription = `Весь список компаний ${categories[query.category]} в Кыргызстане на сайте или в приложениях. ` +
+          'Удобный поиск и отображение на карте. Используйте современный сервис!';
+        break;
+      case (endPoint === '/companies/' && query.city !== 'all' && query.category !== 'all'):
+        elems.title = `Каталог компаний ${categories[query.category]} в ${query.city} на Tachki.KG`;
+        elems.metaDescription = `Весь список компаний ${categories[query.category]} в ${query.city} на сайте или в приложениях. ` +
+          'Удобный поиск и отображение на карте. Используйте современный сервис!';
+        break;
+      case (endPoint === '/companies/' && query.city !== 'all'):
+        elems.title = `Каталог компаний АЗС, СТО, автомоек, автомагазинов в ${query.city}`;
+        elems.metaDescription = `СТО, АЗС, автомойки и многое другое в ${query.city} на сайте или в приложении. ` +
+          'Находите нужные вам компании — удобный поиск и отображение на карте!';
+        break;
+      case (endPoint === '/automobiles/' && Object.keys(query).length === 0):
+        elems.title = 'Купля, продажа, обмен автомобилей в Бишкеке и Кыргызстане';
+        elems.metaDescription = 'Все автомобили Кыргызстана на сайте и в приложениях. Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/automobiles/' && query.city !== 'all' && query.category !== 'all' && ('brand' in query) && ('model' in query)):
+        elems.title = `Все ${query.category} ${query.brand} ${query.model} автомобили в ${query.city} - купля, продажа, обмен`;
+        elems.metaDescription = `Все ${query.category} ${query.brand} ${query.model} автомобили в ${query.city}` +
+        ' на сайте и в приложениях. Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/automobiles/' && query.city !== 'all' && query.category !== 'all' && ('brand' in query)):
+        elems.title = `Все ${query.category} ${query.brand} автомобили в ${query.city} - купля, продажа, обмен`;
+        elems.metaDescription = `Все ${query.category} ${query.brand} автомобили в ${query.city} на сайте и в приложениях. ` +
+        'Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/automobiles/' && query.city !== 'all' && query.category !== 'all'):
+        elems.title = `Все ${query.category} автомобили в ${query.city} - купля, продажа, обмен`;
+        elems.metaDescription = `Все ${query.category} автомобили в ${query.city} на сайте и в приложениях. ` +
+        'Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/automobiles/' && query.city !== 'all'):
+        elems.title = `Все автомобили в ${query.city} - купля, продажа, обмен`;
+        elems.metaDescription = `Все автомобили в ${query.city} на сайте и в приложениях. ` +
+        'Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/spare-parts/' && Object.keys(query).length === 0):
+        elems.title = 'Автозапчасти БУ и новые: купля и продажа в Бишкеке и Кыргызстане';
+        elems.metaDescription = 'Все поставщики автозапчастей на заказ и в наличии в Кыргызстане. ' +
+        'Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/spare-parts/' && ('city' in query) && ('category' in query)):
+        elems.title = `Все ${query.category} в ${query.city} - купля и продажа`;
+        elems.metaDescription = `Все ${query.category} на сайте и в приложениях в ${query.city}. ` +
+        'Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      default:
+        break;
+    }
+    return elems;
+  }
 
   changeStateComponent(postType) {
     const componentData = {};
@@ -168,6 +256,9 @@ class PostList extends React.Component {
           entities: STORE_A_POST,
           component: SUCCESS_FETCH_COMPANIES_LIST,
         };
+        componentData.title = 'Каталог АЗС, СТО, автомоек, автомагазинов в Бишкеке и Кыргызстане';
+        componentData.metaDescription = 'СТО, АЗС, автомойки и многое другое на сайте или в приложениях. ' +
+        'Находите нужные вам компании — удобный поиск и отображение на карте!';
         componentData.allPostsLinks = '/companies';
         componentData.SearchModal = <CompanySearch onModalSubmit={ this.onModalSubmit } />;
         componentData.isFetched = true;
@@ -243,6 +334,7 @@ class PostList extends React.Component {
     return fetchPaginatedResponse(componentData.actionTypes, endpoint, this.props.currentPage);
   }
 
+
   buildEndPoint(endPoint) {
     const loc = browserHistory.getCurrentLocation();
 
@@ -298,14 +390,18 @@ class PostList extends React.Component {
       totalPosts,
       totalPages,
     );
+    console.log(browserHistory.getCurrentLocation().query);
+    console.log(componentData.endPoint);
 
     const renderedItems = postType === 'companies' ?
       posts.map(x => <Company key={ x.id } company={ x } />) :
       posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ componentData.endPoint } />)
     ;
 
+    const { title, metaDescription } = this.getHeadElements();
     return (
       <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
+        {!isFrontPage && <Head title={ title } metaDescription={ metaDescription } />}
         <div className='frontpage__block__head desktop'>
           <h3 className='frontpage__block__title'>{ componentData.viewTitle }</h3>
           { this.renderFrontpage() }

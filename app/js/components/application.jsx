@@ -9,6 +9,8 @@ import Tabber from './header/tabber';
 import '../../style/style.scss';
 import { getCookie, setCookie } from '../utils';
 
+import Head from './shared/head';
+
 export default class Application extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +24,9 @@ export default class Application extends React.Component {
       skip,
       hideSmallBanner: false,
       platform: this.getPlatform(),
+      title: 'Tachki.KG — все, что нужно автолюбителям в одном сервисе',
+      metaDescription: 'Купля и продажа авто в Бишкеке и по всему Кыргызстану, поиск автозапчастей и других ' +
+      'услуг для автомобилей: автомойки, СТО и многое другое.',
     };
   }
 
@@ -99,6 +104,7 @@ export default class Application extends React.Component {
 
     return (
       <div className='app'>
+        <Head title={ this.state.title } metaDescription={ this.state.metaDescription } />
         { this.renderSkipBanner() }
         { this.renderSmallBanner() }
         <Header title={ pathName } controls={ controls } params={ params } />

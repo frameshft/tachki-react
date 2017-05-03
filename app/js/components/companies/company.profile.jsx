@@ -13,6 +13,8 @@ import ContactInfo from '../shared/profile.contact.info';
 import '../../../style/profile.scss';
 import PostMap from '../shared/map.post';
 
+import Head from '../shared/head';
+
 class CompanyProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -64,6 +66,7 @@ class CompanyProfile extends React.Component {
     const { company } = this.props;
     const { showModal, showMapModal } = this.state;
 
+    console.log(company);
     if (company.id === undefined) {
       return null;
     }
@@ -79,8 +82,11 @@ class CompanyProfile extends React.Component {
 
     const contactPhone = company.contactPhone || company.phone;
 
+    const title = `${company.name} на Tachki.KG`;
+    const metaDescription = `${company.profile_info}`;
     return (
       <div className='company-profile'>
+        <Head title={ title } metaDescription={ metaDescription } />
         <MediaQuery maxWidth={ 767 }>
           <div className='company-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>
