@@ -12,6 +12,7 @@ module.exports = {
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
+    disableHostCheck: true,
   },
 
   entry: path.join(__dirname, 'app/js/app.jsx'),
