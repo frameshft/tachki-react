@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, Redirect } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import Application from './components/application';
@@ -16,6 +16,7 @@ import HeaderControls from './constants/header.controls';
 import Agreement from './components/static-pages/agreement';
 import FAQ from './components/static-pages/faq';
 import PostsList from './components/shared/posts.list';
+import PageNotFound from './components/shared/PageNotFound';
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
@@ -102,6 +103,8 @@ export default (store) => {
         <Route path='comments/:id' component={ CommentsPost } title='Комментарии' />
         <Route path='agreement' component={ Agreement } title='Пользовательское соглашение' />
         <Route path='faq' component={ FAQ } title='Правила/Помощь' />
+        <Route path='404' component={ PageNotFound } title='Ошибка' />
+        <Redirect from='*' to='404' />
       </Route>
     </Router>
   );
