@@ -5,6 +5,7 @@ import { Link, browserHistory, IndexLink } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
 import * as AuthActions from '../../actions/auth';
+import { importImage } from '../../utils';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -68,12 +69,13 @@ class Sidebar extends React.Component {
   }
 
   renderAuthorized(user) {
+    const userImage = user.image ? user.image : importImage(false, false, 'no-user');
     return (
       <Swipeable className='sidebar' onSwipingLeft={ this.swiping }>
         <div className='sidebar__profile' onClick={ this.onClick }>
           <div className='sidebar__profile__media'>
             <img
-              className='sidebar__profile__media__img' src={ user.image } alt={ user.username }
+              className='sidebar__profile__media__img' src={ userImage } alt={ user.username }
             />
           </div>
           <div className='sidebar__profile__title'>
