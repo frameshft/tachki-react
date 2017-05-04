@@ -166,8 +166,9 @@ class PostList extends React.Component {
     const endPoint = this.state.componentData.endPoint;
     const query = browserHistory.getCurrentLocation().query;
     const elems = {
-      title: 'STORE_A_POST',
-      metaDescription: 'SUCCESS_FETCH_SERVICES_LIST',
+      title: 'Tachki.KG',
+      metaDescription: 'Сообщество Вежливых Водителей - это огромное общество водителей Бишкека, ' +
+        'которыми движет общая идея - вежливость на дорогах!',
     };
     console.log(query.city);
     switch (true) {
@@ -237,6 +238,16 @@ class PostList extends React.Component {
         elems.title = `Все ${query.category} в ${query.city} - купля и продажа`;
         elems.metaDescription = `Все ${query.category} на сайте и в приложениях в ${query.city}. ` +
         'Пользуйтесь современным сервисом, совершайте выгодные сделки!';
+        break;
+      case (endPoint === '/services/' && Object.keys(query).length === 0):
+        elems.title = 'Все виды услуг для авто в Бишкеке и Кыргызстане';
+        elems.metaDescription = 'Все виды услуг для автомобилей в Кыргызстане на сайте и в приложениях.' +
+          ' Пользуйтесь современным сервисом!';
+        break;
+      case (endPoint === '/services/' && ('city' in query) && ('category' in query)):
+        elems.title = `Услуги ${query.category} в ${query.city} на Tachki.KG`;
+        elems.metaDescription = `Весь список ${query.category} в ${query.city} на сайте или в приложениях. ` +
+          'Удобный поиск и отображение на карте. Используйте современный сервис!';
         break;
       default:
         break;

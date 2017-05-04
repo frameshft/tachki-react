@@ -21,6 +21,8 @@ import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
 import ControlsDesktop from '../shared/controls.post.desktop';
 
+import Head from '../shared/head';
+
 moment.locale('ru');
 
 class SparePartProfile extends React.Component {
@@ -115,8 +117,12 @@ class SparePartProfile extends React.Component {
       return null;
     }
 
+    console.log(post);
+    const title = 'kek';
+    const metaDescription = 'kek';
     return (
       <div className='car-profile'>
+        <Head title={ title } metaDescription={ metaDescription } />
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ post } /> }
           <Controls post={ post } user={ user } />
