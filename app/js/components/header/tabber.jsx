@@ -72,7 +72,8 @@ export default class Tabber extends React.Component {
             </Link>
           </li>
         </ul>
-        { showSidebar && <Sidebar close={ this.closeSidebar } isDesktop /> }
+        { showSidebar && <Sidebar close={ this.closeSidebar } isDesktop />}
+        <div className={ `body-fade fade${(showSidebar ? ' in' : '')} transparent` } onClick={ this.closeSidebar } />
         {/* {showBanner && <div className='desktop main-banner'>
           <div className='main-banner__text main-banner__text--main'>
             Скачайте наше официальное приложение
