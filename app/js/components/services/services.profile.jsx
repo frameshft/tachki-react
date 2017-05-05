@@ -195,7 +195,7 @@ class SparePartProfile extends React.Component {
                 <div className='car-profile__gallery__main' ref='galleryMain'>
                   <img src={ importImage(post.images[mainImgIndex], this.refs.galleryMain) } alt='' />
                 </div>
-                <div className='car-profile__gallery_thumbs'>
+                <div className='car-profile__gallery__thumbs'>
                   {this.renderThumbs(post.images)}
                 </div>
               </div>

@@ -149,6 +149,7 @@
   &__gallery {
     width: 50%;
     float: left;
+    overflow: hidden;
 
     &__main {
       overflow: hidden;
@@ -161,23 +162,25 @@
     }
 
     &__thumbs {
+      width: calc(100% + 2px);
       @include clearfix;
     }
 
     &__thumb {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       position: relative;
       outline: none;
       background: none;
       border: 2px solid transparent;
+      border-left: 0;
+      border-bottom: 0;
       width: 20%;
       float: left;
       height: 83px;
       overflow: hidden;
       //border: none;
       cursor: pointer;
+      padding: 0;
+      margin: 0;
 
       @media all and (max-width: 992px) {
         width: 33.333%;

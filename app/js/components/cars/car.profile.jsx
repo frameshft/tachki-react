@@ -235,7 +235,7 @@ class CarProfile extends React.Component {
                 <div className='car-profile__gallery__main' ref='galleryMain'>
                   <img src={ importImage(car.images[mainImgIndex], this.refs.galleryMain) } alt='' />
                 </div>
-                <div className='car-profile__gallery_thumbs'>
+                <div className='car-profile__gallery__thumbs'>
                   {this.renderThumbs(car.images)}
                 </div>
               </div>
