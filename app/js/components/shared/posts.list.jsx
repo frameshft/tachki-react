@@ -346,6 +346,7 @@ class PostList extends React.Component {
         }
         {modalWindow === 'search' && <div>
           <div className='modal fade in'>
+            <div className='modal-backdrop fade in' onClick={ this.onModalSet.bind(this, null) } />
             <div className='modal-dialog modal-dialog--search'>
               <div className='modal-content'>
                 <div className='modal-header'>
@@ -361,7 +362,6 @@ class PostList extends React.Component {
               </div>
             </div>
           </div>
-          <div className='modal-backdrop fade in' onClick={ this.onModalSet.bind(this, null) } />
         </div>}
 
         {modalWindow === 'map' && <PostMap items={ [] } />}

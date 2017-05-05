@@ -43,6 +43,7 @@ export default class SortModal extends React.Component {
     return (
       <div>
         <div className='modal fade in modal--sort'>
+          <div className='modal-backdrop fade in' onClick={ onClose } />
           <div className='modal-dialog'>
             <div className='modal-content'>
               <div className='modal-header'>
@@ -90,7 +91,6 @@ export default class SortModal extends React.Component {
             </div>
           </div>
         </div>
-        <div className='modal-backdrop fade in' />
       </div>
     );
   }
