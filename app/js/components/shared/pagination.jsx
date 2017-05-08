@@ -5,13 +5,12 @@ import { updateQueryStringParameter } from '../../utils';
 class Pagination extends React.Component {
   render() {
     const location = browserHistory.getCurrentLocation();
-
-    const { onNext, onPrev, view, currentPage } = this.props;
+    const { onNext, onPrev, currentPage } = this.props;
     const prevLink = this.props.currentPage > 1;
     const nextLink = this.props.currentPage < this.props.totalPages;
 
     const nextBtn = !onNext ?
-      (<Link to={ `/${view}${updateQueryStringParameter(location.search, 'page', currentPage + 1)}` } className='pagination__link'>
+      (<Link to={ `${location.pathname}${updateQueryStringParameter(location.search, 'page', currentPage + 1)}` } className='pagination__link'>
         <i className='fa fa-angle-right' />
       </Link>) :
       (<button className='pagination__link' onClick={ onNext }>
@@ -20,7 +19,7 @@ class Pagination extends React.Component {
     ;
 
     const prevBtn = !onPrev ?
-      (<Link to={ `/${view}${updateQueryStringParameter(location.search, 'page', currentPage - 1)}` } className='pagination__link'>
+      (<Link to={ `${location.pathname}${updateQueryStringParameter(location.search, 'page', currentPage - 1)}` } className='pagination__link'>
         <i className='fa fa-angle-left' />
       </Link>) :
       (<button className='pagination__link' onClick={ onPrev }>
