@@ -735,9 +735,6 @@ class CarSearch extends React.Component {
       volumeFrom,
       volumeTo,
     } = this.state;
-    automobiles.brand = null;
-    automobiles.model = null;
-    automobiles.generation = null;
 
     return (
       <div>
