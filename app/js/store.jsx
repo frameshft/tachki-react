@@ -10,21 +10,29 @@ const enhancers = [];
 const loggerMiddleware = createLogger();
 
 enhancers.push(applyMiddleware(thunkMiddleware, loggerMiddleware));
-enhancers.push(autoRehydrate());
+//enhancers.push(autoRehydrate());
 
 if (process.env.NODE_ENV !== 'production') {
   const DevTools = require('./devtools').DevTools; // eslint-disable-line global-require
   enhancers.push(DevTools.instrument());
 }
 
+let init;
+
+try {
+  init = JSON.parse(unescape(htmlDecode(__REDUX_INITIAL_DATA__)));
+} catch(e) {
+  init = {};
+}
 const store = createStore(
   combineReducers({
     routing: routerReducer,
     ...reducers,
   }),
+  init,
   compose(...enhancers),
 );
 
-persistStore(store, { blacklist: ['routing'] });
+//persistStore(store, { blacklist: ['routing'] });
 
 export default store;

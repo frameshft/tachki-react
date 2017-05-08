@@ -76,7 +76,7 @@ module.exports = {
 
       },
       {
-        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.jpg$|\.png$/,
+        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.jpg$|\.png|\.gif$/,
         loader: ['url-loader'],
       },
     ],

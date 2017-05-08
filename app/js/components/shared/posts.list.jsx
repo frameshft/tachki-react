@@ -19,7 +19,7 @@ import CarSearch from '../cars/car.search';
 import ServicesSearch from '../services/services.search';
 import SpareSearch from '../spare-parts/spare.search';
 import CompanySearch from '../companies/companies.search';
-import { FETCH_COUNT_COMPANY } from '../../actions/companies';
+import { FETCH_COUNT_COMPANY, STORE_A_COMPANY } from '../../actions/companies';
 import Company from '../companies/company';
 import PostMap from './map.post';
 
@@ -165,7 +165,7 @@ class PostList extends React.Component {
         componentData.viewClassName = 'companies';
         componentData.viewTitle = 'Компании';
         componentData.actionTypes = {
-          entities: STORE_A_POST,
+          entities: STORE_A_COMPANY,
           component: SUCCESS_FETCH_COMPANIES_LIST,
         };
         componentData.allPostsLinks = '/companies';
@@ -384,7 +384,7 @@ PostList.defaultProps = {
 
 function mapToProps(state, props) {
   const postType = props.postType || props.route.postType;
-  const entities = state.entities.posts;
+  const entities = postType === 'companies' ? state.entities.users : state.entities.posts;
   const viewData = state.views[postType];
 
   const posts = viewData.list.map(x => entities[x]).filter(x => !!x);
