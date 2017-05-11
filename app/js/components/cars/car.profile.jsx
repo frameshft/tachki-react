@@ -85,6 +85,7 @@ class CarProfile extends React.Component {
       let keys = Object.keys(car.profile);
       keys = keys.filter(x => x !== 'equipments');
 
+      keys.sort((a, b) => profileNames[a].localeCompare(profileNames[b]));
 
       keys.forEach((profile, i) => {
         let profileValue;

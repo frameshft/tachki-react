@@ -55,6 +55,7 @@ class CargoProfile extends React.Component {
     const services = [];
     if (post !== undefined && post.profile !== undefined) {
       const keys = Object.keys(post.profile);
+      keys.sort((a, b) => profileNames[a].localeCompare(profileNames[b]));
 
       keys.forEach((profile, i) => {
         let profileValue;

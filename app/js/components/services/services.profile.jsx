@@ -54,6 +54,7 @@ class SparePartProfile extends React.Component {
     if (!post.profile) return null;
     const services = [];
     const keys = Object.keys(post.profile);
+    keys.sort((a, b) => profileNames[a].localeCompare(profileNames[b]));
 
     keys.forEach((profile, i) => {
       let profileValue;
