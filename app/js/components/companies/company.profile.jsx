@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
+import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import store from '../../store';
 
@@ -81,6 +82,10 @@ class CompanyProfile extends React.Component {
 
     return (
       <div className='company-profile'>
+        <Helmet>
+          <title>{ company.htmlTitle }</title>
+          <meta name='description' content={ company.htmlDescription } />
+        </Helmet>
         <MediaQuery maxWidth={ 767 }>
           <div className='company-profile__media'>
             <button className='button__transparent' onClick={ this.onModalShow }>

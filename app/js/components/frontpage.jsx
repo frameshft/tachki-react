@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { Helmet } from 'react-helmet';
 import PostsList from '../components/shared/posts.list';
 
 import '../../style/frontpage.scss';
@@ -9,6 +10,13 @@ class Frontpage extends React.Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Tachki.KG — все, что нужно автолюбителям в одном сервисе</title>
+          <meta
+            name='description'
+            content='Купля и продажа авто в Бишкеке и по всему Кыргызстану, поиск автозапчастей и других услуг для автомобилей: автомойки, СТО и многое другое.'
+          />
+        </Helmet>
         <div className='frontpage'>
           <div className='frontpage__block desktop'>
             <PostsList isFrontPage postType='automobiles' />
@@ -66,6 +74,7 @@ class Frontpage extends React.Component {
 function mapToProps(state) {
   return {
     ...state,
+    pageLocation: state.pageLocation,
   };
 }
 

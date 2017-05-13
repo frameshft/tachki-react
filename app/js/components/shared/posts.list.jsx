@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Swipeable from 'react-swipeable';
 import { browserHistory, Link } from 'react-router';
+import Helmet from 'react-helmet/es/Helmet';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import PostItem from '../shared/post.item';
@@ -22,6 +23,7 @@ import CompanySearch from '../companies/companies.search';
 import { FETCH_COUNT_COMPANY, STORE_A_COMPANY } from '../../actions/companies';
 import Company from '../companies/company';
 import PostMap from './map.post';
+import API from '../../api';
 
 
 class PostList extends React.Component {
@@ -35,19 +37,36 @@ class PostList extends React.Component {
     this.onSwipeRight = this.onSwipeRight.bind(this);
     const currentLocation = browserHistory.getCurrentLocation();
 
+    this.defaultTitle = 'Tachki.KG — все, что нужно автолюбителям в одном сервисе';
+    this.defaultDesc =
+      'Купля и продажа авто в Бишкеке и по всему Кыргызстану, поиск автозапчастей и других услуг для автомобилей: автомойки, СТО и многое другое.';
+
     this.state = {
       currentSearch: currentLocation.search,
       componentData: { isFetched: false },
       showHelpAlert: true && props.postType === 'companies',
       modalWindow: null,
       posts: [],
+      htmlTitle: this.defaultTitle,
+      htmlDescription: this.defaultDesc,
     };
+
+    this.pageUrls = [
+      '/companies',
+      '/automobiles',
+      '/spare-parts',
+      '/services',
+      '/cargo',
+    ];
 
     this.actionTypes = { entities: STORE_A_POST };
   }
 
   componentDidMount() {
     this.changeStateComponent(this.props.postType);
+    if (this.pageUrls.includes(this.props.pageLocation.path)) {
+      this.setHtmlMeta(this.props.postType, this.props.pageLocation.query);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,6 +82,11 @@ class PostList extends React.Component {
 
     if (nextProps.postType !== this.props.postType) {
       this.setState({ showHelpAlert: nextProps.postType === 'companies' });
+    }
+    const uCh = this.props.pageLocation.path !== nextProps.pageLocation.path || this.props.pageLocation.query !== nextProps.pageLocation.query;
+
+    if (uCh && this.pageUrls.includes(nextProps.pageLocation.path)) {
+      this.setHtmlMeta(nextProps.postType, nextProps.pageLocation.query);
     }
   }
 
@@ -154,6 +178,19 @@ class PostList extends React.Component {
       itemsCount,
       totalItemsCount,
     };
+  }
+
+  setHtmlMeta(postType, query) {
+    const { htmlTitle, htmlDescription } = this.state;
+
+    API.fetch(`/posts/get_meta_${postType}/${query}`).then((res) => {
+      if (htmlTitle !== res.title || htmlDescription !== res.description) {
+        this.setState({
+          htmlTitle: res.title,
+          htmlDescription: res.description,
+        });
+      }
+    });
   }
 
   changeStateComponent(postType) {
@@ -279,7 +316,7 @@ class PostList extends React.Component {
 
   render() {
     const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType } = this.props;
-    const { componentData, modalWindow, showHelpAlert } = this.state;
+    const { componentData, modalWindow, showHelpAlert, htmlTitle, htmlDescription } = this.state;
 
     if (!componentData.isFetched) return null;
 
@@ -306,6 +343,11 @@ class PostList extends React.Component {
 
     return (
       <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
+        <Helmet>
+          <title>{ htmlTitle }</title>
+          <meta name='description' content={ htmlDescription } />
+        </Helmet>
+
         <div className='frontpage__block__head desktop'>
           <h3 className='frontpage__block__title'>{ componentData.viewTitle }</h3>
           { this.renderFrontpage() }
@@ -395,6 +437,7 @@ function mapToProps(state, props) {
   return {
     listView: state.views.listView,
     url: state.routing.locationBeforeTransitions,
+    pageLocation: state.pageLocation,
     currentPage,
     posts,
     postType,

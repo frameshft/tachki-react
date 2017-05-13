@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router';
 import MediaQuery from 'react-responsive';
 import store from '../../store';
@@ -136,6 +137,10 @@ class CarProfile extends React.Component {
 
     return (
       <div className='car-profile'>
+        <Helmet>
+          <title>{ car.htmlTitle }</title>
+          <meta name='description' content={ car.htmlDescription } />
+        </Helmet>
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ car } /> }
           {car && <Controls post={ car } user={ user } /> }

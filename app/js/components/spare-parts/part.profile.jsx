@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet/es/Helmet';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router';
@@ -119,6 +120,13 @@ class SparePartProfile extends React.Component {
 
     return (
       <div className='car-profile'>
+        <Helmet>
+          <title>Автозапчасти БУ и новые: купля и продажа в Бишкеке и Кыргызстане</title>
+          <meta
+            name='description'
+            content='Все поставщики автозапчастей на заказ и в наличии в Кыргызстане. Пользуйтесь современным сервисом, совершайте выгодные сделки!'
+          />
+        </Helmet>
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ post } /> }
           <Controls post={ post } user={ user } />

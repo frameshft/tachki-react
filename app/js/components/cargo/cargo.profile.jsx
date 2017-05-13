@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router';
 import MediaQuery from 'react-responsive';
+import { Helmet } from 'react-helmet';
 import store from '../../store';
 import FavoriteToggle from '../shared/favorite.toggle';
 import VipPost from '../shared/vip.post.btn';
@@ -106,6 +107,10 @@ class CargoProfile extends React.Component {
 
     return (
       <div className='car-profile'>
+        <Helmet>
+          <title>{ post.htmlTitle }</title>
+          <meta name='description' content={ post.htmlDescription } />
+        </Helmet>
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ post } /> }
           {post && <Controls post={ post } user={ user } /> }
