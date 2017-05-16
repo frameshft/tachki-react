@@ -1,4 +1,4 @@
-import { SUCCESS_FETCH_CARGO_LIST } from '../../actions/list';
+import { FETCH_CARGO_LIST, SUCCESS_FETCH_CARGO_LIST } from '../../actions/list';
 import { FETCH_CARGO_COUNT } from '../../actions/posts';
 
 const initialState = {
@@ -9,9 +9,15 @@ const initialState = {
 
 export default function cargos(state = initialState, action) {
   switch (action.type) {
+    case FETCH_CARGO_LIST:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case SUCCESS_FETCH_CARGO_LIST:
       return {
         ...state,
+        isFetching: false,
         ...action.data,
       };
     case FETCH_CARGO_COUNT:

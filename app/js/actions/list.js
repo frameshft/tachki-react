@@ -71,7 +71,9 @@ export function fetchPaginatedResponse(actions, endpoint, page = 1) {
     if (actions.fetching !== undefined) {
       dispatch({ type: actions.fetching });
     }
-
+    if (actions.get !== undefined) {
+      dispatch({ type: actions.get });
+    }
     let parsedEndpoint;
     const pageParam = endpoint.indexOf('page=') > -1 ? '' : `page=${page}`;
     if (pageParam.length > 0) {

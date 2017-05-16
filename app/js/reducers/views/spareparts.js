@@ -1,4 +1,4 @@
-import { SUCCESS_SPARE_PARTS_LIST } from '../../actions/list';
+import { FETCH_SPARE_PARTS_LIST, SUCCESS_SPARE_PARTS_LIST } from '../../actions/list';
 import { FETCH_SPAREPTS_COUNT } from '../../actions/posts';
 
 const initialState = {
@@ -9,9 +9,15 @@ const initialState = {
 
 export default function spareParts(state = initialState, action) {
   switch (action.type) {
+    case FETCH_SPARE_PARTS_LIST:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case SUCCESS_SPARE_PARTS_LIST:
       return {
         ...state,
+        isFetching: false,
         ...action.data,
       };
     case FETCH_SPAREPTS_COUNT:
