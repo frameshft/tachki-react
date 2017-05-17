@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Swipeable from 'react-swipeable';
 import { browserHistory, Link } from 'react-router';
 import Helmet from 'react-helmet/es/Helmet';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import store from '../../store';
 import * as listViewType from '../../constants/listView';
 import PostItem from '../shared/post.item';
@@ -27,6 +28,7 @@ import Company from '../companies/company';
 import PostMap from './map.post';
 import API from '../../api';
 import Spinner from '../shared/spinner';
+
 
 class PostList extends React.Component {
   constructor(props) {
@@ -380,7 +382,14 @@ class PostList extends React.Component {
         </div>*/}
 
         { !isFrontPage && <button className='mobile-search' onClick={ this.onModalSet.bind(this, 'search') } />}
-        <div className={ `list${listsCls}` }>{ renderedItems }</div>
+        <CSSTransitionGroup
+          transitionName='fadeflash' transitionAppear transitionAppearTimeout={ 500 }
+          transitionEnter={ false } transitionLeave transitionLeaveTimeout={ 300 }
+        >
+          <div
+            className={ `list${listsCls}` }
+          >{ renderedItems }</div>
+        </CSSTransitionGroup>
 
         <div className='body-bottom'>
           <h3 className='total-item-num'>
