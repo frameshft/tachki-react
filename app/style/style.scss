@@ -347,3 +347,19 @@
             transform: scale(1);
   }
 }
+.fadeflash-appear {
+  opacity: 0.01;
+}
+
+.fadeflash-appear.fadeflash-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+.fadeflash-leave {
+  opacity: 1;
+}
+
+.fadeflash-leave.fadeflash-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
