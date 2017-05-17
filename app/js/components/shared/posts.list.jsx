@@ -26,7 +26,7 @@ import { FETCH_COUNT_COMPANY, STORE_A_COMPANY } from '../../actions/companies';
 import Company from '../companies/company';
 import PostMap from './map.post';
 import API from '../../api';
-
+import Spinner from '../shared/spinner';
 
 class PostList extends React.Component {
   constructor(props) {
@@ -349,7 +349,7 @@ class PostList extends React.Component {
     ;
     console.log(isFetching);
     if (isFetching) {
-      return <h2>Loading...</h2>;
+      return <Spinner />;
     }
     return (
       <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
