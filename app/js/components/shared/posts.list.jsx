@@ -8,8 +8,10 @@ import * as listViewType from '../../constants/listView';
 import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
 import {
-  fetchPaginatedResponse, SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST,
-  SUCCESS_FETCH_CARGO_LIST, SUCCESS_FETCH_COMPANIES_LIST,
+  fetchPaginatedResponse, FETCH_CARS_LIST, FETCH_CARGO_LIST, FETCH_SERVICES_LIST,
+  SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST,
+  SUCCESS_FETCH_CARGO_LIST, SUCCESS_FETCH_COMPANIES_LIST, FETCH_COMPANIES_LIST,
+  FETCH_SPARE_PARTS_LIST,
 } from '../../actions/list';
 import {
   FETCH_CARGO_COUNT, FETCH_CARS_COUNT, FETCH_SERVICES_COUNT, FETCH_SPAREPTS_COUNT, fetchPostCount,
@@ -202,6 +204,7 @@ class PostList extends React.Component {
         componentData.viewClassName = 'companies';
         componentData.viewTitle = 'Компании';
         componentData.actionTypes = {
+          get: FETCH_COMPANIES_LIST,
           entities: STORE_A_COMPANY,
           component: SUCCESS_FETCH_COMPANIES_LIST,
         };
@@ -215,6 +218,7 @@ class PostList extends React.Component {
         componentData.viewClassName = 'cars';
         componentData.viewTitle = 'Автомобили';
         componentData.actionTypes = {
+          get: FETCH_CARS_LIST,
           entities: STORE_A_POST,
           component: SUCCESS_FETCH_CARS_LIST,
         };
@@ -228,6 +232,7 @@ class PostList extends React.Component {
         componentData.viewClassName = 'companies';
         componentData.viewTitle = 'Запчасти';
         componentData.actionTypes = {
+          get: FETCH_SPARE_PARTS_LIST,
           entities: STORE_A_POST,
           component: SUCCESS_SPARE_PARTS_LIST,
         };
@@ -241,6 +246,7 @@ class PostList extends React.Component {
         componentData.viewClassName = 'companies';
         componentData.viewTitle = 'Услуги';
         componentData.actionTypes = {
+          get: FETCH_SERVICES_LIST,
           entities: STORE_A_POST,
           component: SUCCESS_FETCH_SERVICES_LIST,
         };
@@ -254,6 +260,7 @@ class PostList extends React.Component {
         componentData.viewClassName = 'companies';
         componentData.viewTitle = 'Грузовые';
         componentData.actionTypes = {
+          get: FETCH_CARGO_LIST,
           entities: STORE_A_POST,
           component: SUCCESS_FETCH_CARGO_LIST,
         };
@@ -315,10 +322,10 @@ class PostList extends React.Component {
   }
 
   render() {
-    const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType } = this.props;
+    const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType, isFetching } = this.props;
     const { componentData, modalWindow, showHelpAlert, htmlTitle, htmlDescription } = this.state;
 
-    if (!componentData.isFetched) return null;
+    // if (!componentData.isFetched) return <h1>LUL</h1>;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const endpoint = this.buildEndPoint(componentData.endPoint);
@@ -340,7 +347,10 @@ class PostList extends React.Component {
       posts.map(x => <Company key={ x.id } company={ x } />) :
       posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ componentData.endPoint } />)
     ;
-
+    console.log(isFetching);
+    if (isFetching) {
+      return <h2>Loading...</h2>;
+    }
     return (
       <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
         <Helmet>
@@ -440,6 +450,7 @@ function mapToProps(state, props) {
     pageLocation: state.pageLocation,
     currentPage,
     posts,
+    isFetching: viewData.isFetching,
     postType,
     totalPages: viewData.totalPages,
     totalPosts: viewData.total,
