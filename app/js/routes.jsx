@@ -92,7 +92,12 @@ export default (store) => {
           postType='services'
         />
         <Route
-          path='services/:id'
+          path='services/:category'
+          component={ PostsList } title='Услуги' controls={ HeaderControls.POSTS }
+          postType='services'
+        />
+        <Route
+          path='services/:category/:id'
           component={ ServiceProfile } title='Услуги' controls={ HeaderControls.POSTS }
         />
         <Route
@@ -101,7 +106,12 @@ export default (store) => {
           postType='cargos'
         />
         <Route
-          path='cargo/:id'
+          path='cargo/:category'
+          component={ PostsList } title='Грузовые' controls={ HeaderControls.POSTS }
+          postType='cargos'
+        />
+        <Route
+          path='cargo/:category/:id'
           component={ CargoProfile } title='Грузовые' controls={ HeaderControls.POSTS }
         />
         <Route

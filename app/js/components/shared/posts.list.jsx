@@ -216,7 +216,7 @@ class PostList extends React.Component {
       }
 
       urlQuery = `?${Object.keys(query).map(x => `${x}=${query[x]}`).join('&')}`;
-    } else if (urlPath.startsWith('/spare-parts')) {
+    } else if (urlPath.startsWith('/spare-parts') || urlPath.startsWith('/services') || urlPath.startsWith('/cargo')) {
       const { category } = params;
       if (category) {
         query.category = category;
