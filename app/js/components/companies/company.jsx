@@ -13,7 +13,7 @@ class Company extends React.Component {
 
     return (
       <div className='list__item list__item--company'>
-        <Link to={ `/companies/${company.id}` } activeStyle={ { textDecoration: 'none' } }>
+        <Link to={ `/companies/${company.slug}` } activeStyle={ { textDecoration: 'none' } }>
           <div className='list__item__left'>
             <div className='list__item__media' ref='image'>
               <img src={ importImage(company.image, this.refs.image, 'no-user') } className='list__item__media__img' alt={ company.name } />

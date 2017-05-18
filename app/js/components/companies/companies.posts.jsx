@@ -53,7 +53,7 @@ class CompanyPosts extends React.Component {
     store.dispatch(fetchPaginatedResponse({
       entities: STORE_A_POST,
       component: GET_COMPANY_POSTS,
-    }, `/companies/${company.id}/posts/`, currentPage));
+    }, `/companies/${company.slug}/posts/`, currentPage));
   }
 
   render() {
