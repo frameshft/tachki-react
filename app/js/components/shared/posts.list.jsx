@@ -80,13 +80,15 @@ class PostList extends React.Component {
   componentWillReceiveProps(nextProps) {
     const nextUrlConf = this.buildQueryStringFromPath(nextProps.params);
     if (nextUrlConf.urlPath !== this.state.urlConf.urlPath || nextUrlConf.urlQuery !== this.state.urlConf.urlQuery) {
-      this.fetchData(nextUrlConf.urlQuery);
-      this.setState({ urlConf: nextUrlConf });
-    }
-
-    if (nextProps.postType !== this.props.postType) {
-      const componentData = this.changeStateComponent(nextProps.postType);
-      this.setState({ componentData, showHelpAlert: nextProps.postType === 'companies' });
+      if (nextProps.postType !== this.props.postType) {
+        const componentData = this.changeStateComponent(nextProps.postType);
+        this.setState({ componentData, showHelpAlert: nextProps.postType === 'companies', urlConf: nextUrlConf }, () => {
+          this.fetchData(nextUrlConf.urlQuery);
+        });
+      } else {
+        this.fetchData(nextUrlConf.urlQuery);
+        this.setState({ urlConf: nextUrlConf });
+      }
     }
 
     const uCh = this.props.pageLocation.path !== nextProps.pageLocation.path || this.props.pageLocation.query !== nextProps.pageLocation.query;
