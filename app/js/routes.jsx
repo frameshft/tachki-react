@@ -78,7 +78,12 @@ export default (store) => {
           postType='spareParts'
         />
         <Route
-          path='spare-parts/:id'
+          path='spare-parts/:category'
+          component={ PostsList } title='Запчасти' controls={ HeaderControls.POSTS }
+          postType='spareParts'
+        />
+        <Route
+          path='spare-parts/:category/:id'
           components={ PartProfile } title='Запчасти' controls={ HeaderControls.POST_DETAIL }
         />
         <Route

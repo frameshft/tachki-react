@@ -17,8 +17,15 @@ class PostItem extends React.Component {
     images.reverse();
     const image = post.image || (images.length > 0 && images[0]);
 
-    if (post.postType === 'automobile') {
-      endpoint = `${endpoint}${post.brand}-${post.model}-`;
+    switch (post.postType) {
+      case 'automobile':
+        endpoint = `${endpoint}${post.brand}-${post.model}-`;
+        break;
+      case 'spare':
+        endpoint = `${endpoint}${post.categorySlug}/`;
+        break;
+      default:
+        break;
     }
 
     return (
