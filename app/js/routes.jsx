@@ -106,7 +106,12 @@ export default (store) => {
           postType='cargos'
         />
         <Route
-          path='cargo/:id'
+          path='cargo/:category'
+          component={ PostsList } title='Грузовые' controls={ HeaderControls.POSTS }
+          postType='cargos'
+        />
+        <Route
+          path='cargo/:category/:id'
           component={ CargoProfile } title='Грузовые' controls={ HeaderControls.POSTS }
         />
         <Route

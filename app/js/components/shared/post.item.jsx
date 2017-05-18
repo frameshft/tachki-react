@@ -23,6 +23,7 @@ class PostItem extends React.Component {
         break;
       case 'spare':
       case 'service':
+      case 'cargo':
         endpoint = `${endpoint}${post.categorySlug}/`;
         break;
       default:
