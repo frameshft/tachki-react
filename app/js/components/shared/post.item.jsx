@@ -22,6 +22,7 @@ class PostItem extends React.Component {
         endpoint = `${endpoint}${post.brand}-${post.model}-`;
         break;
       case 'spare':
+      case 'service':
         endpoint = `${endpoint}${post.categorySlug}/`;
         break;
       default:

@@ -59,12 +59,12 @@ class ServicesSearch extends React.Component {
   }
 
   onSearch() {
-    const query = this.buildQueryString();
-    const url = `/services${query}`;
+    const { path, querySmart } = this.buildQueryString();
+    const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
 
     if (onModalSubmit) {
-      onModalSubmit(query);
+      onModalSubmit(url);
     } else {
       browserHistory.push(url);
     }
@@ -88,21 +88,29 @@ class ServicesSearch extends React.Component {
     } = this.state;
 
     let query = `?city=${city}&category=${category}`;
+    let querySmart = `?city=${city}`;
+    const path = `/services/${category}/`;
 
     if (priceFrom) {
       query += `&price_from=${priceFrom}`;
+      querySmart += `&price_from=${priceFrom}`;
     }
 
     if (priceTo) {
       query += `&price_to=${priceTo}`;
+      querySmart += `&price_to=${priceTo}`;
     }
 
-    return query;
+    return {
+      path,
+      query,
+      querySmart,
+    };
   }
 
   fetchCount() {
-    const queryString = this.buildQueryString();
-    const url = `/services/count/${queryString}`;
+    const { query } = this.buildQueryString();
+    const url = `/services/count/${query}`;
     API.fetch(url).then(total => this.setState({ total }));
   }
 

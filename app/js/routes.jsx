@@ -92,7 +92,12 @@ export default (store) => {
           postType='services'
         />
         <Route
-          path='services/:id'
+          path='services/:category'
+          component={ PostsList } title='Услуги' controls={ HeaderControls.POSTS }
+          postType='services'
+        />
+        <Route
+          path='services/:category/:id'
           component={ ServiceProfile } title='Услуги' controls={ HeaderControls.POSTS }
         />
         <Route
