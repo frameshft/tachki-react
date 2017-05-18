@@ -10,7 +10,7 @@ export default function users(state = {}, action) {
     case GET_A_COMPANY:
       return {
         ...state,
-        [action.data.id]: action.data,
+        [action.data.slug]: action.data,
       };
     default:
       return state;

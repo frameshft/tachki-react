@@ -42,16 +42,17 @@ function requestPaginatedResponse() {
   };
 }
 
-function parsePaginatedData(data) {
+function parsePaginatedData(data, slugAsKey = false) {
   let objects = {};
   const list = [];
 
   data.results.forEach((item) => {
+    const key = slugAsKey ? item.slug : item.id;
     objects = {
       ...objects,
-      [item.id]: Object.assign({}, item),
+      [key]: Object.assign({}, item),
     };
-    list.push(item.id);
+    list.push(key);
   });
 
   return {
@@ -65,7 +66,7 @@ function parsePaginatedData(data) {
 }
 
 
-export function fetchPaginatedResponse(actions, endpoint, page = 1) {
+export function fetchPaginatedResponse(actions, endpoint, page = 1, slugAsKey = false) {
   return (dispatch) => {
     dispatch(requestPaginatedResponse());
     if (actions.fetching !== undefined) {
@@ -84,7 +85,7 @@ export function fetchPaginatedResponse(actions, endpoint, page = 1) {
 
     return API.fetch(parsedEndpoint)
       .then((res) => {
-        const { objects, results } = parsePaginatedData(res);
+        const { objects, results } = parsePaginatedData(res, slugAsKey);
         return Promise.all([
           dispatch({ type: actions.entities, data: objects }),
           dispatch({ type: actions.component, data: results }),

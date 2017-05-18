@@ -322,7 +322,7 @@ class PostList extends React.Component {
   fetchPosts(urlSearch, query = null) {
     const { componentData } = this.state;
     const endpoint = `${componentData.endPoint}${query !== null ? query : urlSearch}`;
-    return fetchPaginatedResponse(componentData.actionTypes, endpoint, this.props.currentPage);
+    return fetchPaginatedResponse(componentData.actionTypes, endpoint, this.props.currentPage, true);
   }
 
   buildEndPoint(endPoint) {
