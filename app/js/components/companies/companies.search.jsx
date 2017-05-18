@@ -24,16 +24,18 @@ class CompanySearch extends React.Component {
   }
 
   componentDidMount() {
-    API.fetch('/companies/search_init/')
+    setTimeout(() => {
+      this.setState(JSON.parse(localStorage.getItem('companySearch') || API.fetch('/companies/search_init/')
       .then((res) => {
         let { cities, categories } = res;
         cities = listToMap(cities, 'key');
         categories = listToMap(categories, 'key');
         this.setState({ cities, categories });
-      })
-    ;
-
-    this.fetchCount();
+        localStorage.setItem('companySearch', JSON.stringify(this.state));
+        this.fetchCount();
+      }),
+      ));
+    }, 0);
   }
 
   onCategoryChange(e) {
@@ -78,6 +80,7 @@ class CompanySearch extends React.Component {
     const query = this.buildQueryString();
     const url = `/companies${query}`;
     const { onModalSubmit } = this.props;
+    localStorage.setItem('companySearch', JSON.stringify(this.state));
 
     if (onModalSubmit) {
       onModalSubmit(query);
@@ -90,6 +93,12 @@ class CompanySearch extends React.Component {
     const keys = Object.keys(collection).sort();
     return keys.map(x =>
       <option key={ x } value={ collection[x].key }>{ collection[x].value }</option>);
+  }
+  getCheckedServices(service) {
+    if (!this.state.service) {
+      return false;
+    }
+    return this.state.service.indexOf(service) !== -1;
   }
 
   buildQueryString() {
@@ -112,9 +121,11 @@ class CompanySearch extends React.Component {
     const { cities, categories, services, total } = this.state;
     const citiesOpts = this.getSortedItems(cities);
     const categoriesOpts = this.getSortedItems(categories);
+    const selectedCategory = this.state.category;
+    const selectedCity = this.state.city;
     const servicesOpts = !services ? null : services.map(x => (
       <li key={ x.key }>
-        <input type='checkbox' name='sevice' value={ x.key } onChange={ this.onServiceChange } />
+        <input type='checkbox' name='sevice' value={ x.key } onChange={ this.onServiceChange } checked={ this.getCheckedServices(x.key) } />
         { x.value }
       </li>
     ));
@@ -130,6 +141,7 @@ class CompanySearch extends React.Component {
               <select
                 onChange={ this.onCategoryChange }
                 className='search-form__control search-form__control--select'
+                value={ selectedCategory }
               >
                 { categoriesOpts }
               </select>
@@ -148,6 +160,7 @@ class CompanySearch extends React.Component {
               <select
                 onChange={ this.onCityChange }
                 className='search-form__control search-form__control--select'
+                value={ selectedCity }
               >
                 { citiesOpts }
               </select>
