@@ -28,9 +28,6 @@ class CarSearch extends React.Component {
     this.onWheelChange = this.onWheelChange.bind(this);
     this.onFuelChange = this.onFuelChange.bind(this);
     this.onVolumeChange = this.onVolumeChange.bind(this);
-    this.onMotorBrandChange = this.onMotorBrandChange.bind(this);
-    this.onMotorSubCategoryChange = this.onMotorSubCategoryChange.bind(this);
-    this.onWaterSubCategoryChange = this.onWaterSubCategoryChange.bind(this);
 
     this.state = {
       total: 0,
@@ -41,16 +38,12 @@ class CarSearch extends React.Component {
         { key: 'light-old', value: 'Легковые с пробегом' },
         { key: 'all', value: 'Все' },
         { key: 'light-new', value: 'Легковые новые' },
-        { key: 'motor', value: 'Мото техника' },
-        { key: 'water', value: 'Водный транспорт' },
       ],
       priceFrom: 0,
       priceTo: 10000000,
       isExchangeable: false,
       hasImages: false,
       automobiles: {},
-      motorcycles: {},
-      water: {},
       yearFrom: null,
       yearTo: null,
       yearCurrentFrom: null,
@@ -68,8 +61,8 @@ class CarSearch extends React.Component {
     const { category } = this.state;
     API.fetch('/automobiles/search_init/')
       .then((res) => {
-        const { cities, automobiles, motorcycles, water } = res;
-        this.setState({ cities: listToMap(cities, 'key'), automobiles, motorcycles, water });
+        const { cities, automobiles } = res;
+        this.setState({ cities: listToMap(cities, 'key'), automobiles });
       })
     ;
     this.fetchCategoryAPI(category);
@@ -104,27 +97,6 @@ class CarSearch extends React.Component {
     }
   }
 
-  onMotorBrandChange(e) {
-    const brandId = e.target.value;
-    const { motorcycles } = this.state;
-    motorcycles.brand = brandId;
-    this.updateSate({ motorcycles });
-  }
-
-  onMotorSubCategoryChange(e) {
-    const category = e.target.value;
-    const { motorcycles } = this.state;
-    motorcycles.category = category;
-    this.updateSate({ motorcycles });
-  }
-
-  onWaterSubCategoryChange(e) {
-    const category = e.target.value;
-    const { water } = this.state;
-    water.category = category;
-    this.updateSate({ water });
-  }
-
   onCategoryChange(e) {
     const category = e.target.value;
     const { automobiles } = this.state;
@@ -154,12 +126,6 @@ class CarSearch extends React.Component {
         priceTo = 10000000;
         mileageFrom = 0;
         mileageTo = 1000000;
-        volumeFrom = 0;
-        volumeTo = 10;
-        break;
-      case 'motor':
-        priceFrom = 0;
-        priceTo = 10000000;
         volumeFrom = 0;
         volumeTo = 10;
         break;
@@ -376,24 +342,11 @@ class CarSearch extends React.Component {
     ;
   }
 
-  fetchMotorBrands() {
-    return API.fetch('/automobiles/motorcycles/')
-      .then((res) => {
-        const { motorcycles } = this.state;
-        motorcycles.brands = res;
-        this.setState({ motorcycles });
-        return true;
-      })
-    ;
-  }
-
   fetchCategoryAPI(category) {
     switch (category) {
       case 'light-new':
       case 'light-old':
         return this.fetchAutomobileBrands();
-      case 'motor':
-        return this.fetchMotorBrands();
       default:
         return null;
     }
@@ -406,9 +359,7 @@ class CarSearch extends React.Component {
       priceTo,
       isExchangeable,
       hasImages,
-      motorcycles,
       automobiles,
-      water,
       yearCurrentFrom,
       yearCurrentTo,
       mileageFrom,
@@ -498,18 +449,6 @@ class CarSearch extends React.Component {
 
     if (volumeTo) {
       query += `&volume-to=${volumeTo}`;
-    }
-
-    if (motorcycles.brand) {
-      query += `&motor-brand=${motorcycles.brand}`;
-    }
-
-    if (motorcycles.category) {
-      query += `&motor-category=${motorcycles.category}`;
-    }
-
-    if (water.category) {
-      query += `&water-category=${water.category}`;
     }
 
     return query;
@@ -789,57 +728,12 @@ class CarSearch extends React.Component {
     );
   }
 
-  renderMotor() {
-    const {
-      motorcycles,
-      yearCurrentFrom,
-      yearCurrentTo,
-      priceFrom,
-      priceTo,
-      hasImages,
-      isExchangeable,
-    } = this.state;
-    return (
-      <div>
-        { this.renderSelectInput('Категория', this.getSortedItems(motorcycles.subcategories || {}), this.onMotorSubCategoryChange)}
-        { this.renderSelectInput('Марка', this.getSortedItems(motorcycles.brands || {}), this.onMotorBrandChange) }
-        { this.renderSelectInput('Состояние', this.getSortedItems(motorcycles.conditions || {}), this.onConditionChange)}
-        { this.renderRangeSlider('Год', yearCurrentFrom || 1900, yearCurrentTo || 2017, 1900, 2017, 1, this.onYear2Change) }
-        { this.renderRangeSlider('Цена', priceFrom || 0, priceTo || 10000000, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
-        { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
-        { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
-      </div>
-    );
-  }
-
-  renderWater() {
-    const {
-      water,
-      priceFrom,
-      priceTo,
-      hasImages,
-      isExchangeable,
-    } = this.state;
-    return (
-      <div>
-        { this.renderSelectInput('Категория', this.getSortedItems(water.subcategories || {}), this.onWaterSubCategoryChange)}
-        { this.renderRangeSlider('Цена', priceFrom || 0, priceTo || 10000000, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
-        { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
-        { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
-      </div>
-    );
-  }
-
   renderCategoryWidgets(category) {
     switch (category) {
       case 'light-new':
         return this.renderLightNew();
       case 'light-old':
         return this.renderLightOld();
-      case 'motor':
-        return this.renderMotor();
-      case 'water':
-        return this.renderWater();
       default:
         return null;
     }
