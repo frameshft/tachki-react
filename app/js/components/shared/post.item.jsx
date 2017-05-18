@@ -6,7 +6,8 @@ import { importImage } from '../../utils';
 
 class PostItem extends React.Component {
   render() {
-    const { post, endpoint } = this.props;
+    const { post } = this.props;
+    let { endpoint } = this.props;
     if (!post) return null;
 
     const isVip = post.isVip;
@@ -15,6 +16,10 @@ class PostItem extends React.Component {
     const images = post.images || [];
     images.reverse();
     const image = post.image || (images.length > 0 && images[0]);
+
+    if (post.postType === 'automobile') {
+      endpoint = `${endpoint}${post.brand}-${post.model}-`;
+    }
 
     return (
       <div className={ `list__item list__item--car ${vipCls}` }>

@@ -45,14 +45,18 @@ class PostList extends React.Component {
     this.defaultDesc =
       'Купля и продажа авто в Бишкеке и по всему Кыргызстану, поиск автозапчастей и других услуг для автомобилей: автомойки, СТО и многое другое.';
 
+    const urlConf = this.buildQueryStringFromPath(this.props.params);
+
+    const componentData = this.changeStateComponent(props.postType);
     this.state = {
       currentSearch: currentLocation.search,
-      componentData: { isFetched: false },
+      componentData,
       showHelpAlert: true && props.postType === 'companies',
       modalWindow: null,
       posts: [],
       htmlTitle: this.defaultTitle,
       htmlDescription: this.defaultDesc,
+      urlConf,
     };
 
     this.pageUrls = [
@@ -67,26 +71,24 @@ class PostList extends React.Component {
   }
 
   componentDidMount() {
-    this.changeStateComponent(this.props.postType);
+    this.fetchData(this.state.urlConf.urlQuery);
     if (this.pageUrls.includes(this.props.pageLocation.path)) {
       this.setHtmlMeta(this.props.postType, this.props.pageLocation.query);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const urlSearch = browserHistory.getCurrentLocation().search;
-    const isUpdateData = (this.props.currentPage !== nextProps.currentPage) || (this.props.url.search !== nextProps.url.search);
-    if (isUpdateData) {
-      this.fetchData(urlSearch, nextProps.url.search);
+    const nextUrlConf = this.buildQueryStringFromPath(nextProps.params);
+    if (nextUrlConf.urlPath !== this.state.urlConf.urlPath || nextUrlConf.urlQuery !== this.state.urlConf.urlQuery) {
+      this.fetchData(nextUrlConf.urlQuery);
+      this.setState({ urlConf: nextUrlConf });
     }
 
     if (nextProps.postType !== this.props.postType) {
-      this.changeStateComponent(nextProps.postType);
+      const componentData = this.changeStateComponent(nextProps.postType);
+      this.setState({ componentData, showHelpAlert: nextProps.postType === 'companies' });
     }
 
-    if (nextProps.postType !== this.props.postType) {
-      this.setState({ showHelpAlert: nextProps.postType === 'companies' });
-    }
     const uCh = this.props.pageLocation.path !== nextProps.pageLocation.path || this.props.pageLocation.query !== nextProps.pageLocation.query;
 
     if (uCh && this.pageUrls.includes(nextProps.pageLocation.path)) {
@@ -163,9 +165,8 @@ class PostList extends React.Component {
   }
 
   onModalSubmit(query) {
-    const { componentData } = this.state;
     this.setState({ modalWindow: null }, () => {
-      browserHistory.push(`${componentData.endPoint}${query}`);
+      browserHistory.push(`${query}`);
     });
   }
 
@@ -195,6 +196,30 @@ class PostList extends React.Component {
         });
       }
     });
+  }
+
+  buildQueryStringFromPath(params) {
+    const location = browserHistory.getCurrentLocation();
+    const query = location.query;
+    const urlPath = location.pathname;
+    let urlQuery = '';
+
+    if (urlPath.startsWith('/automobiles')) {
+      const { category, brand } = params;
+      query.category = category;
+      if (brand) {
+        query.brand = brand;
+      }
+
+      urlQuery = `?${Object.keys(query).map(x => `${x}=${query[x]}`).join('&')}`;
+    } else {
+      urlQuery = '';
+    }
+
+    return {
+      urlPath,
+      urlQuery,
+    };
   }
 
   changeStateComponent(postType) {
@@ -274,7 +299,7 @@ class PostList extends React.Component {
         break;
     }
 
-    this.setState({ componentData }, () => this.fetchData(browserHistory.getCurrentLocation().search));
+    return componentData;
   }
 
   fetchData(urlSearch, nextUrlSearch = null) {
@@ -327,8 +352,6 @@ class PostList extends React.Component {
     const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType, isFetching } = this.props;
     const { componentData, modalWindow, showHelpAlert, htmlTitle, htmlDescription } = this.state;
 
-    // if (!componentData.isFetched) return <h1>LUL</h1>;
-
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const endpoint = this.buildEndPoint(componentData.endPoint);
 
@@ -349,10 +372,11 @@ class PostList extends React.Component {
       posts.map(x => <Company key={ x.id } company={ x } />) :
       posts.map(x => <PostItem key={ x.id } post={ x } endpoint={ componentData.endPoint } />)
     ;
-    console.log(isFetching);
+
     if (isFetching) {
       return <Spinner />;
     }
+
     return (
       <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
         <Helmet>
@@ -452,7 +476,6 @@ function mapToProps(state, props) {
 
   let currentPage = state.routing.locationBeforeTransitions.query.page;
   currentPage = currentPage !== undefined ? +currentPage : 1;
-
   return {
     listView: state.views.listView,
     url: state.routing.locationBeforeTransitions,
