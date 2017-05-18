@@ -275,12 +275,12 @@ class CarSearch extends React.Component {
   }
 
   onSearch() {
-    const query = this.buildQueryString();
-    const url = `/automobiles${query}`;
+    const { path, querySmart } = this.buildQueryString();
+    const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
 
     if (onModalSubmit) {
-      onModalSubmit(query);
+      onModalSubmit(url);
     } else {
       browserHistory.push(url);
     }
@@ -370,93 +370,120 @@ class CarSearch extends React.Component {
     } = this.state;
 
     let query = `?city=${city}&category=${category}`;
+    let querySmart = `?city=${city}`;
+    let path = `/automobiles/${category}/`;
 
     if (priceFrom) {
       query += `&price_from=${priceFrom}`;
+      querySmart += `&price_from=${priceFrom}`;
     }
 
     if (priceTo) {
       query += `&price_to=${priceTo}`;
+      querySmart += `&price_to=${priceTo}`;
     }
 
     if (isExchangeable) {
       query += '&is_exchangeable';
+      querySmart += '&is_exchangeable';
     }
 
     if (hasImages) {
       query += '&has_images';
+      querySmart += '&has_images';
     }
 
     if (automobiles.brand) {
       query += `&brand=${automobiles.brand}`;
+      path += `${automobiles.brand}/`;
     }
 
     if (automobiles.model) {
       query += `&model=${automobiles.model}`;
+      querySmart += `&model=${automobiles.model}`;
     }
 
     if (yearCurrentFrom) {
       query += `&year-from=${yearCurrentFrom}`;
+      querySmart += `&year-from=${yearCurrentFrom}`;
     }
 
     if (yearCurrentTo) {
       query += `&year-to=${yearCurrentTo}`;
+      querySmart += `&year-to=${yearCurrentTo}`;
     }
 
     if (mileageFrom) {
       query += `&mileage-from=${mileageFrom}`;
+      querySmart += `&mileage-from=${mileageFrom}`;
     }
 
     if (mileageTo) {
       query += `&mileage-to=${mileageTo}`;
+      querySmart += `&mileage-to=${mileageTo}`;
     }
 
     if (automobiles.generation) {
       query += `&generation=${automobiles.generation}`;
+      querySmart += `&generation=${automobiles.generation}`;
     }
 
     if (condition) {
       query += `&condition=${condition}`;
+      querySmart += `&condition=${condition}`;
     }
 
     if (automobiles.bodyType) {
       query += `&body-type=${automobiles.bodyType}`;
+      querySmart += `&body-type=${automobiles.bodyType}`;
     }
 
     if (automobiles.color) {
       query += `&color=${automobiles.color}`;
+      querySmart += `&color=${automobiles.color}`;
     }
 
     if (automobiles.driveUnit) {
       query += `&drive-unit=${automobiles.driveUnit}`;
+      querySmart += `&drive-unit=${automobiles.driveUnit}`;
     }
 
     if (automobiles.transmission) {
       query += `&transmission=${automobiles.transmission}`;
+      querySmart += `&transmission=${automobiles.transmission}`;
     }
 
     if (automobiles.steeringWheel) {
       query += `&steering-wheel=${automobiles.steeringWheel}`;
+      querySmart += `&steering-wheel=${automobiles.steeringWheel}`;
     }
 
     if (automobiles.fuelType) {
       query += `&fuel-type=${automobiles.fuelType}`;
+      querySmart += `&fuel-type=${automobiles.fuelType}`;
     }
 
     if (volumeFrom) {
       query += `&volume-from=${volumeFrom}`;
+      querySmart += `&volume-from=${volumeFrom}`;
     }
 
     if (volumeTo) {
       query += `&volume-to=${volumeTo}`;
+      querySmart += `&volume-to=${volumeTo}`;
     }
 
-    return query;
+    return {
+      path,
+      query,
+      querySmart,
+    };
   }
 
   fetchCount() {
-    const queryString = this.buildQueryString();
-    const url = `/automobiles/count/${queryString}`;
+    const { query } = this.buildQueryString();
+
+    const url = `/automobiles/count/${query}`;
     API.fetch(url).then(total => this.setState({ total }));
   }
 

@@ -49,13 +49,28 @@ export default (store) => {
           postType='automobiles'
         />
         <Route
+          path='automobiles/:brand-:model-:id'
+          components={ CarProfile } title='Объявление' controls={ HeaderControls.POST_DETAIL }
+        />
+        <Route
+          path='automobiles/:category/:brand'
+          component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
+          postType='automobiles'
+        />
+        <Route
+          path='automobiles/:category'
+          component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
+          postType='automobiles'
+        />
+        <Route
+          path='automobiles'
+          component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
+          postType='automobiles'
+        />
+        <Route
           path='posts'
           component={ PostsList } title='Посты' controls={ HeaderControls.POSTS }
           postType='cargos'
-        />
-        <Route
-          path='automobiles/:id'
-          components={ CarProfile } title='Объявление' controls={ HeaderControls.POST_DETAIL }
         />
         <Route
           path='spare-parts'
@@ -63,7 +78,12 @@ export default (store) => {
           postType='spareParts'
         />
         <Route
-          path='spare-parts/:id'
+          path='spare-parts/:category'
+          component={ PostsList } title='Запчасти' controls={ HeaderControls.POSTS }
+          postType='spareParts'
+        />
+        <Route
+          path='spare-parts/:category/:id'
           components={ PartProfile } title='Запчасти' controls={ HeaderControls.POST_DETAIL }
         />
         <Route
