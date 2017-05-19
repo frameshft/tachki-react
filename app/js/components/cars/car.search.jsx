@@ -59,9 +59,9 @@ class CarSearch extends React.Component {
 
   componentDidMount() {
     const { category } = this.state;
-    const lul = JSON.parse(localStorage.getItem('autoSearch'));
-    if (lul) {
-      setTimeout(() => this.setState(lul), 0);
+    const localStorageState = JSON.parse(localStorage.getItem('autoSearch'));
+    if (localStorageState) {
+      setTimeout(() => this.setState(localStorageState), 0);
     } else {
       API.fetch('/automobiles/search_init/')
         .then((res) => {
