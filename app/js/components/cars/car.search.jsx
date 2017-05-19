@@ -59,15 +59,20 @@ class CarSearch extends React.Component {
 
   componentDidMount() {
     const { category } = this.state;
-    API.fetch('/automobiles/search_init/')
-      .then((res) => {
-        const { cities, automobiles } = res;
-        this.setState({ cities: listToMap(cities, 'key'), automobiles });
-      })
-    ;
-    this.fetchCategoryAPI(category);
+    const localStorageState = JSON.parse(localStorage.getItem('autoSearch'));
+    if (localStorageState) {
+      setTimeout(() => this.setState(localStorageState), 0);
+    } else {
+      API.fetch('/automobiles/search_init/')
+        .then((res) => {
+          const { cities, automobiles } = res;
+          this.setState({ cities: listToMap(cities, 'key'), automobiles });
+        })
+      ;
+      this.fetchCategoryAPI(category);
 
-    this.fetchCount();
+      this.fetchCount();
+    }
   }
 
   onAutoBrandChange(e) {
@@ -101,6 +106,10 @@ class CarSearch extends React.Component {
     const category = e.target.value;
     const { automobiles } = this.state;
     let {
+      condition,
+      hasImages,
+      isExchangeable,
+      city,
       priceFrom,
       priceTo,
       mileageFrom,
@@ -112,12 +121,22 @@ class CarSearch extends React.Component {
     automobiles.brand = null;
     automobiles.model = null;
     automobiles.generation = null;
+    automobiles.bodyType = null;
+    automobiles.color = null;
+    automobiles.driveUnit = null;
+    automobiles.transmission = null;
+    automobiles.steeringWheel = null;
+    automobiles.fuelType = null;
+    condition = null;
+    city = 'all';
     priceFrom = null;
     priceTo = null;
     mileageFrom = null;
     mileageTo = null;
     volumeTo = null;
     volumeFrom = null;
+    hasImages = false;
+    isExchangeable = false;
 
     switch (category) {
       case 'light-old':
@@ -135,6 +154,10 @@ class CarSearch extends React.Component {
 
     this.fetchCategoryAPI(category);
     this.updateSate({
+      condition,
+      city,
+      hasImages,
+      isExchangeable,
       category,
       automobiles,
       priceFrom,
@@ -278,6 +301,7 @@ class CarSearch extends React.Component {
     const { path, querySmart } = this.buildQueryString();
     const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
+    localStorage.setItem('autoSearch', JSON.stringify(this.state));
 
     if (onModalSubmit) {
       onModalSubmit(url);
@@ -487,7 +511,7 @@ class CarSearch extends React.Component {
     API.fetch(url).then(total => this.setState({ total }));
   }
 
-  renderAutomobileBrands(category, brands) {
+  renderAutomobileBrands(category, brands, selectedBrand = undefined) {
     const isNull = !(brands && (category === 'light-new' || category === 'light-old'));
 
     if (isNull) return null;
@@ -501,6 +525,7 @@ class CarSearch extends React.Component {
           <select
             onChange={ this.onAutoBrandChange }
             className='search-form__control search-form__control--select'
+            value={ selectedBrand || '' }
           >
             { brands.map(x => <option key={ x.id } value={ x.id }>{ x.name }</option>) }
           </select>
@@ -510,7 +535,7 @@ class CarSearch extends React.Component {
     );
   }
 
-  renderAutomobileModels(models) {
+  renderAutomobileModels(models, selectedModel = 'undefined') {
     if (!models) return null;
 
     return (
@@ -522,6 +547,7 @@ class CarSearch extends React.Component {
           <select
             onChange={ this.onAutoModelChange }
             className='search-form__control search-form__control--select'
+            value={ selectedModel || undefined }
           >
             { models.map(x =>
               <option
@@ -537,7 +563,7 @@ class CarSearch extends React.Component {
     );
   }
 
-  renderAutomobileGenerations(generations) {
+  renderAutomobileGenerations(generations, selectedGeneration = undefined) {
     if (!generations) return null;
 
     return (
@@ -549,6 +575,7 @@ class CarSearch extends React.Component {
           <select
             onChange={ this.onGenerationChange }
             className='search-form__control search-form__control--select'
+            value={ selectedGeneration || undefined }
           >
             { generations.map(x =>
               <option key={ x.id } value={ x.id }>
@@ -598,11 +625,11 @@ class CarSearch extends React.Component {
           </div>
         </div>
       </div>
-      <Range min={ from } max={ to } tipFormatter={ value => `${value}%` } onChange={ this.onMileageChange } defaultValue={ [from, to] } />
+      <Range min={ from } max={ to } tipFormatter={ value => `${value}%` } onChange={ this.onMileageChange } value={ [mileageFrom, mileageTo] } />
     </div>);
   }
 
-  renderAutoConditions(conditions) {
+  renderAutoConditions(conditions, selectedCondition = undefined) {
     const ops = this.getSortedItems(conditions || {});
 
     return (
@@ -614,6 +641,7 @@ class CarSearch extends React.Component {
           <select
             className='search-form__control search-form__control--select'
             onChange={ this.onConditionChange }
+            value={ selectedCondition || undefined }
           >
             { ops }
           </select>
@@ -638,13 +666,14 @@ class CarSearch extends React.Component {
     );
   }
 
-  renderSelectInput(label, options, handler) {
+  renderSelectInput(label, options, handler, selectedOption = undefined) {
     return (
       <div className='search-form__row'>
         <div className='search-form__label'>{ label }</div>
         <div className='custom-select'>
           <select
             className='search-form__control search-form__control--select' onChange={ handler }
+            value={ selectedOption || undefined }
           >{ options }</select>
           <i className='fa fa-caret-down' />
         </div>
@@ -662,7 +691,7 @@ class CarSearch extends React.Component {
             <div className='price-slider__top'>&nbsp;до { bindMax } { suffix }</div>
           </div>
         </div>
-        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } defaultValue={ [bindMin, bindMax] } />
+        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } value={ [bindMin, bindMax] } />
       </div>
     );
   }
@@ -700,25 +729,26 @@ class CarSearch extends React.Component {
       yearCurrentTo,
       volumeFrom,
       volumeTo,
+      condition,
     } = this.state;
 
     return (
       <div>
-        { this.renderAutomobileBrands(category, automobiles.brands) }
-        { this.renderAutomobileModels(automobiles.models) }
-        { this.renderAutomobileGenerations(automobiles.generations) }
-        { this.renderAutoConditions(automobiles.conditions) }
+        { this.renderAutomobileBrands(category, automobiles.brands, automobiles.brand) }
+        { this.renderAutomobileModels(automobiles.models, automobiles.model) }
+        { this.renderAutomobileGenerations(automobiles.generations, automobiles.generation) }
+        { this.renderAutoConditions(automobiles.conditions, condition) }
         { this.renderedMileage(0, 1000000) }
         { this.renderedYear(yearFrom, yearTo, yearCurrentFrom, yearCurrentTo) }
         { this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
         { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
         { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
-        { this.renderSelectInput('Тип кузова', this.getSortedItems(automobiles.bodyTypes || {}), this.onBodyTypeChange) }
-        { this.renderSelectInput('Цвет', this.getSortedItems(automobiles.colors || {}), this.onColorChange) }
-        { this.renderSelectInput('Привод', this.getSortedItems(automobiles.driveUnits || {}), this.onDriveUnitChange) }
-        { this.renderSelectInput('КПП', this.getSortedItems(automobiles.transmissions || {}), this.onTransmissionChange) }
-        { this.renderSelectInput('Руль', this.getSortedItems(automobiles.steeringWheels || {}), this.onWheelChange) }
-        { this.renderSelectInput('Тип двигателя', this.getSortedItems(automobiles.fuelTypes || {}), this.onFuelChange) }
+        { this.renderSelectInput('Тип кузова', this.getSortedItems(automobiles.bodyTypes || {}), this.onBodyTypeChange, automobiles.bodyType) }
+        { this.renderSelectInput('Цвет', this.getSortedItems(automobiles.colors || {}), this.onColorChange, automobiles.color) }
+        { this.renderSelectInput('Привод', this.getSortedItems(automobiles.driveUnits || {}), this.onDriveUnitChange, automobiles.driveUnit) }
+        { this.renderSelectInput('КПП', this.getSortedItems(automobiles.transmissions || {}), this.onTransmissionChangem, automobiles.transmission) }
+        { this.renderSelectInput('Руль', this.getSortedItems(automobiles.steeringWheels || {}), this.onWheelChange, automobiles.steeringWheel) }
+        { this.renderSelectInput('Тип двигателя', this.getSortedItems(automobiles.fuelTypes || {}), this.onFuelChange, automobiles.fuelType) }
         { this.renderRangeSlider('Объем', volumeFrom, volumeTo, 0, 10, 0.1, this.onVolumeChange) }
       </div>
     );
@@ -738,18 +768,18 @@ class CarSearch extends React.Component {
 
     return (
       <div>
-        { this.renderAutomobileBrands(category, automobiles.brands) }
-        { this.renderAutomobileModels(automobiles.models) }
-        { this.renderAutomobileGenerations(automobiles.generations) }
+        { this.renderAutomobileBrands(category, automobiles.brands, automobiles.brand) }
+        { this.renderAutomobileModels(automobiles.models, automobiles.model) }
+        { this.renderAutomobileGenerations(automobiles.generations, automobiles.generation) }
         { this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом') }
         { this.renderToggler('Только с фото', 'photo-checkbox', hasImages, this.onHasImagesClick) }
         { this.renderToggler('Только обмен', 'exchange-checkbox', isExchangeable, this.onIsExchangeableClick) }
-        { this.renderSelectInput('Тип кузова', this.getSortedItems(automobiles.bodyTypes || {}), this.onBodyTypeChange) }
-        { this.renderSelectInput('Цвет', this.getSortedItems(automobiles.colors || {}), this.onColorChange) }
-        { this.renderSelectInput('Привод', this.getSortedItems(automobiles.driveUnits || {}), this.onDriveUnitChange) }
-        { this.renderSelectInput('КПП', this.getSortedItems(automobiles.transmissions || {}), this.onTransmissionChange) }
-        { this.renderSelectInput('Руль', this.getSortedItems(automobiles.steeringWheels || {}), this.onWheelChange) }
-        { this.renderSelectInput('Тип двигателя', this.getSortedItems(automobiles.fuelTypes || {}), this.onFuelChange) }
+        { this.renderSelectInput('Тип кузова', this.getSortedItems(automobiles.bodyTypes || {}), this.onBodyTypeChange, automobiles.bodyType) }
+        { this.renderSelectInput('Цвет', this.getSortedItems(automobiles.colors || {}), this.onColorChange, automobiles.color) }
+        { this.renderSelectInput('Привод', this.getSortedItems(automobiles.driveUnits || {}), this.onDriveUnitChange, automobiles.driveUnit) }
+        { this.renderSelectInput('КПП', this.getSortedItems(automobiles.transmissions || {}), this.onTransmissionChange, automobiles.transmission) }
+        { this.renderSelectInput('Руль', this.getSortedItems(automobiles.steeringWheels || {}), this.onWheelChange, automobiles.steeringWheel) }
+        { this.renderSelectInput('Тип двигателя', this.getSortedItems(automobiles.fuelTypes || {}), this.onFuelChange, automobiles.fuelType) }
         { this.renderRangeSlider('Объем', volumeFrom, volumeTo, 0, 10, 0.1, this.onVolumeChange) }
       </div>
     );
@@ -774,8 +804,8 @@ class CarSearch extends React.Component {
       total,
     } = this.state;
 
-    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange);
-    const renderedCategories = this.renderSelectInput('Тип транспорта', this.getSortedItems(categories), this.onCategoryChange);
+    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange, this.state.city);
+    const renderedCategories = this.renderSelectInput('Тип транспорта', this.getSortedItems(categories), this.onCategoryChange, this.state.category);
 
     return (
       <div className='search-form'>
