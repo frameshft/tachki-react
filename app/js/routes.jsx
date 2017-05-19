@@ -49,8 +49,9 @@ export default (store) => {
           postType='automobiles'
         />
         <Route
-          path='automobiles/:brand-:model-:id'
-          components={ CarProfile } title='Объявление' controls={ HeaderControls.POST_DETAIL }
+          path='automobiles/:category'
+          component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
+          postType='automobiles'
         />
         <Route
           path='automobiles/:category/:brand'
@@ -58,14 +59,13 @@ export default (store) => {
           postType='automobiles'
         />
         <Route
-          path='automobiles/:category'
+          path='automobiles/:category/:brand/:model'
           component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
           postType='automobiles'
         />
         <Route
-          path='automobiles'
-          component={ PostsList } title='Автомобили' controls={ HeaderControls.POSTS }
-          postType='automobiles'
+          path='automobiles/:category/:brand/:model/:id'
+          components={ CarProfile } title='Объявление' controls={ HeaderControls.POST_DETAIL }
         />
         <Route
           path='posts'

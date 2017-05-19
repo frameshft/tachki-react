@@ -19,7 +19,7 @@ class PostItem extends React.Component {
 
     switch (post.postType) {
       case 'automobile':
-        endpoint = `${endpoint}${post.brand}-${post.model}-`;
+        endpoint = `${endpoint}${post.categorySlug}/${post.brand}/${post.model}/`;
         break;
       case 'spare':
       case 'service':

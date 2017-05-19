@@ -207,12 +207,15 @@ class PostList extends React.Component {
     let urlQuery = '';
 
     if (urlPath.startsWith('/automobiles')) {
-      const { category, brand } = params;
+      const { category, brand, model } = params;
       if (category) {
         query.category = category;
       }
       if (brand) {
         query.brand = brand;
+      }
+      if (model) {
+        query.model = model;
       }
 
       urlQuery = `?${Object.keys(query).map(x => `${x}=${query[x]}`).join('&')}`;
