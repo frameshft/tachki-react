@@ -86,7 +86,7 @@ class PostList extends React.Component {
           this.fetchData(nextProps.postType, nextUrlConf.urlQuery);
         });
       } else {
-        this.fetchData(nextUrlConf.urlQuery);
+        this.fetchData(nextProps.postType, nextUrlConf.urlQuery);
         this.setState({ urlConf: nextUrlConf });
       }
     }
@@ -315,6 +315,7 @@ class PostList extends React.Component {
 
   fetchData(postType, urlSearch, nextUrlSearch = null) {
     const { componentData } = this.state;
+
     store.dispatch(this.fetchPosts(postType, urlSearch));
     store.dispatch(fetchPostCount(componentData.endPoint, nextUrlSearch || urlSearch, componentData.COUNT_ACTION));
   }
