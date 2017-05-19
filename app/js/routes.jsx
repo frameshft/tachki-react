@@ -40,12 +40,12 @@ export default (store) => {
           postType='companies'
         />
         <Route
-          path='companies/:category'
+          path='companies/categories/:category'
           component={ PostsList } title='Компании' controls={ HeaderControls.COMPANIES }
           postType='companies'
         />
         <Route
-          path='companies/:category/:id'
+          path='companies/:id'
           components={ CompanyProfile } title='О компании'
         />
         <Route

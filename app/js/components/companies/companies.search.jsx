@@ -77,13 +77,13 @@ class CompanySearch extends React.Component {
   }
 
   onSearch() {
-    const query = this.buildQueryString();
-    const url = `/companies${query}`;
+    const { path, querySmart } = this.buildQueryString();
+    const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
     localStorage.setItem('companySearch', JSON.stringify(this.state));
 
     if (onModalSubmit) {
-      onModalSubmit(query);
+      onModalSubmit(url);
     } else {
       browserHistory.push(url);
     }
@@ -104,16 +104,23 @@ class CompanySearch extends React.Component {
   buildQueryString() {
     const { city, category, service } = this.state;
     let query = `?city=${city}&category=${category}`;
+    let querySmart = `?city=${city}`;
+    const path = `/companies/categories/${category}`;
     if (service) {
       query += `&${service.map(x => `services=${x}`).join('&')}`;
+      querySmart += `&${service.map(x => `services=${x}`).join('&')}`;
     }
 
-    return query;
+    return {
+      path,
+      query,
+      querySmart,
+    };
   }
 
   fetchCount() {
-    const queryString = this.buildQueryString();
-    const url = `/companies/count/${queryString}`;
+    const { query } = this.buildQueryString();
+    const url = `/companies/count/${query}`;
     API.fetch(url).then(total => this.setState({ total }));
   }
 
