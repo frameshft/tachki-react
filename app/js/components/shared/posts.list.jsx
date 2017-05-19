@@ -71,7 +71,7 @@ class PostList extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData(this.state.urlConf.urlQuery);
+    this.fetchData(this.props.postType, this.state.urlConf.urlQuery);
     if (this.pageUrls.includes(this.props.pageLocation.path)) {
       this.setHtmlMeta(this.props.postType, this.props.pageLocation.query);
     }
@@ -83,7 +83,7 @@ class PostList extends React.Component {
       if (nextProps.postType !== this.props.postType) {
         const componentData = this.changeStateComponent(nextProps.postType);
         this.setState({ componentData, showHelpAlert: nextProps.postType === 'companies', urlConf: nextUrlConf }, () => {
-          this.fetchData(nextUrlConf.urlQuery);
+          this.fetchData(nextProps.postType, nextUrlConf.urlQuery);
         });
       } else {
         this.fetchData(nextUrlConf.urlQuery);
@@ -313,16 +313,16 @@ class PostList extends React.Component {
     return componentData;
   }
 
-  fetchData(urlSearch, nextUrlSearch = null) {
+  fetchData(postType, urlSearch, nextUrlSearch = null) {
     const { componentData } = this.state;
-    store.dispatch(this.fetchPosts(urlSearch));
+    store.dispatch(this.fetchPosts(postType, urlSearch));
     store.dispatch(fetchPostCount(componentData.endPoint, nextUrlSearch || urlSearch, componentData.COUNT_ACTION));
   }
 
-  fetchPosts(urlSearch, query = null) {
+  fetchPosts(postType, urlSearch, query = null) {
     const { componentData } = this.state;
     const endpoint = `${componentData.endPoint}${query !== null ? query : urlSearch}`;
-    return fetchPaginatedResponse(componentData.actionTypes, endpoint, this.props.currentPage, true);
+    return fetchPaginatedResponse(componentData.actionTypes, endpoint, this.props.currentPage, postType === 'companies');
   }
 
   buildEndPoint(endPoint) {
