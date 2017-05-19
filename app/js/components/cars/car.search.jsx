@@ -424,7 +424,7 @@ class CarSearch extends React.Component {
 
     if (automobiles.model) {
       query += `&model=${automobiles.model}`;
-      querySmart += `&model=${automobiles.model}`;
+      path += `${automobiles.model}`;
     }
 
     if (yearCurrentFrom) {
