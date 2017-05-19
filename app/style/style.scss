@@ -363,3 +363,14 @@
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+
+.absolute {
+  position: absolute;
+}
+
+.static {
+  position: static;
+}
+.background-gray {
+  background-color: #ededed;
+}

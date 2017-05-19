@@ -2,9 +2,25 @@ import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import { importImage } from '../../utils';
-
+import Spinner from '../shared/spinner';
 
 class PostItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onImageLoad = this.onImageLoad.bind(this);
+    this.state = { imgLoaded: false };
+  }
+  componentDidMount() {
+    const img = this.node.getBoundingClientRect();
+    if (img.complete) {
+      this.onImageLoad();
+    }
+  }
+  onImageLoad() {
+    if (!this.state.imgLoaded) {
+      this.setState({ imgLoaded: true });
+    }
+  }
   render() {
     const { post } = this.props;
     let { endpoint } = this.props;
@@ -38,8 +54,14 @@ class PostItem extends React.Component {
             <div className='vip mobile' />
           </h3>
           <div className='list__item__left'>
-            <div className='list__item__media' ref='postItem'>
-              <img className='list__item__media__img' src={ importImage(image, this.refs.postItem) } alt={ post.title } />
+            <div className='list__item__media background-gray' ref='postItem'>
+              {!this.state.imgLoaded && <Spinner /> }
+              <img
+                className={ `list__item__media__img fade ${this.state.imgLoaded ? 'in static' : 'absolute'}` }
+                src={ importImage(image, this.refs.postItem) } alt={ post.title }
+                onLoad={ this.onImageLoad }
+                ref={ (node) => { this.node = node; } }
+              />
               <div className='list__item__media__img-count mobile'>{ post.num_images }</div>
               <div className='list__item__city desktop'>
                 { post.city }
