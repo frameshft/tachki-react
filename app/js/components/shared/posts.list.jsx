@@ -195,7 +195,6 @@ class PostList extends React.Component {
 
   setHtmlMeta(postType, query) {
     const { htmlTitle, htmlDescription } = this.state;
-    console.log('/////////////////////////////', query);
     API.fetch(`/posts/get_meta_${postType}/${query}`).then((res) => {
       if (htmlTitle !== res.title || htmlDescription !== res.description) {
         this.setState({
