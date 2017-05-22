@@ -72,8 +72,9 @@ class PostList extends React.Component {
 
   componentDidMount() {
     this.fetchData(this.props.postType, this.state.urlConf.urlQuery);
-    if (this.pageUrls.includes(this.props.pageLocation.path)) {
-      this.setHtmlMeta(this.props.postType, this.props.pageLocation.query);
+    if (this.pageUrls.includes(this.getBasePath(this.props.pageLocation.path))) {
+      const { urlQuery } = this.buildQueryStringFromPath(this.props.params);
+      this.setHtmlMeta(this.props.postType, urlQuery);
     }
   }
 
@@ -92,9 +93,9 @@ class PostList extends React.Component {
     }
 
     const uCh = this.props.pageLocation.path !== nextProps.pageLocation.path || this.props.pageLocation.query !== nextProps.pageLocation.query;
-
-    if (uCh && this.pageUrls.includes(nextProps.pageLocation.path)) {
-      this.setHtmlMeta(nextProps.postType, nextProps.pageLocation.query);
+    if (uCh && this.pageUrls.includes(this.getBasePath(nextProps.pageLocation.path))) {
+      const { urlQuery } = this.buildQueryStringFromPath(nextProps.params);
+      this.setHtmlMeta(nextProps.postType, urlQuery);
     }
   }
 
@@ -187,9 +188,14 @@ class PostList extends React.Component {
     };
   }
 
+  getBasePath(path) {
+    const index = path.indexOf('/', 1);
+    return index > -1 ? path.slice(0, index) : path;
+  }
+
   setHtmlMeta(postType, query) {
     const { htmlTitle, htmlDescription } = this.state;
-
+    console.log('/////////////////////////////', query);
     API.fetch(`/posts/get_meta_${postType}/${query}`).then((res) => {
       if (htmlTitle !== res.title || htmlDescription !== res.description) {
         this.setState({
