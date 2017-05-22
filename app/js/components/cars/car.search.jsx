@@ -61,7 +61,7 @@ class CarSearch extends React.Component {
     const { category } = this.state;
     const localStorageState = JSON.parse(localStorage.getItem('autoSearch'));
     if (localStorageState) {
-      setTimeout(() => this.setState(localStorageState), 0);
+      this.timout = setTimeout(() => this.setState(localStorageState), 0);
     } else {
       API.fetch('/automobiles/search_init/')
         .then((res) => {
@@ -73,6 +73,10 @@ class CarSearch extends React.Component {
 
       this.fetchCount();
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   onAutoBrandChange(e) {

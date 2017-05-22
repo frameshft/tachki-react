@@ -24,8 +24,11 @@ class CompanySearch extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState(JSON.parse(localStorage.getItem('companySearch') || API.fetch('/companies/search_init/')
+    const localStorageState = JSON.parse(localStorage.getItem('companySearch'));
+    if (localStorage) {
+      this.timeout = setTimeout(() => this.setState(localStorageState), 0);
+    } else {
+      API.fetch('/companies/search_init/')
       .then((res) => {
         let { cities, categories } = res;
         cities = listToMap(cities, 'key');
@@ -33,9 +36,12 @@ class CompanySearch extends React.Component {
         this.setState({ cities, categories });
         localStorage.setItem('companySearch', JSON.stringify(this.state));
         this.fetchCount();
-      }),
-      ));
-    }, 0);
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   onCategoryChange(e) {
