@@ -17,7 +17,8 @@ class SpareSearch extends React.Component {
     this.onAutomobileModelClick = this.onAutomobileModelClick.bind(this);
     this.onWheelTypeClick = this.onWheelTypeClick.bind(this);
     this.onTireTypeClick = this.onTireTypeClick.bind(this);
-    this.onDiameterClick = this.onDiameterClick.bind(this);
+    this.onWheelDiameterClick = this.onWheelDiameterClick.bind(this);
+    this.onTireDiameterClick = this.onTireDiameterClick.bind(this);
     this.onTireWidthClick = this.onTireWidthClick.bind(this);
     this.onTireProfileClick = this.onTireProfileClick.bind(this);
 
@@ -50,19 +51,53 @@ class SpareSearch extends React.Component {
   }
 
   componentDidMount() {
-    API.fetch('/spare-parts/search_init/')
-      .then((res) => {
-        const { cities, categories } = res;
-        this.setState({ cities: listToMap(cities, 'key'), categories });
-      })
-    ;
+    const localStorageState = JSON.parse(localStorage.getItem('partsSearch'));
+    if (localStorageState) {
+      this.timeout = setTimeout(() => this.setState(localStorageState), 0);
+    } else {
+      API.fetch('/spare-parts/search_init/')
+        .then((res) => {
+          const { cities, categories } = res;
+          this.setState({ cities: listToMap(cities, 'key'), categories });
+        })
+      ;
 
-    this.fetchCount();
+      this.fetchCount();
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   onCategoryChange(e) {
     const category = e.target.value;
-    this.updateSate({ category });
+    const { automobiles, wheels, tires } = this.state;
+    let { condition, city, priceFrom, priceTo } = this.state;
+
+    condition = 'all';
+    priceFrom = 0;
+    priceTo = 10000000;
+    city = 'all';
+    automobiles.brand = null;
+    automobiles.model = null;
+    wheels.type = null;
+    wheels.diameter = null;
+    tires.type = null;
+    tires.profile = null;
+    tires.profileWidth = null;
+    tires.diameter = null;
+
+    this.updateSate({
+      category,
+      condition,
+      priceFrom,
+      priceTo,
+      city,
+      automobiles,
+      wheels,
+      tires,
+    });
     this.fetchAPIData(category);
   }
 
@@ -120,11 +155,17 @@ class SpareSearch extends React.Component {
     this.updateSate({ tires });
   }
 
-  onDiameterClick(e) {
+  onWheelDiameterClick(e) {
     const diameter = e.target.value;
     const { wheels } = this.state;
     wheels.diameter = diameter;
     this.updateSate({ wheels });
+  }
+  onTireDiameterClick(e) {
+    const diameter = e.target.value;
+    const { tires } = this.state;
+    tires.diameter = diameter;
+    this.updateSate({ tires });
   }
 
   onAutomobileModelClick(e) {
@@ -150,6 +191,7 @@ class SpareSearch extends React.Component {
     const { path, querySmart } = this.buildQueryString();
     const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
+    localStorage.setItem('partsSearch', JSON.stringify(this.state));
 
     if (onModalSubmit) {
       onModalSubmit(url);
@@ -315,13 +357,14 @@ class SpareSearch extends React.Component {
     }
   }
 
-  renderSelectInput(label, options, handler) {
+  renderSelectInput(label, options, handler, selectedInput = undefined) {
     return (
       <div className='search-form__row'>
         <div className='search-form__label'>{ label }</div>
         <div className='custom-select'>
           <select
             className='search-form__control search-form__control--select' onChange={ handler }
+            value={ selectedInput || undefined }
           >{ options }</select>
           <i className='fa fa-caret-down' />
         </div>
@@ -339,7 +382,7 @@ class SpareSearch extends React.Component {
             <div className='price-slider__top'>&nbsp;до { bindMax } { suffix }</div>
           </div>
         </div>
-        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } defaultValue={ [bindMin, bindMax] } />
+        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } value={ [bindMin, bindMax] } />
       </div>
     );
   }
@@ -386,9 +429,9 @@ class SpareSearch extends React.Component {
     } = this.state;
     return (
       <div>
-        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
-        { this.renderSelectInput('Марка', this.getSortedItemsByIdName(automobiles.brands || {}), this.onAutomobileBrandClick) }
-        { this.renderSelectInput('Модель', this.getSortedItemsByIdName(automobiles.models || {}), this.onAutomobileModelClick) }
+        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick, this.state.condition) }
+        { this.renderSelectInput('Марка', this.getSortedItemsByIdName(automobiles.brands || {}), this.onAutomobileBrandClick, automobiles.brand) }
+        { this.renderSelectInput('Модель', this.getSortedItemsByIdName(automobiles.models || {}), this.onAutomobileModelClick, automobiles.model) }
       </div>
     );
   }
@@ -400,9 +443,9 @@ class SpareSearch extends React.Component {
     } = this.state;
     return (
       <div>
-        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
-        { this.renderSelectInput('Тип дисков', this.getSortedItems(wheels.types || {}), this.onWheelTypeClick) }
-        { this.renderSelectInput('Диаметр', this.getSortedItems(wheels.diameters || {}), this.onDiameterClick) }
+        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick, this.state.condition) }
+        { this.renderSelectInput('Тип дисков', this.getSortedItems(wheels.types || {}), this.onWheelTypeClick, wheels.type) }
+        { this.renderSelectInput('Диаметр', this.getSortedItems(wheels.diameters || {}), this.onWheelDiameterClick, wheels.diameter) }
       </div>
     );
   }
@@ -414,11 +457,11 @@ class SpareSearch extends React.Component {
     } = this.state;
     return (
       <div>
-        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
-        { this.renderSelectInput('Тип шин', this.getSortedItems(tires.types || {}), this.onTireTypeClick) }
-        { this.renderSelectInput('Профиль', this.getSortedItems(tires.profiles || {}), this.onTireProfileClick) }
-        { this.renderSelectInput('Ширина', this.getSortedItems(tires.profileWidths || {}), this.onTireWidthClick) }
-        { this.renderSelectInput('Диаметр', this.getSortedItems(tires.diameters || {}), this.onDiameterClick) }
+        { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick, this.state.condition) }
+        { this.renderSelectInput('Тип шин', this.getSortedItems(tires.types || {}), this.onTireTypeClick, tires.type) }
+        { this.renderSelectInput('Профиль', this.getSortedItems(tires.profiles || {}), this.onTireProfileClick, tires.profile) }
+        { this.renderSelectInput('Ширина', this.getSortedItems(tires.profileWidths || {}), this.onTireWidthClick, tires.profileWidth) }
+        { this.renderSelectInput('Диаметр', this.getSortedItems(tires.diameters || {}), this.onTireDiameterClick, tires.diameter) }
       </div>
     );
   }
@@ -433,8 +476,8 @@ class SpareSearch extends React.Component {
       total,
     } = this.state;
 
-    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange);
-    const renderedCategories = this.renderSelectInput('Тип запчасти', this.getSortedItems(categories), this.onCategoryChange);
+    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange, this.state.city);
+    const renderedCategories = this.renderSelectInput('Тип запчасти', this.getSortedItems(categories), this.onCategoryChange, this.state.category);
     const renderPrices = this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом');
 
     return (
