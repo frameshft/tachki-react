@@ -18,6 +18,8 @@ class SpareSearch extends React.Component {
     this.onWheelTypeClick = this.onWheelTypeClick.bind(this);
     this.onTireTypeClick = this.onTireTypeClick.bind(this);
     this.onDiameterClick = this.onDiameterClick.bind(this);
+    this.onTireWidthClick = this.onTireWidthClick.bind(this);
+    this.onTireProfileClick = this.onTireProfileClick.bind(this);
 
     this.state = {
       total: 0,
@@ -97,6 +99,20 @@ class SpareSearch extends React.Component {
     this.updateSate({ wheels });
   }
 
+  onTireProfileClick(e) {
+    const type = e.target.value;
+    const { tires } = this.state;
+    tires.profile = type;
+    this.updateSate({ tires });
+  }
+
+  onTireWidthClick(e) {
+    const type = e.target.value;
+    const { tires } = this.state;
+    tires.profileWidth = type;
+    this.updateSate({ tires });
+  }
+
   onTireTypeClick(e) {
     const type = e.target.value;
     const { tires } = this.state;
@@ -168,6 +184,9 @@ class SpareSearch extends React.Component {
       category,
       priceFrom,
       priceTo,
+      condition,
+      tires,
+      wheels,
     } = this.state;
 
     let query = `?city=${city}&category=${category}`;
@@ -182,6 +201,30 @@ class SpareSearch extends React.Component {
     if (priceTo) {
       query += `&price_to=${priceTo}`;
       querySmart += `&price_to=${priceTo}`;
+    }
+
+    if (condition && condition !== 'all') {
+      query += `&condition=${condition}`;
+      querySmart += `&condition=${condition}`;
+    }
+
+    if (category === 'tire') {
+      if (tires.type) {
+        query += `&tire-type=${tires.type}`;
+        querySmart += `&tire-type=${tires.type}`;
+      }
+      if (tires.profileWidth) {
+        query += `&tire-width=${tires.profileWidth}`;
+        querySmart += `&tire-width=${tires.profileWidth}`;
+      }
+      if (tires.profile) {
+        query += `&tire-profile=${tires.profile}`;
+        querySmart += `&tire-profile=${tires.profile}`;
+      }
+      if (wheels.diameter) {
+        query += `&tire-diameter=${wheels.diameter}`;
+        querySmart += `&tire-diameter=${wheels.diameter}`;
+      }
     }
 
     return {
@@ -230,7 +273,7 @@ class SpareSearch extends React.Component {
             return true;
           })
           ;
-      case 'tires':
+      case 'tire':
         return API.fetch('/spare-parts/tires_config/')
           .then((res) => {
             const { tires } = this.state;
@@ -350,8 +393,8 @@ class SpareSearch extends React.Component {
       <div>
         { this.renderSelectInput('Состояние', this.getSortedItems(conditions || {}), this.onConditionClick) }
         { this.renderSelectInput('Тип шин', this.getSortedItems(tires.types || {}), this.onTireTypeClick) }
-        { this.renderSelectInput('Профиль', this.getSortedItems(tires.profiles || {}), this.onWheelTypeClick) }
-        { this.renderSelectInput('Ширина', this.getSortedItems(tires.profileWidths || {}), this.onWheelTypeClick) }
+        { this.renderSelectInput('Профиль', this.getSortedItems(tires.profiles || {}), this.onTireProfileClick) }
+        { this.renderSelectInput('Ширина', this.getSortedItems(tires.profileWidths || {}), this.onTireWidthClick) }
         { this.renderSelectInput('Диаметр', this.getSortedItems(tires.diameters || {}), this.onDiameterClick) }
       </div>
     );
