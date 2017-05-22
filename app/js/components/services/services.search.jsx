@@ -31,14 +31,22 @@ class ServicesSearch extends React.Component {
   }
 
   componentDidMount() {
-    API.fetch('/services/search_init/')
-      .then((res) => {
-        const { cities, categories } = res;
-        this.setState({ cities: listToMap(cities, 'key'), categories });
-      })
-    ;
+    const localStorageState = JSON.parse(localStorage.getItem('serviceSearch'));
+    if (localStorageState) {
+      this.timeout = setTimeout(() => this.setState(localStorageState), 0);
+    } else {
+      API.fetch('/services/search_init/')
+        .then((res) => {
+          const { cities, categories } = res;
+          this.setState({ cities: listToMap(cities, 'key'), categories });
+        })
+      ;
+      this.fetchCount();
+    }
+  }
 
-    this.fetchCount();
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   onCategoryChange(e) {
@@ -62,6 +70,7 @@ class ServicesSearch extends React.Component {
     const { path, querySmart } = this.buildQueryString();
     const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
+    localStorage.setItem('serviceSearch', JSON.stringify(this.state));
 
     if (onModalSubmit) {
       onModalSubmit(url);
@@ -114,13 +123,14 @@ class ServicesSearch extends React.Component {
     API.fetch(url).then(total => this.setState({ total }));
   }
 
-  renderSelectInput(label, options, handler) {
+  renderSelectInput(label, options, handler, selectedInput = undefined) {
     return (
       <div className='search-form__row'>
         <div className='search-form__label'>{ label }</div>
         <div className='custom-select'>
           <select
             className='search-form__control search-form__control--select' onChange={ handler }
+            value={ selectedInput || undefined }
           >{ options }</select>
           <i className='fa fa-caret-down' />
         </div>
@@ -138,7 +148,7 @@ class ServicesSearch extends React.Component {
             <div className='price-slider__top'>&nbsp;до { bindMax } { suffix }</div>
           </div>
         </div>
-        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } defaultValue={ [bindMin, bindMax] } />
+        <Range min={ min } max={ max } tipFormatter={ value => `${value}%` } onChange={ handler } step={ step } value={ [bindMin, bindMax] } />
       </div>
     );
   }
@@ -152,8 +162,8 @@ class ServicesSearch extends React.Component {
       total,
     } = this.state;
 
-    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange);
-    const renderedCategories = this.renderSelectInput('Тип услуг', this.getSortedItems(categories), this.onCategoryChange);
+    const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange, this.state.city);
+    const renderedCategories = this.renderSelectInput('Тип услуг', this.getSortedItems(categories), this.onCategoryChange, this.state.category);
     const renderPrices = this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом');
 
     return (
