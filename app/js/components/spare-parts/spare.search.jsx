@@ -185,6 +185,7 @@ class SpareSearch extends React.Component {
       priceFrom,
       priceTo,
       condition,
+      automobiles,
       tires,
       wheels,
     } = this.state;
@@ -206,6 +207,17 @@ class SpareSearch extends React.Component {
     if (condition && condition !== 'all') {
       query += `&condition=${condition}`;
       querySmart += `&condition=${condition}`;
+    }
+
+    if (category === 'sale_spare') {
+      if (automobiles.brand && automobiles.brand !== 'all') {
+        query += `&automobile-brand=${automobiles.brand}`;
+        querySmart += `&automobile-brand=${automobiles.brand}`;
+      }
+      if (automobiles.model && automobiles.model !== 'all') {
+        query += `&automobile-model=${automobiles.model}`;
+        querySmart += `&automobile-model=${automobiles.model}`;
+      }
     }
 
     if (category === 'tire') {
