@@ -25,7 +25,7 @@ class CompanySearch extends React.Component {
 
   componentDidMount() {
     const localStorageState = JSON.parse(localStorage.getItem('companySearch'));
-    if (localStorage) {
+    if (localStorageState) {
       this.timeout = setTimeout(() => this.setState(localStorageState), 0);
     } else {
       API.fetch('/companies/search_init/')
