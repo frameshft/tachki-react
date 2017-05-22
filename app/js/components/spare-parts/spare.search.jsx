@@ -239,6 +239,17 @@ class SpareSearch extends React.Component {
       }
     }
 
+    if (category === 'wheels') {
+      if (wheels.type) {
+        query += `&wheels-type=${wheels.type}`;
+        querySmart += `&wheels-type=${wheels.type}`;
+      }
+      if (wheels.diameter) {
+        query += `&wheels-diameter=${wheels.diameter}`;
+        querySmart += `&wheels-diameter=${wheels.diameter}`;
+      }
+    }
+
     return {
       path,
       query,
