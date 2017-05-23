@@ -16,6 +16,11 @@ class Frontpage extends React.Component {
             name='description'
             content='Купля и продажа авто в Бишкеке и по всему Кыргызстану, поиск автозапчастей и других услуг для автомобилей: автомойки, СТО и многое другое.'
           />
+          <meta property='og:title' content='Tachki.KG — все, что нужно автолюбителям в одном сервисе' />
+          <meta
+            property='og:description'
+            content='Купля и продажа авто в Бишкеке и по всему Кыргызстану, поиск автозапчастей и других услуг для автомобилей: автомойки, СТО и многое другое.'
+          />
         </Helmet>
         <div className='frontpage'>
           <div className='frontpage__block desktop'>

@@ -140,6 +140,8 @@ class CarProfile extends React.Component {
         <Helmet>
           <title>{ car.htmlTitle }</title>
           <meta name='description' content={ car.htmlDescription } />
+          <meta property='og:title' content={ car.htmlTitle } />
+          <meta property='og:description' content={ car.htmlDescription } />
         </Helmet>
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ car } /> }

@@ -412,6 +412,8 @@ class PostList extends React.Component {
         <Helmet>
           <title>{ htmlTitle }</title>
           <meta name='description' content={ htmlDescription } />
+          <meta property='og:title' content={ htmlTitle } />
+          <meta property='og:description' content={ htmlDescription } />
         </Helmet>
 
         <div className='frontpage__block__head desktop'>

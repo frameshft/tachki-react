@@ -108,6 +108,8 @@ class SparePartProfile extends React.Component {
         <Helmet>
           <title>{ post.htmlTitle }</title>
           <meta name='description' content={ post.htmlDescription } />
+          <meta property='og:title' content={ post.htmlTitle } />
+          <meta property='og:description' content={ post.htmlDescription } />
         </Helmet>
         <MediaQuery maxWidth={ 767 }>
           { user.token && <FavoriteToggle post={ post } /> }

@@ -85,6 +85,8 @@ class CompanyProfile extends React.Component {
         <Helmet>
           <title>{ company.htmlTitle }</title>
           <meta name='description' content={ company.htmlDescription } />
+          <meta property='og:title' content={ company.htmlTitle } />
+          <meta property='og:description' content={ company.htmlDescription } />
         </Helmet>
         <MediaQuery maxWidth={ 767 }>
           <div className='company-profile__media'>
