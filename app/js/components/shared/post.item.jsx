@@ -21,6 +21,17 @@ class PostItem extends React.Component {
       this.setState({ imgLoaded: true });
     }
   }
+
+  formatPrice(price, separator = ' ') {
+    let output = (price) ? price.toString() : '';
+    output = output.replace(/[^0-9]+/g, '')
+      .replace(new RegExp(`^(\\d{${(output.length % 3 ? output.length % 3 : 0)}})(\\d{3})`, 'g'), '$1 $2')
+      .replace(/(\d{3})+?/gi, '$1 ')
+      .trim();
+    output = output.replace(/\s/g, separator);
+    return output;
+  }
+
   render() {
     const { post } = this.props;
     let { endpoint } = this.props;
@@ -33,12 +44,17 @@ class PostItem extends React.Component {
     images.reverse();
     const image = post.image || (images.length > 0 && images[0]);
 
+    let pricePre = '';
+
     switch (post.postType) {
       case 'automobile':
         endpoint = `${endpoint}${post.categorySlug}/${post.brand}/${post.model}/`;
         break;
       case 'spare':
       case 'service':
+        pricePre = 'От ';
+        endpoint = `${endpoint}${post.categorySlug}/`;
+        break;
       case 'cargo':
         endpoint = `${endpoint}${post.categorySlug}/`;
         break;
@@ -68,14 +84,14 @@ class PostItem extends React.Component {
               </div>
               { isVip && <div className='vip desktop' /> }
               <div className='list__item__price mobile'>
-                { post.price } сом
+                { pricePre } { this.formatPrice(post.price) } сом
               </div>
             </div>
             <h3 className='list__item__name desktop'>
               { post.title }
             </h3>
             <div className='list__item__price small-view'>
-              { post.price } сом
+              { pricePre } { this.formatPrice(post.price) } сом
             </div>
           </div>
 
@@ -87,11 +103,11 @@ class PostItem extends React.Component {
             <div className='list__item__description list__item__description'>
               { post.description }
               <div className='list__item__date mobile'>
-                <strong>{ post.city }</strong>&nbsp;{ moment().format('MM.YY.DD, h:mm') }
+                <strong>{ post.city }</strong>&nbsp;{ moment().format('DD.MM.YY, h:mm') }
               </div>
             </div>
             <div className='list__item__price desktop'>
-              { post.price } сом
+              { pricePre } { this.formatPrice(post.price) } сом
             </div>
             <div className='list__item__bottom' />
           </div>
