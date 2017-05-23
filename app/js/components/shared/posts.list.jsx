@@ -107,6 +107,11 @@ class PostList extends React.Component {
 
   onSwipeLeft() {
     const { postType } = this.props;
+    const { modalWindow } = this.state;
+    // Disable Swipe if Modal window is Open
+    if (modalWindow) {
+      return;
+    }
 
     switch (postType) {
       case 'companies':
@@ -135,6 +140,11 @@ class PostList extends React.Component {
 
   onSwipeRight() {
     const { postType } = this.props;
+    const { modalWindow } = this.state;
+    // Disable Swipe if Modal window is Open
+    if (modalWindow) {
+      return;
+    }
 
     switch (postType) {
       case 'companies':
