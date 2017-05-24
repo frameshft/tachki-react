@@ -374,3 +374,15 @@
 .background-gray {
   background-color: #ededed;
 }
+.search-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &__message {
+    width: 80%;
+    max-width: 700px;
+  }
+}
