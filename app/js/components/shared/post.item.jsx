@@ -103,7 +103,7 @@ class PostItem extends React.Component {
             <div className='list__item__description list__item__description'>
               { post.description }
               <div className='list__item__date mobile'>
-                <strong>{ post.city }</strong>&nbsp;{ moment().format('DD.MM.YY, h:mm') }
+                <strong>{ post.city }</strong>&nbsp;{ moment().format('DD.MM.YY') }
               </div>
             </div>
             <div className='list__item__price desktop'>
