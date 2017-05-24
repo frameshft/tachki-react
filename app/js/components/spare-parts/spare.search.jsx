@@ -253,12 +253,12 @@ class SpareSearch extends React.Component {
 
     if (category === 'sale_spare') {
       if (automobiles.brand && automobiles.brand !== 'all') {
-        query += `&automobile-brand=${automobiles.brand}`;
-        querySmart += `&automobile-brand=${automobiles.brand}`;
+        query += `&brand=${automobiles.brand}`;
+        querySmart += `&brand=${automobiles.brand}`;
       }
       if (automobiles.model && automobiles.model !== 'all') {
-        query += `&automobile-model=${automobiles.model}`;
-        querySmart += `&automobile-model=${automobiles.model}`;
+        query += `&model=${automobiles.model}`;
+        querySmart += `&model=${automobiles.model}`;
       }
     }
 
