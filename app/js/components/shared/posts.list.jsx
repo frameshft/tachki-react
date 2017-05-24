@@ -39,6 +39,7 @@ class PostList extends React.Component {
     this.onAlertHelpClose = this.onAlertHelpClose.bind(this);
     this.onSwipeLeft = this.onSwipeLeft.bind(this);
     this.onSwipeRight = this.onSwipeRight.bind(this);
+    this.renderNotFound = this.renderNotFound.bind(this);
     const currentLocation = browserHistory.getCurrentLocation();
 
     this.defaultTitle = 'Tachki.KG — все, что нужно автолюбителям в одном сервисе';
@@ -377,6 +378,14 @@ class PostList extends React.Component {
         </li>
       </ul>;
   }
+  renderNotFound() {
+    // Not sure if this should be a standalone component, so leaving as a function inside here for now.
+    return (<div className='search-not-found'>
+      { /* eslint-disable global-require */ }
+      <img className='search-not-found__message' src={ require('../../../img/not_found.svg') } alt='Ошибка 404' />
+      { /* eslint-enable global-require */ }
+    </div>);
+  }
 
   render() {
     const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType, isFetching } = this.props;
@@ -444,7 +453,7 @@ class PostList extends React.Component {
         >
           <div
             className={ `list${listsCls}` }
-          >{ renderedItems }</div>
+          >{ (renderedItems[0] != null) ? renderedItems : this.renderNotFound()}</div>
         </CSSTransitionGroup>
 
         <div className='body-bottom'>
