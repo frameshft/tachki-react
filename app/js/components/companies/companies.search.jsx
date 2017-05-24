@@ -115,7 +115,7 @@ class CompanySearch extends React.Component {
     const currentTime = Math.floor(Date.now() / (1000 * 60 * 60));
     const storedTime = ('timeStamp' in state) ? state.timeStamp : 0;
     const timePassed = currentTime - storedTime;
-    return timePassed > 3;
+    return timePassed > 1;
   }
 
   buildQueryString() {

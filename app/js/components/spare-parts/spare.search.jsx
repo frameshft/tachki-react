@@ -52,7 +52,7 @@ class SpareSearch extends React.Component {
 
   componentDidMount() {
     const localStorageState = JSON.parse(localStorage.getItem('partsSearch'));
-    if (localStorageState) {
+    if (localStorageState && !this.localStorageIsOld(localStorageState)) {
       this.timeout = setTimeout(() => this.setState(localStorageState), 0);
     } else {
       API.fetch('/spare-parts/search_init/')
@@ -191,7 +191,10 @@ class SpareSearch extends React.Component {
     const { path, querySmart } = this.buildQueryString();
     const url = `${path}${querySmart}`;
     const { onModalSubmit } = this.props;
-    localStorage.setItem('partsSearch', JSON.stringify(this.state));
+
+    const timeStamp = Math.floor(Date.now() / (1000 * 60 * 60));
+    const localStorageState = Object.assign({}, this.state, { timeStamp });
+    localStorage.setItem('partsSearch', JSON.stringify(localStorageState));
 
     if (onModalSubmit) {
       onModalSubmit(url);
@@ -219,6 +222,15 @@ class SpareSearch extends React.Component {
 
   updateSate(hash) {
     this.setState({ ...hash }, () => this.fetchCount());
+  }
+
+  localStorageIsOld(state) {
+    // Hours passed since Epoch
+    // Refactor me
+    const currentTime = Math.floor(Date.now() / (1000 * 60 * 60));
+    const storedTime = ('timeStamp' in state) ? state.timeStamp : 0;
+    const timePassed = currentTime - storedTime;
+    return timePassed > 1;
   }
 
   buildQueryString() {
