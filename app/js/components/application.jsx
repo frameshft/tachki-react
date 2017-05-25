@@ -7,7 +7,6 @@ import Header from './header/header';
 import Tabber from './header/tabber';
 
 import '../../style/style.scss';
-import { getCookie, setCookie } from '../utils';
 
 export default class Application extends React.Component {
   constructor(props) {
@@ -16,7 +15,7 @@ export default class Application extends React.Component {
     this.onInstallBtn = this.onInstallBtn.bind(this);
     this.onHideBanner = this.onHideBanner.bind(this);
 
-    const skip = !!getCookie('mobile-ad');
+    const skip = !!sessionStorage.getItem('skipBanner');
 
     this.state = {
       skip,
@@ -40,7 +39,7 @@ export default class Application extends React.Component {
   }
 
   onSkip() {
-    setCookie('mobile-ad', 1, 1);
+    sessionStorage.setItem('skipBanner', '1');
     this.setState({ skip: true });
   }
 
@@ -60,17 +59,18 @@ export default class Application extends React.Component {
     if (skip) return null;
     return (
       <Swipeable onSwiped={ this.onSkip } className='mobile-banner'>
-        <div className='mobile-banner__logo' />
+        { /* eslint-disable global-require */ }
+        <img className='mobile-banner__logo' src={ require('../../img/skip-banner-logo.svg') } alt='Установи приложение Тачки.KG' />
+        { /* eslint-enable global-require */ }
         <button className='button__transparent btn-close' onClick={ this.onSkip } />
-        <div className='mobile-banner__text'>
-          Установить приложение
-        </div>
-        <div className='download'>
-          <a href='https://play.google.com/store/apps/details?id=kg.mirsoft.tachki&hl=ru' className='download__item download__item--playmarket'>&nbsp;</a>
-          <br />
-          <a href='https://itunes.apple.com/ru/app/tachki-kg/id1188571920?mt=8' className='download__item download__item--appstore'>&nbsp;</a>
-        </div>
-        <button className='button__transparent btn-down' onClick={ this.onSkip }><i className='fa fa-angle-up' /></button>
+        { /* eslint-disable global-require */ }
+        <img
+          className='mobile-banner__download'
+          src={ require('../../img/skip-banner-button.svg') }
+          alt='Скачай приложение'
+          onClick={ this.onInstallBtn }
+        />
+        { /* eslint-enable global-require */ }
       </Swipeable>
     );
   }

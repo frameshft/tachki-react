@@ -48,11 +48,11 @@
 .mobile-banner {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   position: fixed;
   width: 100%;
   height: 100vh;
-  background: #f71616;
+  background: white;
   z-index: 99;
 
   @media all and (min-width: 767px) {
@@ -63,7 +63,7 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    background: url('../img/exit.svg') no-repeat 0 0;
+    background: url('../img/exit-gray.svg') no-repeat 0 0;
     background-size: 30px;
     width: 30px;
     height: 30px;
@@ -80,11 +80,13 @@
   }
 
   &__logo {
-    background: url('../img/mobile-banner-logo.svg');
-    width: 100px;
-    height: 112px;
-    background-size: 100%;
+    width: 95%;
     margin: 0 auto;
+  }
+
+  &__download {
+    margin: 0 auto;
+    width: 80%;
   }
 
   .download {
