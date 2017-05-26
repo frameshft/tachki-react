@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { Range } from 'rc-slider';
 import API from '../../api';
 import { listToMap } from '../../utils';
+import Spinner from '../shared/spinner';
 
 class CarSearch extends React.Component {
   constructor(props) {
@@ -54,6 +55,8 @@ class CarSearch extends React.Component {
       condition: 'all',
       volumeFrom: 0,
       volumeTo: 10,
+      autoBrandIsLoading: true,
+      autoIsLoading: true,
     };
   }
 
@@ -61,12 +64,12 @@ class CarSearch extends React.Component {
     const { category } = this.state;
     const localStorageState = JSON.parse(localStorage.getItem('autoSearch'));
     if (localStorageState) {
-      this.timout = setTimeout(() => this.setState(localStorageState), 0);
+      this.timout = setTimeout(() => this.setState({ ...localStorageState, autoIsLoading: false, autoBrandIsLoading: false }), 0);
     } else {
       API.fetch('/automobiles/search_init/')
         .then((res) => {
           const { cities, automobiles } = res;
-          this.setState({ cities: listToMap(cities, 'key'), automobiles });
+          this.setState({ cities: listToMap(cities, 'key'), automobiles, autoIsLoading: false });
         })
       ;
       this.fetchCategoryAPI(category);
@@ -363,7 +366,7 @@ class CarSearch extends React.Component {
         automobiles.models = models;
         automobiles.generations = generations;
 
-        this.setState({ automobiles });
+        this.setState({ automobiles, autoBrandIsLoading: false });
 
         return true;
       })
@@ -806,12 +809,15 @@ class CarSearch extends React.Component {
       category,
       categories,
       total,
+      autoIsLoading,
+      autoBrandIsLoading,
     } = this.state;
 
     const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange, this.state.city);
     const renderedCategories = this.renderSelectInput('Тип транспорта', this.getSortedItems(categories), this.onCategoryChange, this.state.category);
+    const isLoading = autoIsLoading || autoBrandIsLoading;
 
-    return (
+    return (isLoading) ? <Spinner /> : (
       <div className='search-form'>
         <div className='search-form__wrapper'>
           { renderedCategories }

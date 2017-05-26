@@ -2,6 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import API from '../../api';
 import { listToMap } from '../../utils';
+import Spinner from '../shared/spinner';
 
 class CompanySearch extends React.Component {
   constructor(props) {
@@ -20,20 +21,21 @@ class CompanySearch extends React.Component {
       city: 'all',
       cities: {},
       categories: {},
+      isLoading: true,
     };
   }
 
   componentDidMount() {
     const localStorageState = JSON.parse(localStorage.getItem('companySearch'));
     if (localStorageState && !this.localStorageIsOld(localStorageState)) {
-      this.timeout = setTimeout(() => this.setState(localStorageState), 0);
+      this.timeout = setTimeout(() => this.setState({ ...localStorageState, isLoading: false }), 0);
     } else {
       API.fetch('/companies/search_init/')
       .then((res) => {
         let { cities, categories } = res;
         cities = listToMap(cities, 'key');
         categories = listToMap(categories, 'key');
-        this.setState({ cities, categories });
+        this.setState({ cities, categories, isLoading: false });
         this.fetchCount();
       });
     }
@@ -142,7 +144,7 @@ class CompanySearch extends React.Component {
   }
 
   render() {
-    const { cities, categories, services, total } = this.state;
+    const { cities, categories, services, total, isLoading } = this.state;
     const citiesOpts = this.getSortedItems(cities);
     const categoriesOpts = this.getSortedItems(categories);
     const selectedCategory = this.state.category;
@@ -154,7 +156,7 @@ class CompanySearch extends React.Component {
       </li>
     ));
 
-    return (
+    return (isLoading) ? <Spinner /> : (
       <div className='search-form'>
         <div className='search-form__wrapper'>
           <div className='search-form__row'>
