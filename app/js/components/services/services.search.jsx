@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { Range } from 'rc-slider';
 import API from '../../api';
 import { listToMap } from '../../utils';
+import Spinner from '../shared/spinner';
 
 class ServicesSearch extends React.Component {
   constructor(props) {
@@ -27,18 +28,20 @@ class ServicesSearch extends React.Component {
       ],
       priceFrom: 0,
       priceTo: 10000000,
+      isLoading: true,
     };
   }
 
   componentDidMount() {
     const localStorageState = JSON.parse(localStorage.getItem('serviceSearch'));
     if (localStorageState) {
-      this.timeout = setTimeout(() => this.setState(localStorageState), 0);
+      this.timeout = setTimeout(() => this.setState({ ...localStorageState, isLoading: false }), 0);
     } else {
       API.fetch('/services/search_init/')
         .then((res) => {
           const { cities, categories } = res;
-          this.setState({ cities: listToMap(cities, 'key'), categories });
+          this.setState({ cities: listToMap(cities, 'key'), categories, isLoading: false });
+          this.isLoading = false;
         })
       ;
       this.fetchCount();
@@ -160,13 +163,14 @@ class ServicesSearch extends React.Component {
       priceFrom,
       priceTo,
       total,
+      isLoading,
     } = this.state;
 
     const renderedCities = this.renderSelectInput('Город', this.getSortedItems(cities), this.onCityChange, this.state.city);
     const renderedCategories = this.renderSelectInput('Тип услуг', this.getSortedItems(categories), this.onCategoryChange, this.state.category);
     const renderPrices = this.renderRangeSlider('Цена', priceFrom, priceTo, 0, 10000000, 10000, this.onPriceFromChange, 'сом');
 
-    return (
+    return (isLoading) ? <Spinner /> : (
       <div className='search-form'>
         <div className='search-form__wrapper'>
           { renderedCities }
