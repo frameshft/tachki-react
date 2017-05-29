@@ -11,6 +11,7 @@ import services from './services';
 import isShownMobileSidebar from './isShownMobileSidebar';
 import companyPosts from './companyPosts';
 import faq from './faq';
+import meta from './meta';
 
 
 const combinedReducer = combineReducers({
@@ -26,6 +27,7 @@ const combinedReducer = combineReducers({
   services,
   isShownMobileSidebar,
   faq,
+  meta,
 });
 
 export default function views(state, action) {

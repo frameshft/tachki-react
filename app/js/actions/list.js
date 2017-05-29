@@ -33,6 +33,8 @@ export const FAILURE_FETCH_MY_FAVORITE_POSTS = 'FAILURE_FETCH_MY_FAVORITE_POSTS'
 
 export const SUCCESS_FETCH_FAQ = 'SUCCESS_FETCH_FAQ';
 
+export const SUCCESS_FETCH_META = 'SUCCESS_FETCH_META';
+
 export const CLEAR_HISTORY_POST = 'CLEAR_HISTORY_POST';
 
 function requestPaginatedResponse() {
@@ -97,4 +99,8 @@ export function fetchPaginatedResponse(actions, endpoint, page = 1, slugAsKey = 
 
 export function fetchFAQ() {
   return dispatch => API.fetch('/faq/').then(data => dispatch({ type: SUCCESS_FETCH_FAQ, data }));
+}
+
+export function fetchMeta(postType, query) {
+  return dispatch => API.fetch(`/posts/get_meta_${postType}/${query}`).then(data => dispatch({ type: SUCCESS_FETCH_META, data }));
 }
