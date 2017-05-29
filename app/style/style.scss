@@ -388,3 +388,24 @@
     max-width: 700px;
   }
 }
+.breadcrumbs-wrap {
+  margin-top: 10px;
+
+  @media all and (max-width: 767px) {
+    display: none;
+  }
+}
+.breadcrumbs-wrap>ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.breadcrumbs-wrap>ul>li {
+  display: inline-block;
+  padding: 2px 5px;
+}
+.breadcrumbs-wrap>ul>li>a {
+  text-decoration: none;
+  color: #337ab7;
+}

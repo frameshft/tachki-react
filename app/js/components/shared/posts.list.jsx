@@ -9,7 +9,7 @@ import * as listViewType from '../../constants/listView';
 import PostItem from '../shared/post.item';
 import Pagination from '../shared/pagination';
 import {
-  fetchPaginatedResponse, FETCH_CARS_LIST, FETCH_CARGO_LIST, FETCH_SERVICES_LIST,
+  fetchPaginatedResponse, fetchMeta, FETCH_CARS_LIST, FETCH_CARGO_LIST, FETCH_SERVICES_LIST,
   SUCCESS_FETCH_CARS_LIST, SUCCESS_SPARE_PARTS_LIST, SUCCESS_FETCH_SERVICES_LIST,
   SUCCESS_FETCH_CARGO_LIST, SUCCESS_FETCH_COMPANIES_LIST, FETCH_COMPANIES_LIST,
   FETCH_SPARE_PARTS_LIST,
@@ -214,6 +214,7 @@ class PostList extends React.Component {
         });
       }
     });
+    store.dispatch(fetchMeta(postType, query));
   }
 
   buildQueryStringFromPath(params) {
