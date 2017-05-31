@@ -417,6 +417,9 @@ class PostList extends React.Component {
       return <Spinner />;
     }
 
+    console.log(location.pathname.split('/'));
+    console.log(location.pathname);
+
     return (
       <Swipeable className={ `body ${componentData.viewClassName}` } onSwipingLeft={ this.onSwipeLeft } onSwipingRight={ this.onSwipeRight }>
         <Helmet>
