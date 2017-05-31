@@ -99,15 +99,14 @@ export default class Application extends React.Component {
     const controls = this.props.routes[1].controls;
     const params = this.props.params.id || '';
     const location = browserHistory.getCurrentLocation();
-    const pathname = (location.pathname.substr(location.pathname.length - 1) === '/') ? location.pathname.slice(0, -1) :  location.pathname;
-
+    const pathname = (location.pathname.substr(location.pathname.length - 1) === '/') ? location.pathname.slice(0, -1) : location.pathname;
     return (
       <div className='app'>
         { this.renderSkipBanner() }
         { this.renderSmallBanner() }
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
-        <BreadcrumbsContainer pathname={ pathname } />
+        {pathname && <BreadcrumbsContainer pathname={ pathname } />}
         <div className='breadcrumbs-wrap'>
           <Breadcrumbs
             routes={ this.props.routes }

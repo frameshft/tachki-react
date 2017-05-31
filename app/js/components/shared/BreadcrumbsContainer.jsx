@@ -6,7 +6,7 @@ const getPaths = (p, i, arr) => {
   if (i === 0) {
     return {
       key: i,
-      content: (<Link to={ '/' }>Home</Link>),
+      content: (<Link to={ '/' }>Главная</Link>),
       active: (i === arr.length - 1),
       link: (i < arr.length - 1),
     };
@@ -29,7 +29,7 @@ const getPaths = (p, i, arr) => {
 
 const BreadcrumbsContainer = (props) => {
   const paths = props.pathname.split('/').map(getPaths);
-  return <Breadcrumb sections={ paths } divider='/' />;
+  return <Breadcrumb sections={ paths } divider='>' />;
 };
 
 export default BreadcrumbsContainer;
