@@ -15,13 +15,13 @@ const getPaths = (p, i, arr, breadcrumbs) => {
   if (i === arr.length - 1) {
     return {
       key: i,
-      content: breadcrumbs[p],
+      content: breadcrumbs[p] || 'Загружается...',
       active: (i === arr.length - 1),
     };
   }
   return {
     key: i,
-    content: (<Link to={ `${arr.slice(0, i + 1).join('/')}` }>{ breadcrumbs[p] }</Link>),
+    content: (<Link to={ `${arr.slice(0, i + 1).join('/')}` }>{ breadcrumbs[p] || 'Загружается...'}</Link>),
     active: (i === arr.length - 1),
     link: (i < arr.length - 1),
   };

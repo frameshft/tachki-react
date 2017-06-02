@@ -2,7 +2,6 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
 import Swipeable from 'react-swipeable';
-import Breadcrumbs from 'redux-breadcrumb-trail';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
@@ -107,13 +106,6 @@ export default class Application extends React.Component {
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
         {pathname && <BreadcrumbsContainer pathname={ pathname } />}
-        <div className='breadcrumbs-wrap'>
-          <Breadcrumbs
-            routes={ this.props.routes }
-            params={ this.props.params }
-            location={ this.props.location }
-          />
-        </div>
         <div className='main cf'>
           { this.props.children }
         </div>
