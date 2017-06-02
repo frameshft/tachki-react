@@ -13,6 +13,7 @@ import ContactInfo from '../shared/profile.contact.info';
 
 import '../../../style/profile.scss';
 import PostMap from '../shared/map.post';
+import { fetchMeta } from '../../actions/list';
 
 class CompanyProfile extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class CompanyProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getCompany(this.props.params.id));
+    store.dispatch(fetchMeta(this.props.postType, ''));
   }
 
   onModalClose() {
@@ -202,6 +204,7 @@ CompanyProfile.propTypes = {
 
 
 function mapToProps(state, props) {
+  const postType = props.postType || props.route.postType;
   const companies = state.entities.users;
   const allPosts = state.entities.posts;
   const company = companies[props.params.id] || {};
@@ -210,6 +213,7 @@ function mapToProps(state, props) {
   return {
     company,
     posts,
+    postType,
   };
 }
 

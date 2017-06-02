@@ -21,6 +21,7 @@ import SimilarPosts from '../shared/similar.post';
 import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 import ImageSlider from '../shared/image.slider';
+import { fetchMeta } from '../../actions/list';
 
 moment.locale('ru');
 
@@ -37,11 +38,13 @@ class CargoProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getPost('cargo', this.props.params.id));
+    store.dispatch(fetchMeta(this.props.postType, ''));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
       store.dispatch(getPost('cargo', nextProps.params.id));
+      store.dispatch(fetchMeta(this.props.postType, ''));
     }
   }
 
@@ -252,6 +255,7 @@ CargoProfile.propTypes = {
 };
 
 function mapToProps(state, props) {
+  const postType = props.postType || props.route.postType;
   const posts = state.entities.posts;
   const post = posts[props.params.id] || {};
   const user = state.auth.user;
@@ -259,6 +263,7 @@ function mapToProps(state, props) {
   return {
     post,
     user,
+    postType,
   };
 }
 

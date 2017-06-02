@@ -10,7 +10,7 @@ const baseAPI = 'react';
 const locale = 'ru';
 
  // const baseUrl = `${proto}//staging.tachki.kg/`;
-const baseUrl = isProduction ? `${proto}//${location.hostname}/` : `${proto}//staging.tachki.kg/`;
+const baseUrl = isProduction ? `${proto}//${location.hostname}/` : 'https://staging.tachki.kg/';
 const apiToken = isProduction ? 'tachki.kg:U-M_6a6B_JA6zbWXfxvQEXXAWzM' : 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
  // const apiToken = 'tachki.kg:Je-w5kSyuxz6oXm5ootzHAlbas8';
 

@@ -22,6 +22,7 @@ import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
 import ControlsDesktop from '../shared/controls.post.desktop';
 import ImageSlider from '../shared/image.slider';
+import { fetchMeta } from '../../actions/list';
 
 moment.locale('ru');
 
@@ -41,11 +42,13 @@ class SparePartProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getPost('spare-parts', this.props.params.id));
+    store.dispatch(fetchMeta(this.props.postType, ''));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
       store.dispatch(getPost('spare-parts', nextProps.params.id));
+      store.dispatch(fetchMeta(this.props.postType, ''));
     }
   }
 
@@ -275,6 +278,7 @@ SparePartProfile.propTypes = {
 };
 
 function mapToProps(state, props) {
+  const postType = props.postType || props.route.postType;
   const cars = state.entities.posts;
   const post = cars[props.params.id] || {};
   const user = state.auth.user;
@@ -282,6 +286,7 @@ function mapToProps(state, props) {
   return {
     post,
     user,
+    postType,
   };
 }
 
