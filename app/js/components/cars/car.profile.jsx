@@ -22,6 +22,7 @@ import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
 import ImageSlider from '../shared/image.slider';
+import { fetchMeta } from '../../actions/list';
 
 moment.locale('ru');
 
@@ -41,11 +42,13 @@ class CarProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getPost('automobiles', this.props.params.id));
+    store.dispatch(fetchMeta(this.props.postType, ''));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
       store.dispatch(getPost('automobiles', nextProps.params.id));
+      store.dispatch(fetchMeta(this.props.postType, ''));
     }
   }
 
@@ -298,6 +301,7 @@ CarProfile.propTypes = {
 };
 
 function mapToProps(state, props) {
+  const postType = props.postType || props.route.postType;
   const cars = state.entities.posts;
   const car = cars[props.params.id] || {};
   const user = state.auth.user;
@@ -305,6 +309,7 @@ function mapToProps(state, props) {
   return {
     car,
     user,
+    postType,
   };
 }
 

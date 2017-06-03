@@ -1,11 +1,11 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import Swipeable from 'react-swipeable';
-import Breadcrumbs from 'redux-breadcrumb-trail';
 
 import Header from './header/header';
 import Tabber from './header/tabber';
+import BreadcrumbsContainer from '../components/shared/BreadcrumbsContainer';
 
 import '../../style/style.scss';
 
@@ -97,20 +97,15 @@ export default class Application extends React.Component {
     const pathName = this.props.routes[1].title;
     const controls = this.props.routes[1].controls;
     const params = this.props.params.id || '';
-
+    const location = browserHistory.getCurrentLocation();
+    const pathname = (location.pathname.substr(location.pathname.length - 1) === '/') ? location.pathname.slice(0, -1) : location.pathname;
     return (
       <div className='app'>
         { this.renderSkipBanner() }
         { this.renderSmallBanner() }
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
-        <div className='breadcrumbs-wrap'>
-          <Breadcrumbs
-            routes={ this.props.routes }
-            params={ this.props.params }
-            location={ this.props.location }
-          />
-        </div>
+        {pathname && <BreadcrumbsContainer pathname={ pathname } />}
         <div className='main cf'>
           { this.props.children }
         </div>

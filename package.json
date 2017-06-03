@@ -85,6 +85,7 @@
     "redux-persist": "^4.4.2",
     "redux-router": "^2.1.2",
     "redux-thunk": "^2.2.0",
+    "semantic-ui-react": "^0.68.4",
     "slick-carousel": "^1.6.0",
     "throttle-debounce": "^1.0.1",
     "url": "0.11.0"

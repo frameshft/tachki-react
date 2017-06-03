@@ -1,6 +1,5 @@
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { reducer as breadcrumb } from 'redux-breadcrumb-trail';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
@@ -30,7 +29,6 @@ const store = createStore(
   combineReducers({
     routing: routerReducer,
     ...reducers,
-    breadcrumb,
   }),
   init,
   compose(...enhancers),
