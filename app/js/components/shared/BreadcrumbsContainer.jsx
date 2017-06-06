@@ -28,7 +28,7 @@ const getPaths = (p, i, arr, breadcrumbs) => {
 };
 
 const BreadcrumbsContainer = ({ pathname, breadcrumbs }) => {
-  const paths = pathname.split('/').map((p, i, arr) => getPaths(p, i, arr, breadcrumbs));
+  const paths = pathname.split('/').filter(p => p !== 'all').map((p, i, arr) => getPaths(p, i, arr, breadcrumbs));
   return <Breadcrumb sections={ paths } divider='>' />;
 };
 
