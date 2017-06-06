@@ -113,7 +113,10 @@ export default class Application extends React.Component {
         { this.renderSmallBanner() }
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
-        {pathname && !this.ignoreBreadcrumbsPaths.includes(pathname) && <BreadcrumbsContainer pathname={ pathname } />}
+        {pathname &&
+        !this.ignoreBreadcrumbsPaths.includes(pathname) &&
+        !pathname.startsWith('/cargo') &&
+        <BreadcrumbsContainer pathname={ pathname } />}
         <div className='main cf'>
           { this.props.children }
         </div>
