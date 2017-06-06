@@ -13,7 +13,6 @@ import ContactInfo from '../shared/profile.contact.info';
 
 import '../../../style/profile.scss';
 import PostMap from '../shared/map.post';
-import { fetchMeta } from '../../actions/list';
 
 class CompanyProfile extends React.Component {
   constructor(props) {
@@ -36,7 +35,6 @@ class CompanyProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getCompany(this.props.params.id));
-    store.dispatch(fetchMeta(this.props.postType, ''));
   }
 
   onModalClose() {

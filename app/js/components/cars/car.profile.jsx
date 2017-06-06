@@ -22,7 +22,6 @@ import { importImage } from '../../utils';
 import LastCommentsPost from '../shared/comments.last';
 import PostMap from '../shared/map.post';
 import ImageSlider from '../shared/image.slider';
-import { fetchMeta } from '../../actions/list';
 
 moment.locale('ru');
 
@@ -42,13 +41,11 @@ class CarProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getPost('automobiles', this.props.params.id));
-    store.dispatch(fetchMeta(this.props.postType, ''));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
       store.dispatch(getPost('automobiles', nextProps.params.id));
-      store.dispatch(fetchMeta(this.props.postType, ''));
     }
   }
 

@@ -10,5 +10,12 @@ export const GET_COMPANY_POSTS = 'GET_COMPANY_POSTS';
 export function getCompany(companyId) {
   return dispatch =>
     API.fetch(`/companies/${companyId}/`)
-      .then(data => dispatch({ type: GET_A_COMPANY, data }));
+      .then((data) => {
+        const { breadcrumbs, title, description } = data;
+        dispatch({
+          type: 'SUCCESS_FETCH_META',
+          data: { breadcrumbs, title, description },
+        });
+        return dispatch({ type: GET_A_COMPANY, data });
+      });
 }

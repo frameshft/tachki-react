@@ -42,7 +42,14 @@ export function deletePost(postId) {
 export function getPost(postType, postId) {
   return dispatch =>
     API.fetch(`/${postType}/${postId}/`)
-      .then(res => dispatch({ type: STORE_A_POST, data: { [res.id]: res } }));
+      .then((res) => {
+        const { breadcrumbs, title, description } = res;
+        dispatch({
+          type: 'SUCCESS_FETCH_META',
+          data: { breadcrumbs, title, description },
+        });
+        return dispatch({ type: STORE_A_POST, data: { [res.id]: res } });
+      });
 }
 
 export function votePostUp(postId) {
