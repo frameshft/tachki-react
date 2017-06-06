@@ -23,6 +23,14 @@ export default class Application extends React.Component {
       hideSmallBanner: false,
       platform: this.getPlatform(),
     };
+
+    this.ignoreBreadcrumbsPaths = [
+      '/my/history',
+      '/sign-in',
+      '/sign-up',
+      '/faq',
+      '/agreement',
+    ];
   }
 
   onInstallBtn() {
@@ -105,7 +113,7 @@ export default class Application extends React.Component {
         { this.renderSmallBanner() }
         <Header title={ pathName } controls={ controls } params={ params } />
         <Tabber />
-        {pathname && <BreadcrumbsContainer pathname={ pathname } />}
+        {pathname && !this.ignoreBreadcrumbsPaths.includes(pathname) && <BreadcrumbsContainer pathname={ pathname } />}
         <div className='main cf'>
           { this.props.children }
         </div>
