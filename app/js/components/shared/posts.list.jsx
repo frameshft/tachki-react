@@ -374,9 +374,9 @@ class PostList extends React.Component {
             <button className='button__transparent' onClick={ this.onModalSet.bind(this, 'sort') }>Сортировка</button>
           </li>
         }
-        <li className='head-tools__item head-tools__item--marker'>
+        {/* <li className='head-tools__item head-tools__item--marker'>
           <button className='button__transparent'>Показать на карте</button>
-        </li>
+        </li> */}
       </ul>;
   }
   renderNotFound() {

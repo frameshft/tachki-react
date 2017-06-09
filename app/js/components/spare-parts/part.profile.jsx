@@ -202,9 +202,9 @@ class SparePartProfile extends React.Component {
                 { user.token && <FavoriteToggle post={ post } isDesktop /> }
                 {/* TODO: add crud */}
                 {/* { car.isMy && <button className='button__transparent btn--edit' /> } */}
-                <button className='button__transparent btn--marker' onClick={ this.onModalShow }>
+                {/* <button className='button__transparent btn--marker' onClick={ this.onModalShow }>
                   Показать на карте
-                </button>
+                </button> */}
                 <div className='car-profile__top__info'>
                   <span> { moment(post.created_at).format('DD.MM.YYYY') }</span>
                 </div>

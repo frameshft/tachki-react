@@ -156,9 +156,9 @@ class CompanyProfile extends React.Component {
               <div className='company-profile__top__controls'>
                 {/* TODO: add crud */}
                 {/* <button className='button__transparent btn--edit' /> */}
-                <button className='button__transparent btn--marker' onClick={ this.onMapModalShow }>
+                {/* <button className='button__transparent btn--marker' onClick={ this.onMapModalShow }>
                   Показать на карте
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

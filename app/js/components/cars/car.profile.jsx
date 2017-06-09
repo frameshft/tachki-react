@@ -222,9 +222,9 @@ class CarProfile extends React.Component {
                 { user.token && <FavoriteToggle post={ car } isDesktop /> }
                 {/* TODO: add crud */}
                 {/* { car.isMy && <button className='button__transparent btn--edit' /> } */}
-                <button className='button__transparent btn--marker' onClick={ this.onModalShow }>
+                {/* <button className='button__transparent btn--marker' onClick={ this.onModalShow }>
                   Показать на карте
-                </button>
+                </button> */}
                 <div className='car-profile__top__info'>
                   <span> { moment(car.created_at).format('DD.MM.YYYY') }</span>
                 </div>
