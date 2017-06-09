@@ -23,6 +23,8 @@ import PostMap from '../shared/map.post';
 import ControlsDesktop from '../shared/controls.post.desktop';
 import ImageSlider from '../shared/image.slider';
 
+import { ADD_HISTORY_POST } from '../../actions/list';
+
 moment.locale('ru');
 
 class SparePartProfile extends React.Component {
@@ -41,11 +43,13 @@ class SparePartProfile extends React.Component {
 
   componentDidMount() {
     store.dispatch(getPost('spare-parts', this.props.params.id));
+    store.dispatch({ type: ADD_HISTORY_POST, data: this.props.params.id });
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.token !== this.props.user.token || this.props.params.id !== nextProps.params.id) {
       store.dispatch(getPost('spare-parts', nextProps.params.id));
+      store.dispatch({ type: ADD_HISTORY_POST, data: nextProps.params.id });
     }
   }
 
