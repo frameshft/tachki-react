@@ -34,11 +34,11 @@ apiRequest.interceptors.response.use((response) => {
   }
   if (response.status === 401) {
     store.dispatch({ type: SUCESS_FETCH_SIGNOUT });
-    return Promise.reject({ status: 401, error: 'Unauthorized' });
+    return Promise.reject({ status: 401, errors: data });
   } else if (response.status >= 400) {
     return Promise.reject({
       status: response.status,
-      error: data,
+      errors: data,
     });
   }
 
