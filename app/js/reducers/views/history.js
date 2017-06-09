@@ -1,43 +1,35 @@
-import { CLEAR_HISTORY_POST } from '../../actions/list';
+import { ADD_HISTORY_POST, CLEAR_HISTORY_POST } from '../../actions/list';
 
 const historyLength = 20;
-
-const trackPaths = [
-  'automobiles',
-  'spare-parts',
-  'cargo',
-  'services',
-];
 
 const initialState = {
   list: [],
 };
 
-function pushHistory(list, path) {
-  const splitPath = path.split('/');
-
-  if (splitPath.length === 3 && /^[0-9]+$/.test(splitPath[2]) && trackPaths.includes(splitPath[1])) {
-    const elem = +splitPath[2];
-    const newList = list.filter(x => x !== elem);
-
-    newList.unshift(elem);
-
-    if (newList.length > historyLength) {
-      newList.pop();
-    }
-
-    return newList;
+const pushToHistoryList = (list, id) => {
+  // Get a new list without the pushed Post ID
+  const newList = list.filter(x => x !== id);
+  // Append the Post ID to the start of the list
+  newList.unshift(id);
+  // Control the size of the history list
+  if (newList.length > historyLength) {
+    newList.pop();
   }
 
-  return list;
-}
+  return newList;
+};
 
 export default function history(state = initialState, action) {
   switch (action.type) {
     case '@@router/LOCATION_CHANGE':
       return {
         ...state,
-        list: pushHistory(state.list, action.payload.pathname),
+        list: state.list,
+      };
+    case ADD_HISTORY_POST:
+      return {
+        ...state,
+        list: pushToHistoryList(state.list, action.data),
       };
     case CLEAR_HISTORY_POST:
       return initialState;

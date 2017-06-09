@@ -35,6 +35,7 @@ export const SUCCESS_FETCH_FAQ = 'SUCCESS_FETCH_FAQ';
 
 export const SUCCESS_FETCH_META = 'SUCCESS_FETCH_META';
 
+export const ADD_HISTORY_POST = 'ADD_HISTORY_POST';
 export const CLEAR_HISTORY_POST = 'CLEAR_HISTORY_POST';
 
 function requestPaginatedResponse() {
