@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "webpack -p --config webpack.prod.js",
+    "staging": "webpack -p --config webpack.staging.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ./app --ext .jsx --ext .js",
     "dev": "webpack-dev-server --hot --inline --history-api-fallback --progress --watch-poll -d --client-log-level=info --host 0.0.0.0",
