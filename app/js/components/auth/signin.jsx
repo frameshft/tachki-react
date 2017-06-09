@@ -12,6 +12,8 @@ class SignIn extends React.Component {
     this.state = {
       loginValue: '',
       passwordValue: '',
+      errors: {},
+      isSubmitting: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -29,16 +31,13 @@ class SignIn extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    this.setState({ errors: {}, isSubmitting: true });
     const { loginValue, passwordValue } = this.state;
     const mask = '996';
     const login = mask.concat(loginValue);
     store.dispatch(AuthActions.signin({ phone: login, password: passwordValue }))
-      .catch((res) => {
-      // do something with error
-        switch (res.status) {
-          default:
-            return 'error';
-        }
+      .catch(({ errors }) => {
+        this.setState({ errors, isSubmitting: false });
       });
   }
 
@@ -55,10 +54,12 @@ class SignIn extends React.Component {
   }
 
   render() {
+    const { isSubmitting, errors } = this.state;
     return (
       <form className='auth-form' onSubmit={ this.onSubmit } >
         <input type='text' style={ { display: 'none' } } />
         <input type='password' style={ { display: 'none' } } />
+        {errors.detail && <h3 className='text-center error'>{errors.detail}</h3>}
         <div className='auth-form__row auth-form__row--phone'>
           <input
             type='text'
@@ -67,6 +68,7 @@ class SignIn extends React.Component {
             onChange={ this.loginHandle }
             className='auth-form__input'
           />
+          {errors.phone && <span className='error'>{errors.phone}</span>}
         </div>
         <div className='auth-form__row'>
           <input
@@ -75,9 +77,10 @@ class SignIn extends React.Component {
             onChange={ this.passwordHandle }
             className='auth-form__input'
           />
+          {errors.password && <span className='error'>{errors.password}</span>}
         </div>
         <div className='auth-form__row auth-form__row--submit text-center'>
-          <button type='submit' className='btn btn--primary'>
+          <button disabled={ isSubmitting } type='submit' className='btn btn--primary'>
             Войти
           </button>
         </div>
