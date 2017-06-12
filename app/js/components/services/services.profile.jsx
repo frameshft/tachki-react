@@ -24,6 +24,8 @@ import ImageSlider from '../shared/image.slider';
 
 import { ADD_HISTORY_POST } from '../../actions/list';
 
+import Spinner from '../shared/spinner';
+
 moment.locale('ru');
 
 class SparePartProfile extends React.Component {
@@ -100,9 +102,13 @@ class SparePartProfile extends React.Component {
   }
 
   render() {
-    const { post, user } = this.props;
+    const { post, user, isFetching } = this.props;
     const { mainImgIndex } = this.state;
     const postUser = post.user;
+
+    if (isFetching) {
+      return <Spinner />;
+    }
     if (!post || !post.profile) {
       return null;
     }
@@ -256,6 +262,7 @@ SparePartProfile.propTypes = {
 function mapToProps(state, props) {
   const postType = props.postType || props.route.postType;
   const cars = state.entities.posts;
+  const isFetching = cars.isFetching;
   const post = cars[props.params.id] || {};
   const user = state.auth.user;
 
@@ -263,6 +270,7 @@ function mapToProps(state, props) {
     post,
     user,
     postType,
+    isFetching,
   };
 }
 
