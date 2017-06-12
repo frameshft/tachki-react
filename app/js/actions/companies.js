@@ -5,10 +5,11 @@ export const GET_A_COMPANY = 'GET_A_COMPANY';
 export const REMOVE_A_COMPANY = 'REMOVE_A_COMPANY';
 export const FETCH_COUNT_COMPANY = 'FETCH_COUNT_COMPANY';
 export const GET_COMPANY_POSTS = 'GET_COMPANY_POSTS';
-
+export const FETCH_A_COMPANY = 'FETCH_A_COMPANY';
 
 export function getCompany(companyId) {
-  return dispatch =>
+  return (dispatch) => {
+    dispatch({ type: FETCH_A_COMPANY });
     API.fetch(`/companies/${companyId}/`)
       .then((data) => {
         const { breadcrumbs, title, description } = data;
@@ -18,4 +19,5 @@ export function getCompany(companyId) {
         });
         return dispatch({ type: GET_A_COMPANY, data });
       });
+  };
 }
