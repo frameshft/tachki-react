@@ -40,7 +40,6 @@ class SimilarPosts extends React.Component {
 
   render() {
     const { posts, isFetching } = this.state;
-    console.log(posts);
     if (isFetching) {
       return <Spinner />;
     }

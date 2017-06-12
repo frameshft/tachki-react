@@ -136,8 +136,6 @@ class CarProfile extends React.Component {
     const { car, user, isFetching } = this.props;
     const { mainImgIndex, showModal } = this.state;
     const postUser = car.user;
-    console.log('This should render');
-    console.log(isFetching);
     if (isFetching) {
       return <Spinner />;
     }
