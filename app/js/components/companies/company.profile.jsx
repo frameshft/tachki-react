@@ -14,6 +14,8 @@ import ContactInfo from '../shared/profile.contact.info';
 import '../../../style/profile.scss';
 import PostMap from '../shared/map.post';
 
+import Spinner from '../shared/spinner';
+
 class CompanyProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -62,9 +64,12 @@ class CompanyProfile extends React.Component {
   }
 
   render() {
-    const { company } = this.props;
+    const { company, isFetching } = this.props;
     const { showModal, showMapModal } = this.state;
 
+    if (isFetching) {
+      return <Spinner />;
+    }
     if (company.id === undefined) {
       return null;
     }
@@ -204,6 +209,7 @@ CompanyProfile.propTypes = {
 function mapToProps(state, props) {
   const postType = props.postType || props.route.postType;
   const companies = state.entities.users;
+  const isFetching = companies.isFetching;
   const allPosts = state.entities.posts;
   const company = companies[props.params.id] || {};
   const companyPosts = company.posts || [];
@@ -212,6 +218,7 @@ function mapToProps(state, props) {
     company,
     posts,
     postType,
+    isFetching,
   };
 }
 
