@@ -24,6 +24,8 @@ import ImageSlider from '../shared/image.slider';
 
 import { ADD_HISTORY_POST } from '../../actions/list';
 
+import Spinner from '../shared/spinner';
+
 moment.locale('ru');
 
 class CargoProfile extends React.Component {
@@ -102,9 +104,13 @@ class CargoProfile extends React.Component {
   }
 
   render() {
-    const { post, user } = this.props;
+    const { post, user, isFetching } = this.props;
     const { mainImgIndex } = this.state;
     const postUser = post.user;
+
+    if (isFetching) {
+      return <Spinner />;
+    }
     if (post.profile === undefined) {
       return null;
     }
@@ -258,6 +264,7 @@ CargoProfile.propTypes = {
 function mapToProps(state, props) {
   const postType = props.postType || props.route.postType;
   const posts = state.entities.posts;
+  const isFetching = posts.isFetching;
   const post = posts[props.params.id] || {};
   const user = state.auth.user;
 
@@ -265,6 +272,7 @@ function mapToProps(state, props) {
     post,
     user,
     postType,
+    isFetching,
   };
 }
 
