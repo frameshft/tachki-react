@@ -16,7 +16,6 @@ class HistoryPosts extends React.Component {
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const postsRender = posts.map(p => getPostComponent(p));
-
     return (
       <div className='body companies'>
         { /* <div>
