@@ -1,17 +1,23 @@
 import {
   GET_A_POST, STORE_A_POST, MARK_POST_AS_FAVORITE, UNMARK_POST_AS_FAVORITE,
   REMOVE_A_POST, UP_A_POST, MAKE_POST_VIP, STORE_COMMENTS_LIST, ADD_NEW_COMMENTS,
-  REMOVE_ZOMBIE_POST,
+  REMOVE_ZOMBIE_POST, FETCH_A_POST,
 } from '../../actions/posts';
 
 export default function posts(state = {}, action) {
   let newState;
 
   switch (action.type) {
+    case FETCH_A_POST:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case STORE_A_POST:
       return {
         ...state,
         ...action.data,
+        isFetching: false,
       };
     case GET_A_POST:
       return {

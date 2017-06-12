@@ -24,6 +24,8 @@ import PostMap from '../shared/map.post';
 import ImageSlider from '../shared/image.slider';
 import { ADD_HISTORY_POST } from '../../actions/list';
 
+import Spinner from '../shared/spinner';
+
 moment.locale('ru');
 
 class CarProfile extends React.Component {
@@ -131,12 +133,18 @@ class CarProfile extends React.Component {
   }
 
   render() {
-    const { car, user } = this.props;
+    const { car, user, isFetching } = this.props;
     const { mainImgIndex, showModal } = this.state;
     const postUser = car.user;
+    console.log('This should render');
+    console.log(isFetching);
+    if (isFetching) {
+      return <Spinner />;
+    }
     if (car.profile === undefined) {
       return null;
     }
+
 
     return (
       <div className='car-profile'>
@@ -304,12 +312,14 @@ function mapToProps(state, props) {
   const postType = props.postType || props.route.postType;
   const cars = state.entities.posts;
   const car = cars[props.params.id] || {};
+  const isFetching = cars.isFetching;
   const user = state.auth.user;
 
   return {
     car,
     user,
     postType,
+    isFetching,
   };
 }
 

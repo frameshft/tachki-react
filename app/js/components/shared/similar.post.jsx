@@ -2,20 +2,22 @@ import React from 'react';
 import API from '../../api';
 import { getPostComponent } from './utils';
 
+import Spinner from '../shared/spinner';
+
 class SimilarPosts extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       posts: [],
+      isFetching: true,
     };
   }
 
   componentDidMount() {
     const { post } = this.props;
-
     API.fetch(`/posts/${post.id}/similar/`)
-      .then(posts => this.setState({ posts }));
+      .then(posts => this.setState({ posts, isFetching: false }));
   }
 
   listPosts(posts) {
@@ -37,7 +39,11 @@ class SimilarPosts extends React.Component {
   }
 
   render() {
-    const { posts } = this.state;
+    const { posts, isFetching } = this.state;
+    console.log(posts);
+    if (isFetching) {
+      return <Spinner />;
+    }
     return this.renderPosts(posts);
   }
 }

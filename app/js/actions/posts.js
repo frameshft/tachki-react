@@ -16,6 +16,7 @@ export const FETCH_SERVICES_COUNT = 'FETCH_SERVICES_COUNT';
 export const FETCH_SPAREPTS_COUNT = 'FETCH_SPAREPTS_COUNT';
 export const FETCH_CARGO_COUNT = 'FETCH_CARGO_COUNT';
 export const MARK_POST_AS_ABUSE = 'MARK_POST_AS_ABUSE';
+export const FETCH_A_POST = 'FETCH_A_POST';
 
 
 export function markPostAsFavorite(postId) {
@@ -40,7 +41,8 @@ export function deletePost(postId) {
 }
 
 export function getPost(postType, postId) {
-  return dispatch =>
+  return (dispatch) => {
+    dispatch({ type: FETCH_A_POST });
     API.fetch(`/${postType}/${postId}/`)
       .then((res) => {
         const { breadcrumbs, title, description } = res;
@@ -50,6 +52,7 @@ export function getPost(postType, postId) {
         });
         return dispatch({ type: STORE_A_POST, data: { [res.id]: res } });
       });
+  };
 }
 
 export function votePostUp(postId) {
