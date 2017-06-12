@@ -124,7 +124,6 @@ class SparePartProfile extends React.Component {
     if (isFetching) {
       return <Spinner />;
     }
-    
     if (!post || !post.profile) {
       return null;
     }
