@@ -429,7 +429,7 @@ class PostList extends React.Component {
         </Helmet>
 
         <div className='frontpage__block__head desktop'>
-          <h3 className='frontpage__block__title'>{ h1 }</h3>
+          <h1 className='frontpage__block__title'>{ h1 }</h1>
           { this.renderFrontpage() }
         </div>
 
