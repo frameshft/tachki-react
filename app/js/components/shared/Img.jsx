@@ -53,7 +53,7 @@ Img.propTypes = {
   imgClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
   placeholderClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
   onClick: React.PropTypes.func,
-  children: React.PropTypes.element,
+  children: React.PropTypes.node,
 };
 /*eslint-enable */
 
