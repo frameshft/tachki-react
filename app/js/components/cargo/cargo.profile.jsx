@@ -25,6 +25,7 @@ import ImageSlider from '../shared/image.slider';
 import { ADD_HISTORY_POST } from '../../actions/list';
 
 import Spinner from '../shared/spinner';
+import Img from '../shared/Img';
 
 moment.locale('ru');
 
@@ -98,7 +99,7 @@ class CargoProfile extends React.Component {
         key={ index }
         ref='thumbImage'
       >
-        <img src={ importImage(image, this.refs.thumbImage) } alt={ index } />
+        <Img src={ importImage(image, this.refs.thumbImage) } alt={ index } />
       </button>))
       ;
   }
@@ -213,7 +214,7 @@ class CargoProfile extends React.Component {
               </div>
               <div className='car-profile__gallery'>
                 <div className='car-profile__gallery__main' ref='galleryMain'>
-                  <img src={ importImage(post.images[mainImgIndex], this.refs.galleryMain) } alt='' />
+                  <Img src={ importImage(post.images[mainImgIndex], this.refs.galleryMain) } alt='' />
                 </div>
                 <div className='car-profile__gallery__thumbs'>
                   {this.renderThumbs(post.images)}
