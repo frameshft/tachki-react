@@ -12,13 +12,11 @@ class Img extends React.Component {
   componentDidMount() {
     const img = this.node.getBoundingClientRect();
     if (img.complete) {
-      console.log('waat');
       this.onImageLoad();
     }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
-      console.log('WHATATATAT');
       this.setState({ imgLoaded: false });
     }
   }
