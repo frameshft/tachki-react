@@ -437,3 +437,34 @@
 .error {
   color: #f71616;
 }
+
+/*
+=== Img component styles ===
+*/
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.image-rendered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.6s ease-in;
+}
+.image-placeholder {
+  z-index: 2;
+  opacity: 1;
+  width: 100%;
+}
+.image-placeholder.hidden, .image-rendered.hidden {
+  opacity: 0;
+  z-index: 0;
+}
