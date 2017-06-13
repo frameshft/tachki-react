@@ -57,6 +57,7 @@ class PostList extends React.Component {
       posts: [],
       htmlTitle: this.defaultTitle,
       htmlDescription: this.defaultDesc,
+      h1: componentData.viewTitle,
       urlConf,
     };
 
@@ -205,12 +206,13 @@ class PostList extends React.Component {
   }
 
   setHtmlMeta(postType, query) {
-    const { htmlTitle, htmlDescription } = this.state;
+    const { htmlTitle, htmlDescription, h1 } = this.state;
     API.fetch(`/posts/get_meta_${postType}/${query}`).then((res) => {
-      if (htmlTitle !== res.title || htmlDescription !== res.description) {
+      if (htmlTitle !== res.title || htmlDescription !== res.description || h1 !== res.h1) {
         this.setState({
           htmlTitle: res.title,
           htmlDescription: res.description,
+          h1: res.h1,
         });
       }
     });
@@ -390,7 +392,7 @@ class PostList extends React.Component {
 
   render() {
     const { listView, posts, currentPage, isFrontPage, totalPages, totalPosts, postType, isFetching } = this.props;
-    const { componentData, modalWindow, showHelpAlert, htmlTitle, htmlDescription } = this.state;
+    const { componentData, modalWindow, showHelpAlert, htmlTitle, htmlDescription, h1 } = this.state;
 
     const listsCls = (listView === listViewType.LIST_VIEW_NORMAL) ? '' : ' list--small';
     const endpoint = this.buildEndPoint(componentData.endPoint);
@@ -427,7 +429,7 @@ class PostList extends React.Component {
         </Helmet>
 
         <div className='frontpage__block__head desktop'>
-          <h3 className='frontpage__block__title'>{ componentData.viewTitle }</h3>
+          <h3 className='frontpage__block__title'>{ h1 }</h3>
           { this.renderFrontpage() }
         </div>
 
