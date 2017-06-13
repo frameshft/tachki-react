@@ -49,9 +49,9 @@ class Img extends React.Component {
 Img.propTypes = {
   src: React.PropTypes.string.isRequired,
   alt: React.PropTypes.string,
-  wrapperClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
-  imgClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
-  placeholderClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
+  wrapperClasses: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]),
+  imgClasses: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]),
+  placeholderClasses: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]),
   onClick: React.PropTypes.func,
   children: React.PropTypes.node,
 };
