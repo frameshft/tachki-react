@@ -45,4 +45,16 @@ class Img extends React.Component {
   }
 }
 
+/*eslint-disable */
+Img.propTypes = {
+  src: React.PropTypes.string.isRequired,
+  alt: React.PropTypes.string,
+  wrapperClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
+  imgClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
+  placeholderClasses: React.PropTypes.oneOfType([React.propTypes.string, React.PropTypes.array]),
+  onClick: React.PropTypes.func,
+  children: React.PropTypes.element,
+};
+/*eslint-enable */
+
 export default Img;
