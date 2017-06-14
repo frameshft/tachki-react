@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../api';
-import { getPostComponent } from './utils';
+import { getPostComponent, getEndponit } from './utils';
 
 import Spinner from '../shared/spinner';
 
@@ -16,10 +16,14 @@ class SimilarPosts extends React.Component {
 
   componentDidMount() {
     const { post } = this.props;
+    // Get incomplete similar posts objects
     API.fetch(`/posts/${post.id}/similar/`)
       .then((posts) => {
-        const wut = posts.map(pos => API.fetch(`/automobiles/${pos.id}/`).then(res => res));
-        Promise.all(wut).then(res => this.setState({ posts: res, isFetching: false }));
+        // Fetch complete posts objects based on the endpoint and id into a new array
+        // If unsuccesfull store as a null
+        const fetchedPosts = posts.map(p => API.fetch(`${getEndponit(p.postType)}${p.id}/`).then(res => res).catch(() => null));
+        // Wait until all posts are fetched, then filter out the nulls and store only the successfully fetched posts.
+        Promise.all(fetchedPosts).then(res => this.setState({ posts: res.filter(i => i !== null), isFetching: false }));
       });
   }
 
