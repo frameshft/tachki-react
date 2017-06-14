@@ -128,7 +128,7 @@ class CarProfile extends React.Component {
         key={ index }
         ref='thumbImage'
       >
-        <Img src={ importImage(image, this.refs.thumbImage) } alt={ index } />
+        <Img src={ importImage(image, this.refs.thumbImage) } alt={ index.toString() } />
       </button>))
       ;
   }
