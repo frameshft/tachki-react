@@ -37,7 +37,6 @@ class SimilarPosts extends React.Component {
   renderPosts(posts) {
     const myPosts = this.listPosts(posts);
 
-    console.log(this.state.posts);
     if (myPosts.length < 1) return null;
     return (
       <div className='company-posts'>
