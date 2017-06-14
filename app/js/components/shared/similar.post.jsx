@@ -17,7 +17,10 @@ class SimilarPosts extends React.Component {
   componentDidMount() {
     const { post } = this.props;
     API.fetch(`/posts/${post.id}/similar/`)
-      .then(posts => this.setState({ posts, isFetching: false }));
+      .then((posts) => {
+        const wut = posts.map(pos => API.fetch(`/automobiles/${pos.id}/`).then(res => res));
+        Promise.all(wut).then(res => this.setState({ posts: res, isFetching: false }));
+      });
   }
 
   listPosts(posts) {
@@ -29,6 +32,8 @@ class SimilarPosts extends React.Component {
 
   renderPosts(posts) {
     const myPosts = this.listPosts(posts);
+
+    console.log(this.state.posts);
     if (myPosts.length < 1) return null;
     return (
       <div className='company-posts'>
