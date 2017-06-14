@@ -61,7 +61,6 @@ class PostItem extends React.Component {
       default:
         break;
     }
-
     return (
       <div className={ `list__item list__item--car ${vipCls}` }>
         <Link to={ `${endpoint}${post.id}` } activeStyle={ { textDecoration: 'none' } }>

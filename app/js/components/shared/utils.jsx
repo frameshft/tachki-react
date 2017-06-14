@@ -1,7 +1,7 @@
 import React from 'react';
 import PostItem from './post.item';
 
-function getEndponit(category) {
+export function getEndponit(category) {
   switch (category) {
     case 'automobile':
       return '/automobiles/';
